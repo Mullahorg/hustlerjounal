@@ -244,6 +244,69 @@ export const recordPostView = createServerFn({ method: "POST" })
     return { ok: true };
   });
 
+export const getTopicBySlug = createServerFn({ method: "GET" })
+  .inputValidator((input: { slug: string }) => input)
+  .handler(async ({ data }): Promise<TopicDTO | null> => {
+    const client = createJournalPublicClient();
+    const { data: rows, error } = await client
+      .from("topics")
+      .select("id,name,slug,description")
+      .eq("slug", data.slug)
+      .is("deleted_at", null)
+      .limit(1);
+    if (error) throw new Error(error.message);
+    return rows?.[0] ?? null;
+  });
+
+export const listPostsByTopic = createServerFn({ method: "GET" })
+  .inputValidator((input: { topicId: string; limit?: number }) => input)
+  .handler(async ({ data }): Promise<PostCardDTO[]> => {
+    const client = createJournalPublicClient();
+    const { data: rows, error } = await PUBLISHED_FILTER(baseQuery(client))
+      .contains("topic_ids", [data.topicId])
+      .order("published_at", { ascending: false })
+      .range(0, (data.limit ?? 24) - 1);
+    if (error) throw new Error(error.message);
+    return (rows ?? []).map(toCard);
+  });
+
+export const getSeriesBySlug = createServerFn({ method: "GET" })
+  .inputValidator((input: { slug: string }) => input)
+  .handler(async ({ data }): Promise<{ id: string; name: string; slug: string; description: string | null } | null> => {
+    const client = createJournalPublicClient();
+    const { data: rows, error } = await client
+      .from("series")
+      .select("id,name,slug,description")
+      .eq("slug", data.slug)
+      .is("deleted_at", null)
+      .limit(1);
+    if (error) throw new Error(error.message);
+    return rows?.[0] ?? null;
+  });
+
+export const listPostsBySeries = createServerFn({ method: "GET" })
+  .inputValidator((input: { seriesId: string; limit?: number }) => input)
+  .handler(async ({ data }): Promise<PostCardDTO[]> => {
+    const client = createJournalPublicClient();
+    const { data: rows, error } = await PUBLISHED_FILTER(baseQuery(client))
+      .eq("series_id", data.seriesId)
+      .order("series_order", { ascending: true })
+      .range(0, (data.limit ?? 24) - 1);
+    if (error) throw new Error(error.message);
+    return (rows ?? []).map(toCard);
+  });
+
+export const listSeries = createServerFn({ method: "GET" }).handler(async () => {
+  const client = createJournalPublicClient();
+  const { data, error } = await client
+    .from("series")
+    .select("id,name,slug,description")
+    .is("deleted_at", null)
+    .order("name");
+  if (error) throw new Error(error.message);
+  return data ?? [];
+});
+
 export const subscribeNewsletter = createServerFn({ method: "POST" })
   .inputValidator((input: { email: string; name?: string; categories?: string[] }) => input)
   .handler(async ({ data }) => {
