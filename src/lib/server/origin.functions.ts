@@ -1,5 +1,5 @@
 import { createServerFn } from "@tanstack/react-start";
-import { getRequest } from "@tanstack/react-start";
+import { getRequest } from "@tanstack/react-start/server";
 
 /* Absolute origin for OG tags and sitemap links. Sandbox preview only: trust
  * x-forwarded-host on localhost, else trust the request URL. */
