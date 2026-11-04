@@ -30,6 +30,7 @@ import { Route as StoriesRouteImport } from './routes/stories'
 import { Route as TopicsRouteImport } from './routes/topics'
 import { Route as UpdatesRouteImport } from './routes/updates'
 import { Route as AuthenticatedAccountRouteImport } from './routes/_authenticated/account'
+import { Route as AuthenticatedAdminRouteImport } from './routes/_authenticated/admin'
 import { Route as AuthorsSlugRouteImport } from './routes/authors.$slug'
 import { Route as CategoriesSlugRouteImport } from './routes/categories.$slug'
 import { Route as DevelopersApiRouteImport } from './routes/developers.api'
@@ -157,6 +158,11 @@ const UpdatesRoute = UpdatesRouteImport.update({
 const AuthenticatedAccountRoute = AuthenticatedAccountRouteImport.update({
   id: '/account',
   path: '/account',
+  getParentRoute: () => AuthenticatedRouteRoute,
+} as any)
+const AuthenticatedAdminRoute = AuthenticatedAdminRouteImport.update({
+  id: '/admin',
+  path: '/admin',
   getParentRoute: () => AuthenticatedRouteRoute,
 } as any)
 const AuthorsSlugRoute = AuthorsSlugRouteImport.update({
@@ -304,6 +310,7 @@ export interface FileRoutesByFullPath {
   '/topics': typeof TopicsRouteWithChildren
   '/updates': typeof UpdatesRouteWithChildren
   '/account': typeof AuthenticatedAccountRouteWithChildren
+  '/admin': typeof AuthenticatedAdminRoute
   '/authors/$slug': typeof AuthorsSlugRoute
   '/categories/$slug': typeof CategoriesSlugRoute
   '/developers/api': typeof DevelopersApiRouteWithChildren
@@ -350,6 +357,7 @@ export interface FileRoutesByTo {
   '/topics': typeof TopicsRouteWithChildren
   '/updates': typeof UpdatesRouteWithChildren
   '/account': typeof AuthenticatedAccountRouteWithChildren
+  '/admin': typeof AuthenticatedAdminRoute
   '/authors/$slug': typeof AuthorsSlugRoute
   '/categories/$slug': typeof CategoriesSlugRoute
   '/developers/api': typeof DevelopersApiRouteWithChildren
@@ -398,6 +406,7 @@ export interface FileRoutesById {
   '/topics': typeof TopicsRouteWithChildren
   '/updates': typeof UpdatesRouteWithChildren
   '/_authenticated/account': typeof AuthenticatedAccountRouteWithChildren
+  '/_authenticated/admin': typeof AuthenticatedAdminRoute
   '/authors/$slug': typeof AuthorsSlugRoute
   '/categories/$slug': typeof CategoriesSlugRoute
   '/developers/api': typeof DevelopersApiRouteWithChildren
@@ -446,6 +455,7 @@ export interface FileRouteTypes {
     | '/topics'
     | '/updates'
     | '/account'
+    | '/admin'
     | '/authors/$slug'
     | '/categories/$slug'
     | '/developers/api'
@@ -492,6 +502,7 @@ export interface FileRouteTypes {
     | '/topics'
     | '/updates'
     | '/account'
+    | '/admin'
     | '/authors/$slug'
     | '/categories/$slug'
     | '/developers/api'
@@ -539,6 +550,7 @@ export interface FileRouteTypes {
     | '/topics'
     | '/updates'
     | '/_authenticated/account'
+    | '/_authenticated/admin'
     | '/authors/$slug'
     | '/categories/$slug'
     | '/developers/api'
@@ -740,6 +752,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AuthenticatedAccountRouteImport
       parentRoute: typeof AuthenticatedRouteRoute
     }
+    '/_authenticated/admin': {
+      id: '/_authenticated/admin'
+      path: '/admin'
+      fullPath: '/admin'
+      preLoaderRoute: typeof AuthenticatedAdminRouteImport
+      parentRoute: typeof AuthenticatedRouteRoute
+    }
     '/authors/$slug': {
       id: '/authors/$slug'
       path: '/authors/$slug'
@@ -929,10 +948,12 @@ const AuthenticatedAccountRouteWithChildren =
 
 interface AuthenticatedRouteRouteChildren {
   AuthenticatedAccountRoute: typeof AuthenticatedAccountRouteWithChildren
+  AuthenticatedAdminRoute: typeof AuthenticatedAdminRoute
 }
 
 const AuthenticatedRouteRouteChildren: AuthenticatedRouteRouteChildren = {
   AuthenticatedAccountRoute: AuthenticatedAccountRouteWithChildren,
+  AuthenticatedAdminRoute: AuthenticatedAdminRoute,
 }
 
 const AuthenticatedRouteRouteWithChildren =
