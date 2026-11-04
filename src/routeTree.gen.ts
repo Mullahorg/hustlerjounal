@@ -10,27 +10,36 @@
 
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as IndexRouteImport } from './routes/index'
+import { Route as DevelopersRouteImport } from './routes/developers'
 import { Route as GuidesRouteImport } from './routes/guides'
 import { Route as HelpRouteImport } from './routes/help'
 import { Route as InvestorsRouteImport } from './routes/investors'
 import { Route as LegalRouteImport } from './routes/legal'
+import { Route as NewsRouteImport } from './routes/news'
 import { Route as SafetyRouteImport } from './routes/safety'
 import { Route as StoriesRouteImport } from './routes/stories'
 import { Route as UpdatesRouteImport } from './routes/updates'
 import { Route as DevelopersDocsRouteImport } from './routes/developers.docs'
 import { Route as GuidesSlugRouteImport } from './routes/guides.$slug'
 import { Route as HelpSlugRouteImport } from './routes/help.$slug'
+import { Route as HelpFaqRouteImport } from './routes/help.faq'
 import { Route as InvestorsSlugRouteImport } from './routes/investors.$slug'
 import { Route as LegalSlugRouteImport } from './routes/legal.$slug'
 import { Route as NewsSlugRouteImport } from './routes/news.$slug'
 import { Route as SafetySlugRouteImport } from './routes/safety.$slug'
 import { Route as StoriesSlugRouteImport } from './routes/stories.$slug'
 import { Route as UpdatesSlugRouteImport } from './routes/updates.$slug'
+import { Route as UpdatesReleaseNotesRouteImport } from './routes/updates.release-notes'
 import { Route as DevelopersDocsSlugRouteImport } from './routes/developers.docs.$slug'
 
 const IndexRoute = IndexRouteImport.update({
   id: '/',
   path: '/',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const DevelopersRoute = DevelopersRouteImport.update({
+  id: '/developers',
+  path: '/developers',
   getParentRoute: () => rootRouteImport,
 } as any)
 const GuidesRoute = GuidesRouteImport.update({
@@ -53,6 +62,11 @@ const LegalRoute = LegalRouteImport.update({
   path: '/legal',
   getParentRoute: () => rootRouteImport,
 } as any)
+const NewsRoute = NewsRouteImport.update({
+  id: '/news',
+  path: '/news',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const SafetyRoute = SafetyRouteImport.update({
   id: '/safety',
   path: '/safety',
@@ -69,9 +83,9 @@ const UpdatesRoute = UpdatesRouteImport.update({
   getParentRoute: () => rootRouteImport,
 } as any)
 const DevelopersDocsRoute = DevelopersDocsRouteImport.update({
-  id: '/developers/docs',
-  path: '/developers/docs',
-  getParentRoute: () => rootRouteImport,
+  id: '/docs',
+  path: '/docs',
+  getParentRoute: () => DevelopersRoute,
 } as any)
 const GuidesSlugRoute = GuidesSlugRouteImport.update({
   id: '/$slug',
@@ -81,6 +95,11 @@ const GuidesSlugRoute = GuidesSlugRouteImport.update({
 const HelpSlugRoute = HelpSlugRouteImport.update({
   id: '/$slug',
   path: '/$slug',
+  getParentRoute: () => HelpRoute,
+} as any)
+const HelpFaqRoute = HelpFaqRouteImport.update({
+  id: '/faq',
+  path: '/faq',
   getParentRoute: () => HelpRoute,
 } as any)
 const InvestorsSlugRoute = InvestorsSlugRouteImport.update({
@@ -94,9 +113,9 @@ const LegalSlugRoute = LegalSlugRouteImport.update({
   getParentRoute: () => LegalRoute,
 } as any)
 const NewsSlugRoute = NewsSlugRouteImport.update({
-  id: '/news/$slug',
-  path: '/news/$slug',
-  getParentRoute: () => rootRouteImport,
+  id: '/$slug',
+  path: '/$slug',
+  getParentRoute: () => NewsRoute,
 } as any)
 const SafetySlugRoute = SafetySlugRouteImport.update({
   id: '/$slug',
@@ -113,6 +132,11 @@ const UpdatesSlugRoute = UpdatesSlugRouteImport.update({
   path: '/$slug',
   getParentRoute: () => UpdatesRoute,
 } as any)
+const UpdatesReleaseNotesRoute = UpdatesReleaseNotesRouteImport.update({
+  id: '/release-notes',
+  path: '/release-notes',
+  getParentRoute: () => UpdatesRoute,
+} as any)
 const DevelopersDocsSlugRoute = DevelopersDocsSlugRouteImport.update({
   id: '/$slug',
   path: '/$slug',
@@ -121,139 +145,163 @@ const DevelopersDocsSlugRoute = DevelopersDocsSlugRouteImport.update({
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
+  '/developers': typeof DevelopersRouteWithChildren
   '/guides': typeof GuidesRouteWithChildren
   '/help': typeof HelpRouteWithChildren
   '/investors': typeof InvestorsRouteWithChildren
   '/legal': typeof LegalRouteWithChildren
+  '/news': typeof NewsRouteWithChildren
   '/safety': typeof SafetyRouteWithChildren
   '/stories': typeof StoriesRouteWithChildren
   '/updates': typeof UpdatesRouteWithChildren
   '/developers/docs': typeof DevelopersDocsRouteWithChildren
   '/guides/$slug': typeof GuidesSlugRoute
   '/help/$slug': typeof HelpSlugRoute
+  '/help/faq': typeof HelpFaqRoute
   '/investors/$slug': typeof InvestorsSlugRoute
   '/legal/$slug': typeof LegalSlugRoute
   '/news/$slug': typeof NewsSlugRoute
   '/safety/$slug': typeof SafetySlugRoute
   '/stories/$slug': typeof StoriesSlugRoute
   '/updates/$slug': typeof UpdatesSlugRoute
+  '/updates/release-notes': typeof UpdatesReleaseNotesRoute
   '/developers/docs/$slug': typeof DevelopersDocsSlugRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
+  '/developers': typeof DevelopersRouteWithChildren
   '/guides': typeof GuidesRouteWithChildren
   '/help': typeof HelpRouteWithChildren
   '/investors': typeof InvestorsRouteWithChildren
   '/legal': typeof LegalRouteWithChildren
+  '/news': typeof NewsRouteWithChildren
   '/safety': typeof SafetyRouteWithChildren
   '/stories': typeof StoriesRouteWithChildren
   '/updates': typeof UpdatesRouteWithChildren
   '/developers/docs': typeof DevelopersDocsRouteWithChildren
   '/guides/$slug': typeof GuidesSlugRoute
   '/help/$slug': typeof HelpSlugRoute
+  '/help/faq': typeof HelpFaqRoute
   '/investors/$slug': typeof InvestorsSlugRoute
   '/legal/$slug': typeof LegalSlugRoute
   '/news/$slug': typeof NewsSlugRoute
   '/safety/$slug': typeof SafetySlugRoute
   '/stories/$slug': typeof StoriesSlugRoute
   '/updates/$slug': typeof UpdatesSlugRoute
+  '/updates/release-notes': typeof UpdatesReleaseNotesRoute
   '/developers/docs/$slug': typeof DevelopersDocsSlugRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
+  '/developers': typeof DevelopersRouteWithChildren
   '/guides': typeof GuidesRouteWithChildren
   '/help': typeof HelpRouteWithChildren
   '/investors': typeof InvestorsRouteWithChildren
   '/legal': typeof LegalRouteWithChildren
+  '/news': typeof NewsRouteWithChildren
   '/safety': typeof SafetyRouteWithChildren
   '/stories': typeof StoriesRouteWithChildren
   '/updates': typeof UpdatesRouteWithChildren
   '/developers/docs': typeof DevelopersDocsRouteWithChildren
   '/guides/$slug': typeof GuidesSlugRoute
   '/help/$slug': typeof HelpSlugRoute
+  '/help/faq': typeof HelpFaqRoute
   '/investors/$slug': typeof InvestorsSlugRoute
   '/legal/$slug': typeof LegalSlugRoute
   '/news/$slug': typeof NewsSlugRoute
   '/safety/$slug': typeof SafetySlugRoute
   '/stories/$slug': typeof StoriesSlugRoute
   '/updates/$slug': typeof UpdatesSlugRoute
+  '/updates/release-notes': typeof UpdatesReleaseNotesRoute
   '/developers/docs/$slug': typeof DevelopersDocsSlugRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
   fullPaths:
     | '/'
+    | '/developers'
     | '/guides'
     | '/help'
     | '/investors'
     | '/legal'
+    | '/news'
     | '/safety'
     | '/stories'
     | '/updates'
     | '/developers/docs'
     | '/guides/$slug'
     | '/help/$slug'
+    | '/help/faq'
     | '/investors/$slug'
     | '/legal/$slug'
     | '/news/$slug'
     | '/safety/$slug'
     | '/stories/$slug'
     | '/updates/$slug'
+    | '/updates/release-notes'
     | '/developers/docs/$slug'
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/'
+    | '/developers'
     | '/guides'
     | '/help'
     | '/investors'
     | '/legal'
+    | '/news'
     | '/safety'
     | '/stories'
     | '/updates'
     | '/developers/docs'
     | '/guides/$slug'
     | '/help/$slug'
+    | '/help/faq'
     | '/investors/$slug'
     | '/legal/$slug'
     | '/news/$slug'
     | '/safety/$slug'
     | '/stories/$slug'
     | '/updates/$slug'
+    | '/updates/release-notes'
     | '/developers/docs/$slug'
   id:
     | '__root__'
     | '/'
+    | '/developers'
     | '/guides'
     | '/help'
     | '/investors'
     | '/legal'
+    | '/news'
     | '/safety'
     | '/stories'
     | '/updates'
     | '/developers/docs'
     | '/guides/$slug'
     | '/help/$slug'
+    | '/help/faq'
     | '/investors/$slug'
     | '/legal/$slug'
     | '/news/$slug'
     | '/safety/$slug'
     | '/stories/$slug'
     | '/updates/$slug'
+    | '/updates/release-notes'
     | '/developers/docs/$slug'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
+  DevelopersRoute: typeof DevelopersRouteWithChildren
   GuidesRoute: typeof GuidesRouteWithChildren
   HelpRoute: typeof HelpRouteWithChildren
   InvestorsRoute: typeof InvestorsRouteWithChildren
   LegalRoute: typeof LegalRouteWithChildren
+  NewsRoute: typeof NewsRouteWithChildren
   SafetyRoute: typeof SafetyRouteWithChildren
   StoriesRoute: typeof StoriesRouteWithChildren
   UpdatesRoute: typeof UpdatesRouteWithChildren
-  DevelopersDocsRoute: typeof DevelopersDocsRouteWithChildren
-  NewsSlugRoute: typeof NewsSlugRoute
 }
 
 declare module '@tanstack/react-router' {
@@ -263,6 +311,13 @@ declare module '@tanstack/react-router' {
       path: '/'
       fullPath: '/'
       preLoaderRoute: typeof IndexRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/developers': {
+      id: '/developers'
+      path: '/developers'
+      fullPath: '/developers'
+      preLoaderRoute: typeof DevelopersRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/guides': {
@@ -293,6 +348,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof LegalRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/news': {
+      id: '/news'
+      path: '/news'
+      fullPath: '/news'
+      preLoaderRoute: typeof NewsRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/safety': {
       id: '/safety'
       path: '/safety'
@@ -316,10 +378,10 @@ declare module '@tanstack/react-router' {
     }
     '/developers/docs': {
       id: '/developers/docs'
-      path: '/developers/docs'
+      path: '/docs'
       fullPath: '/developers/docs'
       preLoaderRoute: typeof DevelopersDocsRouteImport
-      parentRoute: typeof rootRouteImport
+      parentRoute: typeof DevelopersRoute
     }
     '/guides/$slug': {
       id: '/guides/$slug'
@@ -333,6 +395,13 @@ declare module '@tanstack/react-router' {
       path: '/$slug'
       fullPath: '/help/$slug'
       preLoaderRoute: typeof HelpSlugRouteImport
+      parentRoute: typeof HelpRoute
+    }
+    '/help/faq': {
+      id: '/help/faq'
+      path: '/faq'
+      fullPath: '/help/faq'
+      preLoaderRoute: typeof HelpFaqRouteImport
       parentRoute: typeof HelpRoute
     }
     '/investors/$slug': {
@@ -351,10 +420,10 @@ declare module '@tanstack/react-router' {
     }
     '/news/$slug': {
       id: '/news/$slug'
-      path: '/news/$slug'
+      path: '/$slug'
       fullPath: '/news/$slug'
       preLoaderRoute: typeof NewsSlugRouteImport
-      parentRoute: typeof rootRouteImport
+      parentRoute: typeof NewsRoute
     }
     '/safety/$slug': {
       id: '/safety/$slug'
@@ -377,6 +446,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof UpdatesSlugRouteImport
       parentRoute: typeof UpdatesRoute
     }
+    '/updates/release-notes': {
+      id: '/updates/release-notes'
+      path: '/release-notes'
+      fullPath: '/updates/release-notes'
+      preLoaderRoute: typeof UpdatesReleaseNotesRouteImport
+      parentRoute: typeof UpdatesRoute
+    }
     '/developers/docs/$slug': {
       id: '/developers/docs/$slug'
       path: '/$slug'
@@ -386,6 +462,30 @@ declare module '@tanstack/react-router' {
     }
   }
 }
+
+interface DevelopersDocsRouteChildren {
+  DevelopersDocsSlugRoute: typeof DevelopersDocsSlugRoute
+}
+
+const DevelopersDocsRouteChildren: DevelopersDocsRouteChildren = {
+  DevelopersDocsSlugRoute: DevelopersDocsSlugRoute,
+}
+
+const DevelopersDocsRouteWithChildren = DevelopersDocsRoute._addFileChildren(
+  DevelopersDocsRouteChildren,
+)
+
+interface DevelopersRouteChildren {
+  DevelopersDocsRoute: typeof DevelopersDocsRouteWithChildren
+}
+
+const DevelopersRouteChildren: DevelopersRouteChildren = {
+  DevelopersDocsRoute: DevelopersDocsRouteWithChildren,
+}
+
+const DevelopersRouteWithChildren = DevelopersRoute._addFileChildren(
+  DevelopersRouteChildren,
+)
 
 interface GuidesRouteChildren {
   GuidesSlugRoute: typeof GuidesSlugRoute
@@ -400,10 +500,12 @@ const GuidesRouteWithChildren =
 
 interface HelpRouteChildren {
   HelpSlugRoute: typeof HelpSlugRoute
+  HelpFaqRoute: typeof HelpFaqRoute
 }
 
 const HelpRouteChildren: HelpRouteChildren = {
   HelpSlugRoute: HelpSlugRoute,
+  HelpFaqRoute: HelpFaqRoute,
 }
 
 const HelpRouteWithChildren = HelpRoute._addFileChildren(HelpRouteChildren)
@@ -430,6 +532,16 @@ const LegalRouteChildren: LegalRouteChildren = {
 
 const LegalRouteWithChildren = LegalRoute._addFileChildren(LegalRouteChildren)
 
+interface NewsRouteChildren {
+  NewsSlugRoute: typeof NewsSlugRoute
+}
+
+const NewsRouteChildren: NewsRouteChildren = {
+  NewsSlugRoute: NewsSlugRoute,
+}
+
+const NewsRouteWithChildren = NewsRoute._addFileChildren(NewsRouteChildren)
+
 interface SafetyRouteChildren {
   SafetySlugRoute: typeof SafetySlugRoute
 }
@@ -454,38 +566,28 @@ const StoriesRouteWithChildren =
 
 interface UpdatesRouteChildren {
   UpdatesSlugRoute: typeof UpdatesSlugRoute
+  UpdatesReleaseNotesRoute: typeof UpdatesReleaseNotesRoute
 }
 
 const UpdatesRouteChildren: UpdatesRouteChildren = {
   UpdatesSlugRoute: UpdatesSlugRoute,
+  UpdatesReleaseNotesRoute: UpdatesReleaseNotesRoute,
 }
 
 const UpdatesRouteWithChildren =
   UpdatesRoute._addFileChildren(UpdatesRouteChildren)
 
-interface DevelopersDocsRouteChildren {
-  DevelopersDocsSlugRoute: typeof DevelopersDocsSlugRoute
-}
-
-const DevelopersDocsRouteChildren: DevelopersDocsRouteChildren = {
-  DevelopersDocsSlugRoute: DevelopersDocsSlugRoute,
-}
-
-const DevelopersDocsRouteWithChildren = DevelopersDocsRoute._addFileChildren(
-  DevelopersDocsRouteChildren,
-)
-
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
+  DevelopersRoute: DevelopersRouteWithChildren,
   GuidesRoute: GuidesRouteWithChildren,
   HelpRoute: HelpRouteWithChildren,
   InvestorsRoute: InvestorsRouteWithChildren,
   LegalRoute: LegalRouteWithChildren,
+  NewsRoute: NewsRouteWithChildren,
   SafetyRoute: SafetyRouteWithChildren,
   StoriesRoute: StoriesRouteWithChildren,
   UpdatesRoute: UpdatesRouteWithChildren,
-  DevelopersDocsRoute: DevelopersDocsRouteWithChildren,
-  NewsSlugRoute: NewsSlugRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
