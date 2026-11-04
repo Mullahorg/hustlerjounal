@@ -10,12 +10,19 @@
 
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as IndexRouteImport } from './routes/index'
+import { Route as AboutRouteImport } from './routes/about'
+import { Route as ContactRouteImport } from './routes/contact'
 import { Route as DevelopersRouteImport } from './routes/developers'
+import { Route as ForgotPasswordRouteImport } from './routes/forgot-password'
 import { Route as GuidesRouteImport } from './routes/guides'
 import { Route as HelpRouteImport } from './routes/help'
 import { Route as InvestorsRouteImport } from './routes/investors'
 import { Route as LegalRouteImport } from './routes/legal'
+import { Route as LoginRouteImport } from './routes/login'
 import { Route as NewsRouteImport } from './routes/news'
+import { Route as NewsletterRouteImport } from './routes/newsletter'
+import { Route as RegisterRouteImport } from './routes/register'
+import { Route as ResetPasswordRouteImport } from './routes/reset-password'
 import { Route as SafetyRouteImport } from './routes/safety'
 import { Route as SearchRouteImport } from './routes/search'
 import { Route as StoriesRouteImport } from './routes/stories'
@@ -30,6 +37,9 @@ import { Route as HelpSlugRouteImport } from './routes/help.$slug'
 import { Route as HelpFaqRouteImport } from './routes/help.faq'
 import { Route as InvestorsSlugRouteImport } from './routes/investors.$slug'
 import { Route as LegalSlugRouteImport } from './routes/legal.$slug'
+import { Route as LegalCookiesRouteImport } from './routes/legal.cookies'
+import { Route as LegalPrivacyRouteImport } from './routes/legal.privacy'
+import { Route as LegalTermsRouteImport } from './routes/legal.terms'
 import { Route as NewsSlugRouteImport } from './routes/news.$slug'
 import { Route as SafetySlugRouteImport } from './routes/safety.$slug'
 import { Route as SeriesSlugRouteImport } from './routes/series.$slug'
@@ -45,9 +55,24 @@ const IndexRoute = IndexRouteImport.update({
   path: '/',
   getParentRoute: () => rootRouteImport,
 } as any)
+const AboutRoute = AboutRouteImport.update({
+  id: '/about',
+  path: '/about',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ContactRoute = ContactRouteImport.update({
+  id: '/contact',
+  path: '/contact',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const DevelopersRoute = DevelopersRouteImport.update({
   id: '/developers',
   path: '/developers',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ForgotPasswordRoute = ForgotPasswordRouteImport.update({
+  id: '/forgot-password',
+  path: '/forgot-password',
   getParentRoute: () => rootRouteImport,
 } as any)
 const GuidesRoute = GuidesRouteImport.update({
@@ -70,9 +95,29 @@ const LegalRoute = LegalRouteImport.update({
   path: '/legal',
   getParentRoute: () => rootRouteImport,
 } as any)
+const LoginRoute = LoginRouteImport.update({
+  id: '/login',
+  path: '/login',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const NewsRoute = NewsRouteImport.update({
   id: '/news',
   path: '/news',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const NewsletterRoute = NewsletterRouteImport.update({
+  id: '/newsletter',
+  path: '/newsletter',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const RegisterRoute = RegisterRouteImport.update({
+  id: '/register',
+  path: '/register',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ResetPasswordRoute = ResetPasswordRouteImport.update({
+  id: '/reset-password',
+  path: '/reset-password',
   getParentRoute: () => rootRouteImport,
 } as any)
 const SafetyRoute = SafetyRouteImport.update({
@@ -145,6 +190,21 @@ const LegalSlugRoute = LegalSlugRouteImport.update({
   path: '/$slug',
   getParentRoute: () => LegalRoute,
 } as any)
+const LegalCookiesRoute = LegalCookiesRouteImport.update({
+  id: '/cookies',
+  path: '/cookies',
+  getParentRoute: () => LegalRoute,
+} as any)
+const LegalPrivacyRoute = LegalPrivacyRouteImport.update({
+  id: '/privacy',
+  path: '/privacy',
+  getParentRoute: () => LegalRoute,
+} as any)
+const LegalTermsRoute = LegalTermsRouteImport.update({
+  id: '/terms',
+  path: '/terms',
+  getParentRoute: () => LegalRoute,
+} as any)
 const NewsSlugRoute = NewsSlugRouteImport.update({
   id: '/$slug',
   path: '/$slug',
@@ -193,12 +253,19 @@ const DevelopersDocsSlugRoute = DevelopersDocsSlugRouteImport.update({
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
+  '/about': typeof AboutRoute
+  '/contact': typeof ContactRoute
   '/developers': typeof DevelopersRouteWithChildren
+  '/forgot-password': typeof ForgotPasswordRoute
   '/guides': typeof GuidesRouteWithChildren
   '/help': typeof HelpRouteWithChildren
   '/investors': typeof InvestorsRouteWithChildren
   '/legal': typeof LegalRouteWithChildren
+  '/login': typeof LoginRoute
   '/news': typeof NewsRouteWithChildren
+  '/newsletter': typeof NewsletterRoute
+  '/register': typeof RegisterRoute
+  '/reset-password': typeof ResetPasswordRoute
   '/safety': typeof SafetyRouteWithChildren
   '/search': typeof SearchRoute
   '/stories': typeof StoriesRouteWithChildren
@@ -213,6 +280,9 @@ export interface FileRoutesByFullPath {
   '/help/faq': typeof HelpFaqRoute
   '/investors/$slug': typeof InvestorsSlugRoute
   '/legal/$slug': typeof LegalSlugRoute
+  '/legal/cookies': typeof LegalCookiesRoute
+  '/legal/privacy': typeof LegalPrivacyRoute
+  '/legal/terms': typeof LegalTermsRoute
   '/news/$slug': typeof NewsSlugRoute
   '/safety/$slug': typeof SafetySlugRoute
   '/series/$slug': typeof SeriesSlugRoute
@@ -225,12 +295,19 @@ export interface FileRoutesByFullPath {
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
+  '/about': typeof AboutRoute
+  '/contact': typeof ContactRoute
   '/developers': typeof DevelopersRouteWithChildren
+  '/forgot-password': typeof ForgotPasswordRoute
   '/guides': typeof GuidesRouteWithChildren
   '/help': typeof HelpRouteWithChildren
   '/investors': typeof InvestorsRouteWithChildren
   '/legal': typeof LegalRouteWithChildren
+  '/login': typeof LoginRoute
   '/news': typeof NewsRouteWithChildren
+  '/newsletter': typeof NewsletterRoute
+  '/register': typeof RegisterRoute
+  '/reset-password': typeof ResetPasswordRoute
   '/safety': typeof SafetyRouteWithChildren
   '/search': typeof SearchRoute
   '/stories': typeof StoriesRouteWithChildren
@@ -245,6 +322,9 @@ export interface FileRoutesByTo {
   '/help/faq': typeof HelpFaqRoute
   '/investors/$slug': typeof InvestorsSlugRoute
   '/legal/$slug': typeof LegalSlugRoute
+  '/legal/cookies': typeof LegalCookiesRoute
+  '/legal/privacy': typeof LegalPrivacyRoute
+  '/legal/terms': typeof LegalTermsRoute
   '/news/$slug': typeof NewsSlugRoute
   '/safety/$slug': typeof SafetySlugRoute
   '/series/$slug': typeof SeriesSlugRoute
@@ -258,12 +338,19 @@ export interface FileRoutesByTo {
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
+  '/about': typeof AboutRoute
+  '/contact': typeof ContactRoute
   '/developers': typeof DevelopersRouteWithChildren
+  '/forgot-password': typeof ForgotPasswordRoute
   '/guides': typeof GuidesRouteWithChildren
   '/help': typeof HelpRouteWithChildren
   '/investors': typeof InvestorsRouteWithChildren
   '/legal': typeof LegalRouteWithChildren
+  '/login': typeof LoginRoute
   '/news': typeof NewsRouteWithChildren
+  '/newsletter': typeof NewsletterRoute
+  '/register': typeof RegisterRoute
+  '/reset-password': typeof ResetPasswordRoute
   '/safety': typeof SafetyRouteWithChildren
   '/search': typeof SearchRoute
   '/stories': typeof StoriesRouteWithChildren
@@ -278,6 +365,9 @@ export interface FileRoutesById {
   '/help/faq': typeof HelpFaqRoute
   '/investors/$slug': typeof InvestorsSlugRoute
   '/legal/$slug': typeof LegalSlugRoute
+  '/legal/cookies': typeof LegalCookiesRoute
+  '/legal/privacy': typeof LegalPrivacyRoute
+  '/legal/terms': typeof LegalTermsRoute
   '/news/$slug': typeof NewsSlugRoute
   '/safety/$slug': typeof SafetySlugRoute
   '/series/$slug': typeof SeriesSlugRoute
@@ -292,12 +382,19 @@ export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
   fullPaths:
     | '/'
+    | '/about'
+    | '/contact'
     | '/developers'
+    | '/forgot-password'
     | '/guides'
     | '/help'
     | '/investors'
     | '/legal'
+    | '/login'
     | '/news'
+    | '/newsletter'
+    | '/register'
+    | '/reset-password'
     | '/safety'
     | '/search'
     | '/stories'
@@ -312,6 +409,9 @@ export interface FileRouteTypes {
     | '/help/faq'
     | '/investors/$slug'
     | '/legal/$slug'
+    | '/legal/cookies'
+    | '/legal/privacy'
+    | '/legal/terms'
     | '/news/$slug'
     | '/safety/$slug'
     | '/series/$slug'
@@ -324,12 +424,19 @@ export interface FileRouteTypes {
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/'
+    | '/about'
+    | '/contact'
     | '/developers'
+    | '/forgot-password'
     | '/guides'
     | '/help'
     | '/investors'
     | '/legal'
+    | '/login'
     | '/news'
+    | '/newsletter'
+    | '/register'
+    | '/reset-password'
     | '/safety'
     | '/search'
     | '/stories'
@@ -344,6 +451,9 @@ export interface FileRouteTypes {
     | '/help/faq'
     | '/investors/$slug'
     | '/legal/$slug'
+    | '/legal/cookies'
+    | '/legal/privacy'
+    | '/legal/terms'
     | '/news/$slug'
     | '/safety/$slug'
     | '/series/$slug'
@@ -356,12 +466,19 @@ export interface FileRouteTypes {
   id:
     | '__root__'
     | '/'
+    | '/about'
+    | '/contact'
     | '/developers'
+    | '/forgot-password'
     | '/guides'
     | '/help'
     | '/investors'
     | '/legal'
+    | '/login'
     | '/news'
+    | '/newsletter'
+    | '/register'
+    | '/reset-password'
     | '/safety'
     | '/search'
     | '/stories'
@@ -376,6 +493,9 @@ export interface FileRouteTypes {
     | '/help/faq'
     | '/investors/$slug'
     | '/legal/$slug'
+    | '/legal/cookies'
+    | '/legal/privacy'
+    | '/legal/terms'
     | '/news/$slug'
     | '/safety/$slug'
     | '/series/$slug'
@@ -389,12 +509,19 @@ export interface FileRouteTypes {
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
+  AboutRoute: typeof AboutRoute
+  ContactRoute: typeof ContactRoute
   DevelopersRoute: typeof DevelopersRouteWithChildren
+  ForgotPasswordRoute: typeof ForgotPasswordRoute
   GuidesRoute: typeof GuidesRouteWithChildren
   HelpRoute: typeof HelpRouteWithChildren
   InvestorsRoute: typeof InvestorsRouteWithChildren
   LegalRoute: typeof LegalRouteWithChildren
+  LoginRoute: typeof LoginRoute
   NewsRoute: typeof NewsRouteWithChildren
+  NewsletterRoute: typeof NewsletterRoute
+  RegisterRoute: typeof RegisterRoute
+  ResetPasswordRoute: typeof ResetPasswordRoute
   SafetyRoute: typeof SafetyRouteWithChildren
   SearchRoute: typeof SearchRoute
   StoriesRoute: typeof StoriesRouteWithChildren
@@ -414,11 +541,32 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof IndexRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/about': {
+      id: '/about'
+      path: '/about'
+      fullPath: '/about'
+      preLoaderRoute: typeof AboutRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/contact': {
+      id: '/contact'
+      path: '/contact'
+      fullPath: '/contact'
+      preLoaderRoute: typeof ContactRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/developers': {
       id: '/developers'
       path: '/developers'
       fullPath: '/developers'
       preLoaderRoute: typeof DevelopersRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/forgot-password': {
+      id: '/forgot-password'
+      path: '/forgot-password'
+      fullPath: '/forgot-password'
+      preLoaderRoute: typeof ForgotPasswordRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/guides': {
@@ -449,11 +597,39 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof LegalRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/login': {
+      id: '/login'
+      path: '/login'
+      fullPath: '/login'
+      preLoaderRoute: typeof LoginRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/news': {
       id: '/news'
       path: '/news'
       fullPath: '/news'
       preLoaderRoute: typeof NewsRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/newsletter': {
+      id: '/newsletter'
+      path: '/newsletter'
+      fullPath: '/newsletter'
+      preLoaderRoute: typeof NewsletterRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/register': {
+      id: '/register'
+      path: '/register'
+      fullPath: '/register'
+      preLoaderRoute: typeof RegisterRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/reset-password': {
+      id: '/reset-password'
+      path: '/reset-password'
+      fullPath: '/reset-password'
+      preLoaderRoute: typeof ResetPasswordRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/safety': {
@@ -552,6 +728,27 @@ declare module '@tanstack/react-router' {
       path: '/$slug'
       fullPath: '/legal/$slug'
       preLoaderRoute: typeof LegalSlugRouteImport
+      parentRoute: typeof LegalRoute
+    }
+    '/legal/cookies': {
+      id: '/legal/cookies'
+      path: '/cookies'
+      fullPath: '/legal/cookies'
+      preLoaderRoute: typeof LegalCookiesRouteImport
+      parentRoute: typeof LegalRoute
+    }
+    '/legal/privacy': {
+      id: '/legal/privacy'
+      path: '/privacy'
+      fullPath: '/legal/privacy'
+      preLoaderRoute: typeof LegalPrivacyRouteImport
+      parentRoute: typeof LegalRoute
+    }
+    '/legal/terms': {
+      id: '/legal/terms'
+      path: '/terms'
+      fullPath: '/legal/terms'
+      preLoaderRoute: typeof LegalTermsRouteImport
       parentRoute: typeof LegalRoute
     }
     '/news/$slug': {
@@ -695,10 +892,16 @@ const InvestorsRouteWithChildren = InvestorsRoute._addFileChildren(
 
 interface LegalRouteChildren {
   LegalSlugRoute: typeof LegalSlugRoute
+  LegalCookiesRoute: typeof LegalCookiesRoute
+  LegalPrivacyRoute: typeof LegalPrivacyRoute
+  LegalTermsRoute: typeof LegalTermsRoute
 }
 
 const LegalRouteChildren: LegalRouteChildren = {
   LegalSlugRoute: LegalSlugRoute,
+  LegalCookiesRoute: LegalCookiesRoute,
+  LegalPrivacyRoute: LegalPrivacyRoute,
+  LegalTermsRoute: LegalTermsRoute,
 }
 
 const LegalRouteWithChildren = LegalRoute._addFileChildren(LegalRouteChildren)
@@ -761,12 +964,19 @@ const UpdatesRouteWithChildren =
 
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
+  AboutRoute: AboutRoute,
+  ContactRoute: ContactRoute,
   DevelopersRoute: DevelopersRouteWithChildren,
+  ForgotPasswordRoute: ForgotPasswordRoute,
   GuidesRoute: GuidesRouteWithChildren,
   HelpRoute: HelpRouteWithChildren,
   InvestorsRoute: InvestorsRouteWithChildren,
   LegalRoute: LegalRouteWithChildren,
+  LoginRoute: LoginRoute,
   NewsRoute: NewsRouteWithChildren,
+  NewsletterRoute: NewsletterRoute,
+  RegisterRoute: RegisterRoute,
+  ResetPasswordRoute: ResetPasswordRoute,
   SafetyRoute: SafetyRouteWithChildren,
   SearchRoute: SearchRoute,
   StoriesRoute: StoriesRouteWithChildren,
