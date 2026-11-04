@@ -17,14 +17,12 @@ function ResetPasswordPage() {
   const navigate = useNavigate();
   const [password, setPassword] = useState("");
   const [busy, setBusy] = useState(false);
-  const [isRecovery, setIsRecovery] = useState(false);
-  const [checked, setChecked] = useState(false);
-
-  useState(() => {
-    // Recovery links land here with type=recovery in the URL hash.
+  // Recovery links land here with type=recovery in the URL hash. Evaluated once,
+  // browser-only, so SSR renders nothing until hydration confirms.
+  const [{ checked, isRecovery }] = useState(() => {
+    if (typeof window === "undefined") return { checked: false, isRecovery: false };
     const hash = new URLSearchParams(window.location.hash.replace(/^#/, ""));
-    setIsRecovery(hash.get("type") === "recovery");
-    setChecked(true);
+    return { checked: true, isRecovery: hash.get("type") === "recovery" };
   });
 
   if (checked && !isRecovery) {

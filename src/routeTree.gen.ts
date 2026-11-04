@@ -13,12 +13,16 @@ import { Route as IndexRouteImport } from './routes/index'
 import { Route as AboutRouteImport } from './routes/about'
 import { Route as ContactRouteImport } from './routes/contact'
 import { Route as DevelopersRouteImport } from './routes/developers'
+import { Route as ForgotPasswordRouteImport } from './routes/forgot-password'
 import { Route as GuidesRouteImport } from './routes/guides'
 import { Route as HelpRouteImport } from './routes/help'
 import { Route as InvestorsRouteImport } from './routes/investors'
 import { Route as LegalRouteImport } from './routes/legal'
+import { Route as LoginRouteImport } from './routes/login'
 import { Route as NewsRouteImport } from './routes/news'
 import { Route as NewsletterRouteImport } from './routes/newsletter'
+import { Route as RegisterRouteImport } from './routes/register'
+import { Route as ResetPasswordRouteImport } from './routes/reset-password'
 import { Route as SafetyRouteImport } from './routes/safety'
 import { Route as SearchRouteImport } from './routes/search'
 import { Route as StoriesRouteImport } from './routes/stories'
@@ -66,6 +70,11 @@ const DevelopersRoute = DevelopersRouteImport.update({
   path: '/developers',
   getParentRoute: () => rootRouteImport,
 } as any)
+const ForgotPasswordRoute = ForgotPasswordRouteImport.update({
+  id: '/forgot-password',
+  path: '/forgot-password',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const GuidesRoute = GuidesRouteImport.update({
   id: '/guides',
   path: '/guides',
@@ -86,6 +95,11 @@ const LegalRoute = LegalRouteImport.update({
   path: '/legal',
   getParentRoute: () => rootRouteImport,
 } as any)
+const LoginRoute = LoginRouteImport.update({
+  id: '/login',
+  path: '/login',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const NewsRoute = NewsRouteImport.update({
   id: '/news',
   path: '/news',
@@ -94,6 +108,16 @@ const NewsRoute = NewsRouteImport.update({
 const NewsletterRoute = NewsletterRouteImport.update({
   id: '/newsletter',
   path: '/newsletter',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const RegisterRoute = RegisterRouteImport.update({
+  id: '/register',
+  path: '/register',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ResetPasswordRoute = ResetPasswordRouteImport.update({
+  id: '/reset-password',
+  path: '/reset-password',
   getParentRoute: () => rootRouteImport,
 } as any)
 const SafetyRoute = SafetyRouteImport.update({
@@ -232,12 +256,16 @@ export interface FileRoutesByFullPath {
   '/about': typeof AboutRoute
   '/contact': typeof ContactRoute
   '/developers': typeof DevelopersRouteWithChildren
+  '/forgot-password': typeof ForgotPasswordRoute
   '/guides': typeof GuidesRouteWithChildren
   '/help': typeof HelpRouteWithChildren
   '/investors': typeof InvestorsRouteWithChildren
   '/legal': typeof LegalRouteWithChildren
+  '/login': typeof LoginRoute
   '/news': typeof NewsRouteWithChildren
   '/newsletter': typeof NewsletterRoute
+  '/register': typeof RegisterRoute
+  '/reset-password': typeof ResetPasswordRoute
   '/safety': typeof SafetyRouteWithChildren
   '/search': typeof SearchRoute
   '/stories': typeof StoriesRouteWithChildren
@@ -270,12 +298,16 @@ export interface FileRoutesByTo {
   '/about': typeof AboutRoute
   '/contact': typeof ContactRoute
   '/developers': typeof DevelopersRouteWithChildren
+  '/forgot-password': typeof ForgotPasswordRoute
   '/guides': typeof GuidesRouteWithChildren
   '/help': typeof HelpRouteWithChildren
   '/investors': typeof InvestorsRouteWithChildren
   '/legal': typeof LegalRouteWithChildren
+  '/login': typeof LoginRoute
   '/news': typeof NewsRouteWithChildren
   '/newsletter': typeof NewsletterRoute
+  '/register': typeof RegisterRoute
+  '/reset-password': typeof ResetPasswordRoute
   '/safety': typeof SafetyRouteWithChildren
   '/search': typeof SearchRoute
   '/stories': typeof StoriesRouteWithChildren
@@ -309,12 +341,16 @@ export interface FileRoutesById {
   '/about': typeof AboutRoute
   '/contact': typeof ContactRoute
   '/developers': typeof DevelopersRouteWithChildren
+  '/forgot-password': typeof ForgotPasswordRoute
   '/guides': typeof GuidesRouteWithChildren
   '/help': typeof HelpRouteWithChildren
   '/investors': typeof InvestorsRouteWithChildren
   '/legal': typeof LegalRouteWithChildren
+  '/login': typeof LoginRoute
   '/news': typeof NewsRouteWithChildren
   '/newsletter': typeof NewsletterRoute
+  '/register': typeof RegisterRoute
+  '/reset-password': typeof ResetPasswordRoute
   '/safety': typeof SafetyRouteWithChildren
   '/search': typeof SearchRoute
   '/stories': typeof StoriesRouteWithChildren
@@ -349,12 +385,16 @@ export interface FileRouteTypes {
     | '/about'
     | '/contact'
     | '/developers'
+    | '/forgot-password'
     | '/guides'
     | '/help'
     | '/investors'
     | '/legal'
+    | '/login'
     | '/news'
     | '/newsletter'
+    | '/register'
+    | '/reset-password'
     | '/safety'
     | '/search'
     | '/stories'
@@ -387,12 +427,16 @@ export interface FileRouteTypes {
     | '/about'
     | '/contact'
     | '/developers'
+    | '/forgot-password'
     | '/guides'
     | '/help'
     | '/investors'
     | '/legal'
+    | '/login'
     | '/news'
     | '/newsletter'
+    | '/register'
+    | '/reset-password'
     | '/safety'
     | '/search'
     | '/stories'
@@ -425,12 +469,16 @@ export interface FileRouteTypes {
     | '/about'
     | '/contact'
     | '/developers'
+    | '/forgot-password'
     | '/guides'
     | '/help'
     | '/investors'
     | '/legal'
+    | '/login'
     | '/news'
     | '/newsletter'
+    | '/register'
+    | '/reset-password'
     | '/safety'
     | '/search'
     | '/stories'
@@ -464,12 +512,16 @@ export interface RootRouteChildren {
   AboutRoute: typeof AboutRoute
   ContactRoute: typeof ContactRoute
   DevelopersRoute: typeof DevelopersRouteWithChildren
+  ForgotPasswordRoute: typeof ForgotPasswordRoute
   GuidesRoute: typeof GuidesRouteWithChildren
   HelpRoute: typeof HelpRouteWithChildren
   InvestorsRoute: typeof InvestorsRouteWithChildren
   LegalRoute: typeof LegalRouteWithChildren
+  LoginRoute: typeof LoginRoute
   NewsRoute: typeof NewsRouteWithChildren
   NewsletterRoute: typeof NewsletterRoute
+  RegisterRoute: typeof RegisterRoute
+  ResetPasswordRoute: typeof ResetPasswordRoute
   SafetyRoute: typeof SafetyRouteWithChildren
   SearchRoute: typeof SearchRoute
   StoriesRoute: typeof StoriesRouteWithChildren
@@ -510,6 +562,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof DevelopersRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/forgot-password': {
+      id: '/forgot-password'
+      path: '/forgot-password'
+      fullPath: '/forgot-password'
+      preLoaderRoute: typeof ForgotPasswordRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/guides': {
       id: '/guides'
       path: '/guides'
@@ -538,6 +597,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof LegalRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/login': {
+      id: '/login'
+      path: '/login'
+      fullPath: '/login'
+      preLoaderRoute: typeof LoginRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/news': {
       id: '/news'
       path: '/news'
@@ -550,6 +616,20 @@ declare module '@tanstack/react-router' {
       path: '/newsletter'
       fullPath: '/newsletter'
       preLoaderRoute: typeof NewsletterRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/register': {
+      id: '/register'
+      path: '/register'
+      fullPath: '/register'
+      preLoaderRoute: typeof RegisterRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/reset-password': {
+      id: '/reset-password'
+      path: '/reset-password'
+      fullPath: '/reset-password'
+      preLoaderRoute: typeof ResetPasswordRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/safety': {
@@ -887,12 +967,16 @@ const rootRouteChildren: RootRouteChildren = {
   AboutRoute: AboutRoute,
   ContactRoute: ContactRoute,
   DevelopersRoute: DevelopersRouteWithChildren,
+  ForgotPasswordRoute: ForgotPasswordRoute,
   GuidesRoute: GuidesRouteWithChildren,
   HelpRoute: HelpRouteWithChildren,
   InvestorsRoute: InvestorsRouteWithChildren,
   LegalRoute: LegalRouteWithChildren,
+  LoginRoute: LoginRoute,
   NewsRoute: NewsRouteWithChildren,
   NewsletterRoute: NewsletterRoute,
+  RegisterRoute: RegisterRoute,
+  ResetPasswordRoute: ResetPasswordRoute,
   SafetyRoute: SafetyRouteWithChildren,
   SearchRoute: SearchRoute,
   StoriesRoute: StoriesRouteWithChildren,
