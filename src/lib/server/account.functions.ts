@@ -75,11 +75,27 @@ export const getBookmarkState = createServerFn({ method: "GET" })
       .limit(1);
     const postId = post?.[0]?.id;
     if (!postId) return { bookmarked: false };
-    const { data: rows } = await context.supabase
+  const { data: rows } = await context.supabase
       .from("bookmarks")
       .select("id")
       .eq("user_id", context.userId)
       .eq("post_id", postId)
       .limit(1);
     return { bookmarked: Boolean(rows?.[0]) };
+  });
+
+export const updateProfile = createServerFn({ method: "POST" })
+  .middleware([requireSupabaseAuth])
+  .inputValidator((input: { displayName: string }) => input)
+  .handler(async ({ data, context }) => {
+    const name = data.displayName.trim().slice(0, 80);
+    const { error } = await context.supabase
+      .from("profiles")
+      .update({ display_name: name, updated_at: new Date().toISOString() })
+      .eq("id", context.userId);
+    if (error) return { ok: false, error: error.message };
+    if (name) {
+      await context.supabase.auth.updateUser({ data: { display_name: name } });
+    }
+    return { ok: true };
   });
