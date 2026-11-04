@@ -10,6 +10,7 @@
 
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as IndexRouteImport } from './routes/index'
+import { Route as AuthenticatedRouteRouteImport } from './routes/_authenticated/route'
 import { Route as AboutRouteImport } from './routes/about'
 import { Route as ContactRouteImport } from './routes/contact'
 import { Route as DevelopersRouteImport } from './routes/developers'
@@ -28,6 +29,7 @@ import { Route as SearchRouteImport } from './routes/search'
 import { Route as StoriesRouteImport } from './routes/stories'
 import { Route as TopicsRouteImport } from './routes/topics'
 import { Route as UpdatesRouteImport } from './routes/updates'
+import { Route as AuthenticatedAccountRouteImport } from './routes/_authenticated/account'
 import { Route as AuthorsSlugRouteImport } from './routes/authors.$slug'
 import { Route as CategoriesSlugRouteImport } from './routes/categories.$slug'
 import { Route as DevelopersApiRouteImport } from './routes/developers.api'
@@ -47,12 +49,19 @@ import { Route as StoriesSlugRouteImport } from './routes/stories.$slug'
 import { Route as TopicsSlugRouteImport } from './routes/topics.$slug'
 import { Route as UpdatesSlugRouteImport } from './routes/updates.$slug'
 import { Route as UpdatesReleaseNotesRouteImport } from './routes/updates.release-notes'
+import { Route as AuthenticatedAccountBookmarksRouteImport } from './routes/_authenticated/account.bookmarks'
+import { Route as AuthenticatedAccountSettingsRouteImport } from './routes/_authenticated/account.settings'
+import { Route as AuthenticatedAccountSubscriptionsRouteImport } from './routes/_authenticated/account.subscriptions'
 import { Route as DevelopersApiVersionRouteImport } from './routes/developers.api.$version'
 import { Route as DevelopersDocsSlugRouteImport } from './routes/developers.docs.$slug'
 
 const IndexRoute = IndexRouteImport.update({
   id: '/',
   path: '/',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const AuthenticatedRouteRoute = AuthenticatedRouteRouteImport.update({
+  id: '/_authenticated',
   getParentRoute: () => rootRouteImport,
 } as any)
 const AboutRoute = AboutRouteImport.update({
@@ -144,6 +153,11 @@ const UpdatesRoute = UpdatesRouteImport.update({
   id: '/updates',
   path: '/updates',
   getParentRoute: () => rootRouteImport,
+} as any)
+const AuthenticatedAccountRoute = AuthenticatedAccountRouteImport.update({
+  id: '/account',
+  path: '/account',
+  getParentRoute: () => AuthenticatedRouteRoute,
 } as any)
 const AuthorsSlugRoute = AuthorsSlugRouteImport.update({
   id: '/authors/$slug',
@@ -240,6 +254,24 @@ const UpdatesReleaseNotesRoute = UpdatesReleaseNotesRouteImport.update({
   path: '/release-notes',
   getParentRoute: () => UpdatesRoute,
 } as any)
+const AuthenticatedAccountBookmarksRoute =
+  AuthenticatedAccountBookmarksRouteImport.update({
+    id: '/bookmarks',
+    path: '/bookmarks',
+    getParentRoute: () => AuthenticatedAccountRoute,
+  } as any)
+const AuthenticatedAccountSettingsRoute =
+  AuthenticatedAccountSettingsRouteImport.update({
+    id: '/settings',
+    path: '/settings',
+    getParentRoute: () => AuthenticatedAccountRoute,
+  } as any)
+const AuthenticatedAccountSubscriptionsRoute =
+  AuthenticatedAccountSubscriptionsRouteImport.update({
+    id: '/subscriptions',
+    path: '/subscriptions',
+    getParentRoute: () => AuthenticatedAccountRoute,
+  } as any)
 const DevelopersApiVersionRoute = DevelopersApiVersionRouteImport.update({
   id: '/$version',
   path: '/$version',
@@ -271,6 +303,7 @@ export interface FileRoutesByFullPath {
   '/stories': typeof StoriesRouteWithChildren
   '/topics': typeof TopicsRouteWithChildren
   '/updates': typeof UpdatesRouteWithChildren
+  '/account': typeof AuthenticatedAccountRouteWithChildren
   '/authors/$slug': typeof AuthorsSlugRoute
   '/categories/$slug': typeof CategoriesSlugRoute
   '/developers/api': typeof DevelopersApiRouteWithChildren
@@ -290,6 +323,9 @@ export interface FileRoutesByFullPath {
   '/topics/$slug': typeof TopicsSlugRoute
   '/updates/$slug': typeof UpdatesSlugRoute
   '/updates/release-notes': typeof UpdatesReleaseNotesRoute
+  '/account/bookmarks': typeof AuthenticatedAccountBookmarksRoute
+  '/account/settings': typeof AuthenticatedAccountSettingsRoute
+  '/account/subscriptions': typeof AuthenticatedAccountSubscriptionsRoute
   '/developers/api/$version': typeof DevelopersApiVersionRoute
   '/developers/docs/$slug': typeof DevelopersDocsSlugRoute
 }
@@ -313,6 +349,7 @@ export interface FileRoutesByTo {
   '/stories': typeof StoriesRouteWithChildren
   '/topics': typeof TopicsRouteWithChildren
   '/updates': typeof UpdatesRouteWithChildren
+  '/account': typeof AuthenticatedAccountRouteWithChildren
   '/authors/$slug': typeof AuthorsSlugRoute
   '/categories/$slug': typeof CategoriesSlugRoute
   '/developers/api': typeof DevelopersApiRouteWithChildren
@@ -332,12 +369,16 @@ export interface FileRoutesByTo {
   '/topics/$slug': typeof TopicsSlugRoute
   '/updates/$slug': typeof UpdatesSlugRoute
   '/updates/release-notes': typeof UpdatesReleaseNotesRoute
+  '/account/bookmarks': typeof AuthenticatedAccountBookmarksRoute
+  '/account/settings': typeof AuthenticatedAccountSettingsRoute
+  '/account/subscriptions': typeof AuthenticatedAccountSubscriptionsRoute
   '/developers/api/$version': typeof DevelopersApiVersionRoute
   '/developers/docs/$slug': typeof DevelopersDocsSlugRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
+  '/_authenticated': typeof AuthenticatedRouteRouteWithChildren
   '/about': typeof AboutRoute
   '/contact': typeof ContactRoute
   '/developers': typeof DevelopersRouteWithChildren
@@ -356,6 +397,7 @@ export interface FileRoutesById {
   '/stories': typeof StoriesRouteWithChildren
   '/topics': typeof TopicsRouteWithChildren
   '/updates': typeof UpdatesRouteWithChildren
+  '/_authenticated/account': typeof AuthenticatedAccountRouteWithChildren
   '/authors/$slug': typeof AuthorsSlugRoute
   '/categories/$slug': typeof CategoriesSlugRoute
   '/developers/api': typeof DevelopersApiRouteWithChildren
@@ -375,6 +417,9 @@ export interface FileRoutesById {
   '/topics/$slug': typeof TopicsSlugRoute
   '/updates/$slug': typeof UpdatesSlugRoute
   '/updates/release-notes': typeof UpdatesReleaseNotesRoute
+  '/_authenticated/account/bookmarks': typeof AuthenticatedAccountBookmarksRoute
+  '/_authenticated/account/settings': typeof AuthenticatedAccountSettingsRoute
+  '/_authenticated/account/subscriptions': typeof AuthenticatedAccountSubscriptionsRoute
   '/developers/api/$version': typeof DevelopersApiVersionRoute
   '/developers/docs/$slug': typeof DevelopersDocsSlugRoute
 }
@@ -400,6 +445,7 @@ export interface FileRouteTypes {
     | '/stories'
     | '/topics'
     | '/updates'
+    | '/account'
     | '/authors/$slug'
     | '/categories/$slug'
     | '/developers/api'
@@ -419,6 +465,9 @@ export interface FileRouteTypes {
     | '/topics/$slug'
     | '/updates/$slug'
     | '/updates/release-notes'
+    | '/account/bookmarks'
+    | '/account/settings'
+    | '/account/subscriptions'
     | '/developers/api/$version'
     | '/developers/docs/$slug'
   fileRoutesByTo: FileRoutesByTo
@@ -442,6 +491,7 @@ export interface FileRouteTypes {
     | '/stories'
     | '/topics'
     | '/updates'
+    | '/account'
     | '/authors/$slug'
     | '/categories/$slug'
     | '/developers/api'
@@ -461,11 +511,15 @@ export interface FileRouteTypes {
     | '/topics/$slug'
     | '/updates/$slug'
     | '/updates/release-notes'
+    | '/account/bookmarks'
+    | '/account/settings'
+    | '/account/subscriptions'
     | '/developers/api/$version'
     | '/developers/docs/$slug'
   id:
     | '__root__'
     | '/'
+    | '/_authenticated'
     | '/about'
     | '/contact'
     | '/developers'
@@ -484,6 +538,7 @@ export interface FileRouteTypes {
     | '/stories'
     | '/topics'
     | '/updates'
+    | '/_authenticated/account'
     | '/authors/$slug'
     | '/categories/$slug'
     | '/developers/api'
@@ -503,12 +558,16 @@ export interface FileRouteTypes {
     | '/topics/$slug'
     | '/updates/$slug'
     | '/updates/release-notes'
+    | '/_authenticated/account/bookmarks'
+    | '/_authenticated/account/settings'
+    | '/_authenticated/account/subscriptions'
     | '/developers/api/$version'
     | '/developers/docs/$slug'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
+  AuthenticatedRouteRoute: typeof AuthenticatedRouteRouteWithChildren
   AboutRoute: typeof AboutRoute
   ContactRoute: typeof ContactRoute
   DevelopersRoute: typeof DevelopersRouteWithChildren
@@ -539,6 +598,13 @@ declare module '@tanstack/react-router' {
       path: '/'
       fullPath: '/'
       preLoaderRoute: typeof IndexRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/_authenticated': {
+      id: '/_authenticated'
+      path: ''
+      fullPath: '/'
+      preLoaderRoute: typeof AuthenticatedRouteRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/about': {
@@ -666,6 +732,13 @@ declare module '@tanstack/react-router' {
       fullPath: '/updates'
       preLoaderRoute: typeof UpdatesRouteImport
       parentRoute: typeof rootRouteImport
+    }
+    '/_authenticated/account': {
+      id: '/_authenticated/account'
+      path: '/account'
+      fullPath: '/account'
+      preLoaderRoute: typeof AuthenticatedAccountRouteImport
+      parentRoute: typeof AuthenticatedRouteRoute
     }
     '/authors/$slug': {
       id: '/authors/$slug'
@@ -800,6 +873,27 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof UpdatesReleaseNotesRouteImport
       parentRoute: typeof UpdatesRoute
     }
+    '/_authenticated/account/bookmarks': {
+      id: '/_authenticated/account/bookmarks'
+      path: '/bookmarks'
+      fullPath: '/account/bookmarks'
+      preLoaderRoute: typeof AuthenticatedAccountBookmarksRouteImport
+      parentRoute: typeof AuthenticatedAccountRoute
+    }
+    '/_authenticated/account/settings': {
+      id: '/_authenticated/account/settings'
+      path: '/settings'
+      fullPath: '/account/settings'
+      preLoaderRoute: typeof AuthenticatedAccountSettingsRouteImport
+      parentRoute: typeof AuthenticatedAccountRoute
+    }
+    '/_authenticated/account/subscriptions': {
+      id: '/_authenticated/account/subscriptions'
+      path: '/subscriptions'
+      fullPath: '/account/subscriptions'
+      preLoaderRoute: typeof AuthenticatedAccountSubscriptionsRouteImport
+      parentRoute: typeof AuthenticatedAccountRoute
+    }
     '/developers/api/$version': {
       id: '/developers/api/$version'
       path: '/$version'
@@ -816,6 +910,33 @@ declare module '@tanstack/react-router' {
     }
   }
 }
+
+interface AuthenticatedAccountRouteChildren {
+  AuthenticatedAccountBookmarksRoute: typeof AuthenticatedAccountBookmarksRoute
+  AuthenticatedAccountSettingsRoute: typeof AuthenticatedAccountSettingsRoute
+  AuthenticatedAccountSubscriptionsRoute: typeof AuthenticatedAccountSubscriptionsRoute
+}
+
+const AuthenticatedAccountRouteChildren: AuthenticatedAccountRouteChildren = {
+  AuthenticatedAccountBookmarksRoute: AuthenticatedAccountBookmarksRoute,
+  AuthenticatedAccountSettingsRoute: AuthenticatedAccountSettingsRoute,
+  AuthenticatedAccountSubscriptionsRoute:
+    AuthenticatedAccountSubscriptionsRoute,
+}
+
+const AuthenticatedAccountRouteWithChildren =
+  AuthenticatedAccountRoute._addFileChildren(AuthenticatedAccountRouteChildren)
+
+interface AuthenticatedRouteRouteChildren {
+  AuthenticatedAccountRoute: typeof AuthenticatedAccountRouteWithChildren
+}
+
+const AuthenticatedRouteRouteChildren: AuthenticatedRouteRouteChildren = {
+  AuthenticatedAccountRoute: AuthenticatedAccountRouteWithChildren,
+}
+
+const AuthenticatedRouteRouteWithChildren =
+  AuthenticatedRouteRoute._addFileChildren(AuthenticatedRouteRouteChildren)
 
 interface DevelopersApiRouteChildren {
   DevelopersApiVersionRoute: typeof DevelopersApiVersionRoute
@@ -964,6 +1085,7 @@ const UpdatesRouteWithChildren =
 
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
+  AuthenticatedRouteRoute: AuthenticatedRouteRouteWithChildren,
   AboutRoute: AboutRoute,
   ContactRoute: ContactRoute,
   DevelopersRoute: DevelopersRouteWithChildren,
