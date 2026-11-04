@@ -17,8 +17,11 @@ import { Route as InvestorsRouteImport } from './routes/investors'
 import { Route as LegalRouteImport } from './routes/legal'
 import { Route as NewsRouteImport } from './routes/news'
 import { Route as SafetyRouteImport } from './routes/safety'
+import { Route as SearchRouteImport } from './routes/search'
 import { Route as StoriesRouteImport } from './routes/stories'
+import { Route as TopicsRouteImport } from './routes/topics'
 import { Route as UpdatesRouteImport } from './routes/updates'
+import { Route as DevelopersApiRouteImport } from './routes/developers.api'
 import { Route as DevelopersDocsRouteImport } from './routes/developers.docs'
 import { Route as GuidesSlugRouteImport } from './routes/guides.$slug'
 import { Route as HelpSlugRouteImport } from './routes/help.$slug'
@@ -30,6 +33,7 @@ import { Route as SafetySlugRouteImport } from './routes/safety.$slug'
 import { Route as StoriesSlugRouteImport } from './routes/stories.$slug'
 import { Route as UpdatesSlugRouteImport } from './routes/updates.$slug'
 import { Route as UpdatesReleaseNotesRouteImport } from './routes/updates.release-notes'
+import { Route as DevelopersApiVersionRouteImport } from './routes/developers.api.$version'
 import { Route as DevelopersDocsSlugRouteImport } from './routes/developers.docs.$slug'
 
 const IndexRoute = IndexRouteImport.update({
@@ -72,15 +76,30 @@ const SafetyRoute = SafetyRouteImport.update({
   path: '/safety',
   getParentRoute: () => rootRouteImport,
 } as any)
+const SearchRoute = SearchRouteImport.update({
+  id: '/search',
+  path: '/search',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const StoriesRoute = StoriesRouteImport.update({
   id: '/stories',
   path: '/stories',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const TopicsRoute = TopicsRouteImport.update({
+  id: '/topics',
+  path: '/topics',
   getParentRoute: () => rootRouteImport,
 } as any)
 const UpdatesRoute = UpdatesRouteImport.update({
   id: '/updates',
   path: '/updates',
   getParentRoute: () => rootRouteImport,
+} as any)
+const DevelopersApiRoute = DevelopersApiRouteImport.update({
+  id: '/api',
+  path: '/api',
+  getParentRoute: () => DevelopersRoute,
 } as any)
 const DevelopersDocsRoute = DevelopersDocsRouteImport.update({
   id: '/docs',
@@ -137,6 +156,11 @@ const UpdatesReleaseNotesRoute = UpdatesReleaseNotesRouteImport.update({
   path: '/release-notes',
   getParentRoute: () => UpdatesRoute,
 } as any)
+const DevelopersApiVersionRoute = DevelopersApiVersionRouteImport.update({
+  id: '/$version',
+  path: '/$version',
+  getParentRoute: () => DevelopersApiRoute,
+} as any)
 const DevelopersDocsSlugRoute = DevelopersDocsSlugRouteImport.update({
   id: '/$slug',
   path: '/$slug',
@@ -152,8 +176,11 @@ export interface FileRoutesByFullPath {
   '/legal': typeof LegalRouteWithChildren
   '/news': typeof NewsRouteWithChildren
   '/safety': typeof SafetyRouteWithChildren
+  '/search': typeof SearchRoute
   '/stories': typeof StoriesRouteWithChildren
+  '/topics': typeof TopicsRoute
   '/updates': typeof UpdatesRouteWithChildren
+  '/developers/api': typeof DevelopersApiRouteWithChildren
   '/developers/docs': typeof DevelopersDocsRouteWithChildren
   '/guides/$slug': typeof GuidesSlugRoute
   '/help/$slug': typeof HelpSlugRoute
@@ -165,6 +192,7 @@ export interface FileRoutesByFullPath {
   '/stories/$slug': typeof StoriesSlugRoute
   '/updates/$slug': typeof UpdatesSlugRoute
   '/updates/release-notes': typeof UpdatesReleaseNotesRoute
+  '/developers/api/$version': typeof DevelopersApiVersionRoute
   '/developers/docs/$slug': typeof DevelopersDocsSlugRoute
 }
 export interface FileRoutesByTo {
@@ -176,8 +204,11 @@ export interface FileRoutesByTo {
   '/legal': typeof LegalRouteWithChildren
   '/news': typeof NewsRouteWithChildren
   '/safety': typeof SafetyRouteWithChildren
+  '/search': typeof SearchRoute
   '/stories': typeof StoriesRouteWithChildren
+  '/topics': typeof TopicsRoute
   '/updates': typeof UpdatesRouteWithChildren
+  '/developers/api': typeof DevelopersApiRouteWithChildren
   '/developers/docs': typeof DevelopersDocsRouteWithChildren
   '/guides/$slug': typeof GuidesSlugRoute
   '/help/$slug': typeof HelpSlugRoute
@@ -189,6 +220,7 @@ export interface FileRoutesByTo {
   '/stories/$slug': typeof StoriesSlugRoute
   '/updates/$slug': typeof UpdatesSlugRoute
   '/updates/release-notes': typeof UpdatesReleaseNotesRoute
+  '/developers/api/$version': typeof DevelopersApiVersionRoute
   '/developers/docs/$slug': typeof DevelopersDocsSlugRoute
 }
 export interface FileRoutesById {
@@ -201,8 +233,11 @@ export interface FileRoutesById {
   '/legal': typeof LegalRouteWithChildren
   '/news': typeof NewsRouteWithChildren
   '/safety': typeof SafetyRouteWithChildren
+  '/search': typeof SearchRoute
   '/stories': typeof StoriesRouteWithChildren
+  '/topics': typeof TopicsRoute
   '/updates': typeof UpdatesRouteWithChildren
+  '/developers/api': typeof DevelopersApiRouteWithChildren
   '/developers/docs': typeof DevelopersDocsRouteWithChildren
   '/guides/$slug': typeof GuidesSlugRoute
   '/help/$slug': typeof HelpSlugRoute
@@ -214,6 +249,7 @@ export interface FileRoutesById {
   '/stories/$slug': typeof StoriesSlugRoute
   '/updates/$slug': typeof UpdatesSlugRoute
   '/updates/release-notes': typeof UpdatesReleaseNotesRoute
+  '/developers/api/$version': typeof DevelopersApiVersionRoute
   '/developers/docs/$slug': typeof DevelopersDocsSlugRoute
 }
 export interface FileRouteTypes {
@@ -227,8 +263,11 @@ export interface FileRouteTypes {
     | '/legal'
     | '/news'
     | '/safety'
+    | '/search'
     | '/stories'
+    | '/topics'
     | '/updates'
+    | '/developers/api'
     | '/developers/docs'
     | '/guides/$slug'
     | '/help/$slug'
@@ -240,6 +279,7 @@ export interface FileRouteTypes {
     | '/stories/$slug'
     | '/updates/$slug'
     | '/updates/release-notes'
+    | '/developers/api/$version'
     | '/developers/docs/$slug'
   fileRoutesByTo: FileRoutesByTo
   to:
@@ -251,8 +291,11 @@ export interface FileRouteTypes {
     | '/legal'
     | '/news'
     | '/safety'
+    | '/search'
     | '/stories'
+    | '/topics'
     | '/updates'
+    | '/developers/api'
     | '/developers/docs'
     | '/guides/$slug'
     | '/help/$slug'
@@ -264,6 +307,7 @@ export interface FileRouteTypes {
     | '/stories/$slug'
     | '/updates/$slug'
     | '/updates/release-notes'
+    | '/developers/api/$version'
     | '/developers/docs/$slug'
   id:
     | '__root__'
@@ -275,8 +319,11 @@ export interface FileRouteTypes {
     | '/legal'
     | '/news'
     | '/safety'
+    | '/search'
     | '/stories'
+    | '/topics'
     | '/updates'
+    | '/developers/api'
     | '/developers/docs'
     | '/guides/$slug'
     | '/help/$slug'
@@ -288,6 +335,7 @@ export interface FileRouteTypes {
     | '/stories/$slug'
     | '/updates/$slug'
     | '/updates/release-notes'
+    | '/developers/api/$version'
     | '/developers/docs/$slug'
   fileRoutesById: FileRoutesById
 }
@@ -300,7 +348,9 @@ export interface RootRouteChildren {
   LegalRoute: typeof LegalRouteWithChildren
   NewsRoute: typeof NewsRouteWithChildren
   SafetyRoute: typeof SafetyRouteWithChildren
+  SearchRoute: typeof SearchRoute
   StoriesRoute: typeof StoriesRouteWithChildren
+  TopicsRoute: typeof TopicsRoute
   UpdatesRoute: typeof UpdatesRouteWithChildren
 }
 
@@ -362,11 +412,25 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof SafetyRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/search': {
+      id: '/search'
+      path: '/search'
+      fullPath: '/search'
+      preLoaderRoute: typeof SearchRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/stories': {
       id: '/stories'
       path: '/stories'
       fullPath: '/stories'
       preLoaderRoute: typeof StoriesRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/topics': {
+      id: '/topics'
+      path: '/topics'
+      fullPath: '/topics'
+      preLoaderRoute: typeof TopicsRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/updates': {
@@ -375,6 +439,13 @@ declare module '@tanstack/react-router' {
       fullPath: '/updates'
       preLoaderRoute: typeof UpdatesRouteImport
       parentRoute: typeof rootRouteImport
+    }
+    '/developers/api': {
+      id: '/developers/api'
+      path: '/api'
+      fullPath: '/developers/api'
+      preLoaderRoute: typeof DevelopersApiRouteImport
+      parentRoute: typeof DevelopersRoute
     }
     '/developers/docs': {
       id: '/developers/docs'
@@ -453,6 +524,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof UpdatesReleaseNotesRouteImport
       parentRoute: typeof UpdatesRoute
     }
+    '/developers/api/$version': {
+      id: '/developers/api/$version'
+      path: '/$version'
+      fullPath: '/developers/api/$version'
+      preLoaderRoute: typeof DevelopersApiVersionRouteImport
+      parentRoute: typeof DevelopersApiRoute
+    }
     '/developers/docs/$slug': {
       id: '/developers/docs/$slug'
       path: '/$slug'
@@ -462,6 +540,18 @@ declare module '@tanstack/react-router' {
     }
   }
 }
+
+interface DevelopersApiRouteChildren {
+  DevelopersApiVersionRoute: typeof DevelopersApiVersionRoute
+}
+
+const DevelopersApiRouteChildren: DevelopersApiRouteChildren = {
+  DevelopersApiVersionRoute: DevelopersApiVersionRoute,
+}
+
+const DevelopersApiRouteWithChildren = DevelopersApiRoute._addFileChildren(
+  DevelopersApiRouteChildren,
+)
 
 interface DevelopersDocsRouteChildren {
   DevelopersDocsSlugRoute: typeof DevelopersDocsSlugRoute
@@ -476,10 +566,12 @@ const DevelopersDocsRouteWithChildren = DevelopersDocsRoute._addFileChildren(
 )
 
 interface DevelopersRouteChildren {
+  DevelopersApiRoute: typeof DevelopersApiRouteWithChildren
   DevelopersDocsRoute: typeof DevelopersDocsRouteWithChildren
 }
 
 const DevelopersRouteChildren: DevelopersRouteChildren = {
+  DevelopersApiRoute: DevelopersApiRouteWithChildren,
   DevelopersDocsRoute: DevelopersDocsRouteWithChildren,
 }
 
@@ -586,7 +678,9 @@ const rootRouteChildren: RootRouteChildren = {
   LegalRoute: LegalRouteWithChildren,
   NewsRoute: NewsRouteWithChildren,
   SafetyRoute: SafetyRouteWithChildren,
+  SearchRoute: SearchRoute,
   StoriesRoute: StoriesRouteWithChildren,
+  TopicsRoute: TopicsRoute,
   UpdatesRoute: UpdatesRouteWithChildren,
 }
 export const routeTree = rootRouteImport
