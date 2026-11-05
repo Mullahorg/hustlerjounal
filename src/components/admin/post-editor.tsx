@@ -1,4 +1,4 @@
-import { useEffect, useMemo, useRef, useState } from "react";
+import { useEffect, useMemo, useRef, useState, type ReactNode } from "react";
 import { Link, useNavigate } from "@tanstack/react-router";
 import { useServerFn } from "@tanstack/react-start";
 import { toast } from "sonner";
@@ -50,7 +50,7 @@ export function PostEditor({
 }: {
   initial: EditablePost;
   categories: { id: string; name: string }[];
-  revisions: { id: string; title: string; created_at: string }[];
+  revisions: { id: string; title: string; created_at: string; note?: string | null }[];
 }) {
   const navigate = useNavigate();
   const save = useServerFn(adminSavePost);
@@ -383,7 +383,7 @@ function toSaveInput(p: EditablePost) {
   };
 }
 
-function Field({ label, hint, children }: { label: string; hint?: string; children: React.ReactNode }) {
+function Field({ label, hint, children }: { label: string; hint?: string; children: ReactNode }) {
   return (
     <label className="block">
       <span className="mb-1.5 block text-sm font-bold">{label}</span>

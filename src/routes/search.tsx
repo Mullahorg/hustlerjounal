@@ -7,7 +7,7 @@ import { categories } from "@/lib/site";
 
 export const Route = createFileRoute("/search")({
   validateSearch: (search: Record<string, unknown>) => ({
-    q: typeof search.q === "string" ? search.q.slice(0, 200) : "",
+    q: typeof search["q"] === "string" ? search["q"].slice(0, 200) : "",
   }),
   loaderDeps: ({ search: { q } }) => ({ q }),
   loader: async ({ deps }) => {
@@ -16,7 +16,7 @@ export const Route = createFileRoute("/search")({
       return { results: [], latest };
     }
     const results = await searchPosts({ data: { query: deps.q } });
-    return { results, latest: [] };
+    return { results, latest: results.length ? [] : await listPublishedPosts({ data: { limit: 6 } }) };
   },
   head: () => ({
     meta: [

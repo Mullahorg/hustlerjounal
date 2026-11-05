@@ -9,7 +9,7 @@ export const SITE = {
 
 export type NavItem = { label: string; to: string; external?: boolean };
 
-export const primaryNav: NavItem[] = [
+export const primaryNav = [
   { label: "Stories", to: "/stories" },
   { label: "Guides", to: "/guides" },
   { label: "Safety & Escrow", to: "/safety" },
@@ -17,7 +17,7 @@ export const primaryNav: NavItem[] = [
   { label: "News", to: "/news" },
   { label: "Help Center", to: "/help" },
   { label: "Developers", to: "/developers" },
-];
+] as const;
 
 export const ecosystemNav: NavItem[] = [
   { label: "HustlerLink Platform", to: "https://hustlerlink.com", external: true },
@@ -27,7 +27,7 @@ export const ecosystemNav: NavItem[] = [
   { label: "Business Directory", to: "https://hustlerlink.com/businesses", external: true },
   { label: "Verification", to: "https://hustlerlink.com/verify", external: true },
   { label: "Status Page", to: "https://status.hustlerlink.com", external: true },
-];
+] as const;
 
 export type CategoryMeta = {
   slug: string;
@@ -37,7 +37,7 @@ export type CategoryMeta = {
 };
 
 /* The fixed content pillars from the spec, with their public routes. */
-export const categories: CategoryMeta[] = [
+export const categories = [
   {
     slug: "success-stories",
     name: "Success Stories",
@@ -113,7 +113,7 @@ export const categories: CategoryMeta[] = [
     route: "/help/faq",
     description: "Reference articles covering the whole platform.",
   },
-];
+] as const;
 
 export function categoryBySlug(slug: string): CategoryMeta | undefined {
   return categories.find((c) => c.slug === slug);
@@ -142,6 +142,7 @@ export function formatDate(iso: string | Date): string {
     year: "numeric",
     month: "long",
     day: "numeric",
+    timeZone: "UTC",
   }).format(date);
 }
 

@@ -33,7 +33,7 @@ const columns = [
       { label: "Topics", to: "/topics" },
     ],
   },
-];
+] as const;
 
 export function SiteFooter() {
   return (
@@ -93,7 +93,7 @@ export function SiteFooter() {
             {new Intl.DateTimeFormat("en", { year: "numeric" }).format(new Date())} HustlerLink.
             All rights reserved.
           </p>
-          <nav aria-label="Legal" className="flex gap-4">
+          <nav aria-label="Legal" className="flex flex-wrap gap-4">
             {categories
               .filter((c) => c.slug === "legal-policies")
               .map(() => null)}
