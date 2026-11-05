@@ -56,9 +56,13 @@ import { Route as AuthenticatedAccountSubscriptionsRouteImport } from './routes/
 import { Route as AuthenticatedAdminCategoriesRouteImport } from './routes/_authenticated/admin.categories'
 import { Route as AuthenticatedAdminNewsletterRouteImport } from './routes/_authenticated/admin.newsletter'
 import { Route as AuthenticatedAdminPostsRouteImport } from './routes/_authenticated/admin.posts'
+import { Route as ApiV1CategoriesRouteImport } from './routes/api/v1/categories'
+import { Route as ApiV1PostsRouteImport } from './routes/api/v1/posts'
+import { Route as ApiV1SearchRouteImport } from './routes/api/v1/search'
 import { Route as DevelopersApiVersionRouteImport } from './routes/developers.api.$version'
 import { Route as DevelopersDocsSlugRouteImport } from './routes/developers.docs.$slug'
 import { Route as AuthenticatedAdminPostsNewRouteImport } from './routes/_authenticated/admin.posts.new'
+import { Route as ApiV1PostsSlugRouteImport } from './routes/api/v1/posts.$slug'
 import { Route as AuthenticatedAdminPostsIdEditRouteImport } from './routes/_authenticated/admin.posts.$id.edit'
 
 const IndexRoute = IndexRouteImport.update({
@@ -300,6 +304,21 @@ const AuthenticatedAdminPostsRoute = AuthenticatedAdminPostsRouteImport.update({
   path: '/posts',
   getParentRoute: () => AuthenticatedAdminRoute,
 } as any)
+const ApiV1CategoriesRoute = ApiV1CategoriesRouteImport.update({
+  id: '/api/v1/categories',
+  path: '/api/v1/categories',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ApiV1PostsRoute = ApiV1PostsRouteImport.update({
+  id: '/api/v1/posts',
+  path: '/api/v1/posts',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ApiV1SearchRoute = ApiV1SearchRouteImport.update({
+  id: '/api/v1/search',
+  path: '/api/v1/search',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const DevelopersApiVersionRoute = DevelopersApiVersionRouteImport.update({
   id: '/$version',
   path: '/$version',
@@ -316,6 +335,11 @@ const AuthenticatedAdminPostsNewRoute =
     path: '/new',
     getParentRoute: () => AuthenticatedAdminPostsRoute,
   } as any)
+const ApiV1PostsSlugRoute = ApiV1PostsSlugRouteImport.update({
+  id: '/$slug',
+  path: '/$slug',
+  getParentRoute: () => ApiV1PostsRoute,
+} as any)
 const AuthenticatedAdminPostsIdEditRoute =
   AuthenticatedAdminPostsIdEditRouteImport.update({
     id: '/$id/edit',
@@ -370,9 +394,13 @@ export interface FileRoutesByFullPath {
   '/admin/categories': typeof AuthenticatedAdminCategoriesRoute
   '/admin/newsletter': typeof AuthenticatedAdminNewsletterRoute
   '/admin/posts': typeof AuthenticatedAdminPostsRouteWithChildren
+  '/api/v1/categories': typeof ApiV1CategoriesRoute
+  '/api/v1/posts': typeof ApiV1PostsRouteWithChildren
+  '/api/v1/search': typeof ApiV1SearchRoute
   '/developers/api/$version': typeof DevelopersApiVersionRoute
   '/developers/docs/$slug': typeof DevelopersDocsSlugRoute
   '/admin/posts/new': typeof AuthenticatedAdminPostsNewRoute
+  '/api/v1/posts/$slug': typeof ApiV1PostsSlugRoute
   '/admin/posts/$id/edit': typeof AuthenticatedAdminPostsIdEditRoute
 }
 export interface FileRoutesByTo {
@@ -422,9 +450,13 @@ export interface FileRoutesByTo {
   '/admin/categories': typeof AuthenticatedAdminCategoriesRoute
   '/admin/newsletter': typeof AuthenticatedAdminNewsletterRoute
   '/admin/posts': typeof AuthenticatedAdminPostsRouteWithChildren
+  '/api/v1/categories': typeof ApiV1CategoriesRoute
+  '/api/v1/posts': typeof ApiV1PostsRouteWithChildren
+  '/api/v1/search': typeof ApiV1SearchRoute
   '/developers/api/$version': typeof DevelopersApiVersionRoute
   '/developers/docs/$slug': typeof DevelopersDocsSlugRoute
   '/admin/posts/new': typeof AuthenticatedAdminPostsNewRoute
+  '/api/v1/posts/$slug': typeof ApiV1PostsSlugRoute
   '/admin/posts/$id/edit': typeof AuthenticatedAdminPostsIdEditRoute
 }
 export interface FileRoutesById {
@@ -476,9 +508,13 @@ export interface FileRoutesById {
   '/_authenticated/admin/categories': typeof AuthenticatedAdminCategoriesRoute
   '/_authenticated/admin/newsletter': typeof AuthenticatedAdminNewsletterRoute
   '/_authenticated/admin/posts': typeof AuthenticatedAdminPostsRouteWithChildren
+  '/api/v1/categories': typeof ApiV1CategoriesRoute
+  '/api/v1/posts': typeof ApiV1PostsRouteWithChildren
+  '/api/v1/search': typeof ApiV1SearchRoute
   '/developers/api/$version': typeof DevelopersApiVersionRoute
   '/developers/docs/$slug': typeof DevelopersDocsSlugRoute
   '/_authenticated/admin/posts/new': typeof AuthenticatedAdminPostsNewRoute
+  '/api/v1/posts/$slug': typeof ApiV1PostsSlugRoute
   '/_authenticated/admin/posts/$id/edit': typeof AuthenticatedAdminPostsIdEditRoute
 }
 export interface FileRouteTypes {
@@ -530,9 +566,13 @@ export interface FileRouteTypes {
     | '/admin/categories'
     | '/admin/newsletter'
     | '/admin/posts'
+    | '/api/v1/categories'
+    | '/api/v1/posts'
+    | '/api/v1/search'
     | '/developers/api/$version'
     | '/developers/docs/$slug'
     | '/admin/posts/new'
+    | '/api/v1/posts/$slug'
     | '/admin/posts/$id/edit'
   fileRoutesByTo: FileRoutesByTo
   to:
@@ -582,9 +622,13 @@ export interface FileRouteTypes {
     | '/admin/categories'
     | '/admin/newsletter'
     | '/admin/posts'
+    | '/api/v1/categories'
+    | '/api/v1/posts'
+    | '/api/v1/search'
     | '/developers/api/$version'
     | '/developers/docs/$slug'
     | '/admin/posts/new'
+    | '/api/v1/posts/$slug'
     | '/admin/posts/$id/edit'
   id:
     | '__root__'
@@ -635,9 +679,13 @@ export interface FileRouteTypes {
     | '/_authenticated/admin/categories'
     | '/_authenticated/admin/newsletter'
     | '/_authenticated/admin/posts'
+    | '/api/v1/categories'
+    | '/api/v1/posts'
+    | '/api/v1/search'
     | '/developers/api/$version'
     | '/developers/docs/$slug'
     | '/_authenticated/admin/posts/new'
+    | '/api/v1/posts/$slug'
     | '/_authenticated/admin/posts/$id/edit'
   fileRoutesById: FileRoutesById
 }
@@ -665,6 +713,9 @@ export interface RootRouteChildren {
   AuthorsSlugRoute: typeof AuthorsSlugRoute
   CategoriesSlugRoute: typeof CategoriesSlugRoute
   SeriesSlugRoute: typeof SeriesSlugRoute
+  ApiV1CategoriesRoute: typeof ApiV1CategoriesRoute
+  ApiV1PostsRoute: typeof ApiV1PostsRouteWithChildren
+  ApiV1SearchRoute: typeof ApiV1SearchRoute
 }
 
 declare module '@tanstack/react-router' {
@@ -998,6 +1049,27 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AuthenticatedAdminPostsRouteImport
       parentRoute: typeof AuthenticatedAdminRoute
     }
+    '/api/v1/categories': {
+      id: '/api/v1/categories'
+      path: '/api/v1/categories'
+      fullPath: '/api/v1/categories'
+      preLoaderRoute: typeof ApiV1CategoriesRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/api/v1/posts': {
+      id: '/api/v1/posts'
+      path: '/api/v1/posts'
+      fullPath: '/api/v1/posts'
+      preLoaderRoute: typeof ApiV1PostsRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/api/v1/search': {
+      id: '/api/v1/search'
+      path: '/api/v1/search'
+      fullPath: '/api/v1/search'
+      preLoaderRoute: typeof ApiV1SearchRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/developers/api/$version': {
       id: '/developers/api/$version'
       path: '/$version'
@@ -1018,6 +1090,13 @@ declare module '@tanstack/react-router' {
       fullPath: '/admin/posts/new'
       preLoaderRoute: typeof AuthenticatedAdminPostsNewRouteImport
       parentRoute: typeof AuthenticatedAdminPostsRoute
+    }
+    '/api/v1/posts/$slug': {
+      id: '/api/v1/posts/$slug'
+      path: '/$slug'
+      fullPath: '/api/v1/posts/$slug'
+      preLoaderRoute: typeof ApiV1PostsSlugRouteImport
+      parentRoute: typeof ApiV1PostsRoute
     }
     '/_authenticated/admin/posts/$id/edit': {
       id: '/_authenticated/admin/posts/$id/edit'
@@ -1234,6 +1313,18 @@ const UpdatesRouteChildren: UpdatesRouteChildren = {
 const UpdatesRouteWithChildren =
   UpdatesRoute._addFileChildren(UpdatesRouteChildren)
 
+interface ApiV1PostsRouteChildren {
+  ApiV1PostsSlugRoute: typeof ApiV1PostsSlugRoute
+}
+
+const ApiV1PostsRouteChildren: ApiV1PostsRouteChildren = {
+  ApiV1PostsSlugRoute: ApiV1PostsSlugRoute,
+}
+
+const ApiV1PostsRouteWithChildren = ApiV1PostsRoute._addFileChildren(
+  ApiV1PostsRouteChildren,
+)
+
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
   AuthenticatedRouteRoute: AuthenticatedRouteRouteWithChildren,
@@ -1258,6 +1349,9 @@ const rootRouteChildren: RootRouteChildren = {
   AuthorsSlugRoute: AuthorsSlugRoute,
   CategoriesSlugRoute: CategoriesSlugRoute,
   SeriesSlugRoute: SeriesSlugRoute,
+  ApiV1CategoriesRoute: ApiV1CategoriesRoute,
+  ApiV1PostsRoute: ApiV1PostsRouteWithChildren,
+  ApiV1SearchRoute: ApiV1SearchRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
