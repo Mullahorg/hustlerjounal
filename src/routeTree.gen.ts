@@ -53,6 +53,8 @@ import { Route as UpdatesReleaseNotesRouteImport } from './routes/updates.releas
 import { Route as AuthenticatedAccountBookmarksRouteImport } from './routes/_authenticated/account.bookmarks'
 import { Route as AuthenticatedAccountSettingsRouteImport } from './routes/_authenticated/account.settings'
 import { Route as AuthenticatedAccountSubscriptionsRouteImport } from './routes/_authenticated/account.subscriptions'
+import { Route as AuthenticatedAdminCategoriesRouteImport } from './routes/_authenticated/admin.categories'
+import { Route as AuthenticatedAdminNewsletterRouteImport } from './routes/_authenticated/admin.newsletter'
 import { Route as AuthenticatedAdminPostsRouteImport } from './routes/_authenticated/admin.posts'
 import { Route as DevelopersApiVersionRouteImport } from './routes/developers.api.$version'
 import { Route as DevelopersDocsSlugRouteImport } from './routes/developers.docs.$slug'
@@ -281,6 +283,18 @@ const AuthenticatedAccountSubscriptionsRoute =
     path: '/subscriptions',
     getParentRoute: () => AuthenticatedAccountRoute,
   } as any)
+const AuthenticatedAdminCategoriesRoute =
+  AuthenticatedAdminCategoriesRouteImport.update({
+    id: '/categories',
+    path: '/categories',
+    getParentRoute: () => AuthenticatedAdminRoute,
+  } as any)
+const AuthenticatedAdminNewsletterRoute =
+  AuthenticatedAdminNewsletterRouteImport.update({
+    id: '/newsletter',
+    path: '/newsletter',
+    getParentRoute: () => AuthenticatedAdminRoute,
+  } as any)
 const AuthenticatedAdminPostsRoute = AuthenticatedAdminPostsRouteImport.update({
   id: '/posts',
   path: '/posts',
@@ -353,6 +367,8 @@ export interface FileRoutesByFullPath {
   '/account/bookmarks': typeof AuthenticatedAccountBookmarksRoute
   '/account/settings': typeof AuthenticatedAccountSettingsRoute
   '/account/subscriptions': typeof AuthenticatedAccountSubscriptionsRoute
+  '/admin/categories': typeof AuthenticatedAdminCategoriesRoute
+  '/admin/newsletter': typeof AuthenticatedAdminNewsletterRoute
   '/admin/posts': typeof AuthenticatedAdminPostsRouteWithChildren
   '/developers/api/$version': typeof DevelopersApiVersionRoute
   '/developers/docs/$slug': typeof DevelopersDocsSlugRoute
@@ -403,6 +419,8 @@ export interface FileRoutesByTo {
   '/account/bookmarks': typeof AuthenticatedAccountBookmarksRoute
   '/account/settings': typeof AuthenticatedAccountSettingsRoute
   '/account/subscriptions': typeof AuthenticatedAccountSubscriptionsRoute
+  '/admin/categories': typeof AuthenticatedAdminCategoriesRoute
+  '/admin/newsletter': typeof AuthenticatedAdminNewsletterRoute
   '/admin/posts': typeof AuthenticatedAdminPostsRouteWithChildren
   '/developers/api/$version': typeof DevelopersApiVersionRoute
   '/developers/docs/$slug': typeof DevelopersDocsSlugRoute
@@ -455,6 +473,8 @@ export interface FileRoutesById {
   '/_authenticated/account/bookmarks': typeof AuthenticatedAccountBookmarksRoute
   '/_authenticated/account/settings': typeof AuthenticatedAccountSettingsRoute
   '/_authenticated/account/subscriptions': typeof AuthenticatedAccountSubscriptionsRoute
+  '/_authenticated/admin/categories': typeof AuthenticatedAdminCategoriesRoute
+  '/_authenticated/admin/newsletter': typeof AuthenticatedAdminNewsletterRoute
   '/_authenticated/admin/posts': typeof AuthenticatedAdminPostsRouteWithChildren
   '/developers/api/$version': typeof DevelopersApiVersionRoute
   '/developers/docs/$slug': typeof DevelopersDocsSlugRoute
@@ -507,6 +527,8 @@ export interface FileRouteTypes {
     | '/account/bookmarks'
     | '/account/settings'
     | '/account/subscriptions'
+    | '/admin/categories'
+    | '/admin/newsletter'
     | '/admin/posts'
     | '/developers/api/$version'
     | '/developers/docs/$slug'
@@ -557,6 +579,8 @@ export interface FileRouteTypes {
     | '/account/bookmarks'
     | '/account/settings'
     | '/account/subscriptions'
+    | '/admin/categories'
+    | '/admin/newsletter'
     | '/admin/posts'
     | '/developers/api/$version'
     | '/developers/docs/$slug'
@@ -608,6 +632,8 @@ export interface FileRouteTypes {
     | '/_authenticated/account/bookmarks'
     | '/_authenticated/account/settings'
     | '/_authenticated/account/subscriptions'
+    | '/_authenticated/admin/categories'
+    | '/_authenticated/admin/newsletter'
     | '/_authenticated/admin/posts'
     | '/developers/api/$version'
     | '/developers/docs/$slug'
@@ -951,6 +977,20 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AuthenticatedAccountSubscriptionsRouteImport
       parentRoute: typeof AuthenticatedAccountRoute
     }
+    '/_authenticated/admin/categories': {
+      id: '/_authenticated/admin/categories'
+      path: '/categories'
+      fullPath: '/admin/categories'
+      preLoaderRoute: typeof AuthenticatedAdminCategoriesRouteImport
+      parentRoute: typeof AuthenticatedAdminRoute
+    }
+    '/_authenticated/admin/newsletter': {
+      id: '/_authenticated/admin/newsletter'
+      path: '/newsletter'
+      fullPath: '/admin/newsletter'
+      preLoaderRoute: typeof AuthenticatedAdminNewsletterRouteImport
+      parentRoute: typeof AuthenticatedAdminRoute
+    }
     '/_authenticated/admin/posts': {
       id: '/_authenticated/admin/posts'
       path: '/posts'
@@ -1022,10 +1062,14 @@ const AuthenticatedAdminPostsRouteWithChildren =
   )
 
 interface AuthenticatedAdminRouteChildren {
+  AuthenticatedAdminCategoriesRoute: typeof AuthenticatedAdminCategoriesRoute
+  AuthenticatedAdminNewsletterRoute: typeof AuthenticatedAdminNewsletterRoute
   AuthenticatedAdminPostsRoute: typeof AuthenticatedAdminPostsRouteWithChildren
 }
 
 const AuthenticatedAdminRouteChildren: AuthenticatedAdminRouteChildren = {
+  AuthenticatedAdminCategoriesRoute: AuthenticatedAdminCategoriesRoute,
+  AuthenticatedAdminNewsletterRoute: AuthenticatedAdminNewsletterRoute,
   AuthenticatedAdminPostsRoute: AuthenticatedAdminPostsRouteWithChildren,
 }
 
