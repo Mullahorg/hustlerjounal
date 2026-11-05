@@ -17,15 +17,15 @@ export const listBookmarks = createServerFn({ method: "GET" })
         const post = row.post as Record<string, unknown> | null;
         if (!post) return null;
         return {
-          postId: post.id as string,
-          slug: post.slug as string,
-          type: post.type as string,
-          title: post.title as string,
-          excerpt: post.excerpt as string | null,
-          coverImageUrl: post.cover_image_url as string | null,
-          readingTimeMinutes: post.reading_time_minutes as number,
-          publishedAt: post.published_at as string | null,
-          categoryName: (post.category as { name?: string } | null)?.name ?? null,
+          postId: post["id"] as string,
+          slug: post["slug"] as string,
+          type: post["type"] as string,
+          title: post["title"] as string,
+          excerpt: post["excerpt"] as string | null,
+          coverImageUrl: post["cover_image_url"] as string | null,
+          readingTimeMinutes: post["reading_time_minutes"] as number,
+          publishedAt: post["published_at"] as string | null,
+          categoryName: (post["category"] as { name?: string } | null)?.name ?? null,
           savedAt: row.created_at as string,
         };
       })

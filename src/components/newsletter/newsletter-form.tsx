@@ -25,7 +25,7 @@ export function NewsletterForm({ compact = false }: { compact?: boolean }) {
           setEmail("");
           setName("");
         } else {
-          setState({ status: "error", message: result.error });
+          setState({ status: "error", message: result.error ?? "Could not subscribe. Try again." });
         }
       }}
       className="w-full"

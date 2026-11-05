@@ -1,21 +1,24 @@
 import { Link } from "@tanstack/react-router";
 import { Clock } from "lucide-react";
-import { categoryRoute } from "@/lib/site";
+
 import type { PostCardDTO } from "@/lib/types";
 
 export function CategoryChip({
   name,
   slug,
   variant = "primary",
+  linked = true,
 }: {
   name: string;
   slug: string;
   variant?: "primary" | "amber";
+  linked?: boolean;
 }) {
   const cls =
     variant === "amber"
       ? "bg-accent text-accent-foreground"
       : "bg-primary-soft text-primary";
+  if (!linked) return <span className={`inline-flex items-center rounded-full px-3 py-1 text-base font-bold ${cls}`}>{name}</span>;
   return (
     <Link
       to="/categories/$slug"
@@ -39,7 +42,7 @@ export function PostMeta({
       {post.author ? `${post.author.name}. ` : ""}
       <time dateTime={post.publishedAt ?? undefined}>
         {post.publishedAt
-          ? new Intl.DateTimeFormat("en-KE", { day: "numeric", month: "short", year: "numeric" }).format(
+          ? new Intl.DateTimeFormat("en-KE", { day: "numeric", month: "short", year: "numeric", timeZone: "UTC" }).format(
               new Date(post.publishedAt),
             )
           : ""}
@@ -94,7 +97,7 @@ export function ArticleCard({
         )}
         <div className="p-6 md:p-8">
           {post.categoryName && post.categorySlug && (
-            <CategoryChip name={post.categoryName} slug={post.categorySlug} />
+            <CategoryChip name={post.categoryName} slug={post.categorySlug} linked={false} />
           )}
           <h2 className="mt-4 text-3xl font-extrabold tracking-tight leading-tight group-hover:underline underline-offset-4 md:text-4xl">
             {post.title}
@@ -126,7 +129,7 @@ export function ArticleCard({
       )}
       <div className="flex flex-1 flex-col p-5">
         {post.categoryName && post.categorySlug && (
-          <CategoryChip name={post.categoryName} slug={post.categorySlug} />
+          <CategoryChip name={post.categoryName} slug={post.categorySlug} linked={false} />
         )}
         <h3 className="mt-3 text-lg font-bold leading-snug group-hover:underline underline-offset-4">
           {post.title}
@@ -143,8 +146,8 @@ export function ArticleCard({
 }
 
 /* Detail routes are type-specific, so cards map type to its section route. */
-export function cardRoute(post: PostCardDTO): string {
-  const map: Record<string, string> = {
+export function cardRoute(post: Pick<PostCardDTO, "type">) {
+  const map = {
     story: "/stories/$slug",
     guide: "/guides/$slug",
     safety: "/safety/$slug",
@@ -154,8 +157,8 @@ export function cardRoute(post: PostCardDTO): string {
     help: "/help/$slug",
     policy: "/legal/$slug",
     doc: "/developers/docs/$slug",
-  };
-  return map[post.type] ?? "/stories/$slug";
+  } as const;
+  return map[post.type as keyof typeof map] ?? "/stories/$slug";
 }
 
 export function ArticleCardTyped({ post, size = "md" }: { post: PostCardDTO; size?: "sm" | "md" | "lg" }) {
@@ -177,7 +180,7 @@ export function ArticleCardTyped({ post, size = "md" }: { post: PostCardDTO; siz
       )}
       <div className="p-5">
         {post.categoryName && post.categorySlug && (
-          <CategoryChip name={post.categoryName} slug={post.categorySlug} />
+          <CategoryChip name={post.categoryName} slug={post.categorySlug} linked={false} />
         )}
         <h3
           className={`mt-3 font-bold leading-snug group-hover:underline underline-offset-4 ${

@@ -38,11 +38,12 @@ const CALLOUT_TITLES: Record<string, string> = {
 
 function safeHref(href: string): string {
   const trimmed = href.trim();
+  if (/[\\\u0000-\u0020]/.test(trimmed) || trimmed.startsWith("//")) return "#";
   if (/^(https?:\/\/|mailto:|tel:|\/|#)/i.test(trimmed)) return escapeHtml(trimmed);
   return "#";
 }
 
-type Inline = { text: string; href?: string };
+type Inline = { text: string; href?: string; strong?: boolean; em?: boolean; code?: boolean };
 
 function parseInline(raw: string): Inline[] {
   const out: Inline[] = [];
@@ -56,14 +57,14 @@ function parseInline(raw: string): Inline[] {
       break;
     }
     if (match.index > 0) out.push({ text: rest.slice(0, match.index) });
-    if (match[1] !== undefined) {
-      out.push({ text: match[1], href: match[2] });
+    if ((match[1] ?? "") !== undefined) {
+      out.push({ text: (match[1] ?? ""), href: (match[2] ?? "") });
     } else if (match[3] !== undefined) {
-      out.push({ text: match[3], strong: true } as Inline & { strong: boolean });
+      out.push({ text: match[3], strong: true });
     } else if (match[4] !== undefined) {
-      out.push({ text: match[4], em: true } as Inline & { em: boolean });
+      out.push({ text: match[4], em: true });
     } else if (match[5] !== undefined) {
-      out.push({ text: match[5], code: true } as Inline & { code: boolean });
+      out.push({ text: match[5], code: true });
     }
     rest = rest.slice(match.index + match[0].length);
   }
@@ -73,7 +74,7 @@ function parseInline(raw: string): Inline[] {
 function renderInline(raw: string): string {
   return parseInline(raw)
     .map((seg) => {
-      const s = seg as Inline & { strong?: boolean; em?: boolean; code?: boolean };
+      const s = seg;
       const text = escapeHtml(s.text);
       if (s.href !== undefined) {
         return `<a href="${safeHref(s.href)}">${text}</a>`;
@@ -99,8 +100,8 @@ export function extractHeadings(markdown: string): Heading[] {
     if (inCode) continue;
     const match = /^(##|###)\s+(.*)$/.exec(line);
     if (!match) continue;
-    const text = match[2].replace(/[*`]/g, "").trim();
-    headings.push({ id: slugify(text), text, level: match[1].length === 2 ? 2 : 3 });
+    const text = (match[2] ?? "").replace(/[*`]/g, "").trim();
+    headings.push({ id: slugify(text), text, level: (match[1] ?? "").length === 2 ? 2 : 3 });
   }
   return headings;
 }
@@ -116,15 +117,15 @@ export function renderMarkdown(markdown: string): string {
   };
 
   while (i < lines.length) {
-    const line = lines[i];
+    const line = (lines[i] ?? "");
 
     // Fenced code block
     if (line.trim().startsWith("```")) {
       const lang = line.trim().slice(3).trim();
       const code: string[] = [];
       i++;
-      while (i < lines.length && !lines[i].trim().startsWith("```")) {
-        code.push(lines[i]);
+      while (i < lines.length && !(lines[i] ?? "").trim().startsWith("```")) {
+        code.push((lines[i] ?? ""));
         i++;
       }
       i++;
@@ -137,8 +138,8 @@ export function renderMarkdown(markdown: string): string {
     // Heading
     const headingMatch = /^(#{1,4})\s+(.*)$/.exec(line);
     if (headingMatch) {
-      const level = headingMatch[1].length;
-      const text = headingMatch[2];
+      const level = (headingMatch[1] ?? "").length;
+      const text = (headingMatch[2] ?? "");
       const id = slugify(text);
       const inner = renderInline(text);
       if (level === 1) {
@@ -155,11 +156,11 @@ export function renderMarkdown(markdown: string): string {
     // Callout block: > [!INFO] style, or ::: callouts
     const calloutMatch = /^:::(info|warning|success|tip)\s*(.*)$/.exec(line.trim());
     if (calloutMatch) {
-      const kind = calloutMatch[1];
+      const kind = (calloutMatch[1] ?? "");
       const body: string[] = [];
       i++;
-      while (i < lines.length && !lines[i].trim().startsWith(":::")) {
-        body.push(lines[i]);
+      while (i < lines.length && !(lines[i] ?? "").trim().startsWith(":::")) {
+        body.push((lines[i] ?? ""));
         i++;
       }
       i++;
@@ -174,8 +175,8 @@ export function renderMarkdown(markdown: string): string {
     // Blockquote
     if (line.startsWith("> ")) {
       const quote: string[] = [];
-      while (i < lines.length && lines[i].startsWith("> ")) {
-        quote.push(lines[i].slice(2));
+      while (i < lines.length && (lines[i] ?? "").startsWith("> ")) {
+        quote.push((lines[i] ?? "").slice(2));
         i++;
       }
       html.push(`<blockquote><p>${renderInline(quote.join(" "))}</p></blockquote>`);
@@ -183,7 +184,7 @@ export function renderMarkdown(markdown: string): string {
     }
 
     // Table: | a | b |\n| --- | --- |\n rows
-    if (/^\|.*\|\s*$/.test(line) && i + 1 < lines.length && /^\|[\s:|-]+\|\s*$/.test(lines[i + 1])) {
+    if (/^\|.*\|\s*$/.test(line) && i + 1 < lines.length && /^\|[\s:|-]+\|\s*$/.test((lines[i + 1] ?? ""))) {
       const splitRow = (row: string) =>
         row
           .trim()
@@ -194,8 +195,8 @@ export function renderMarkdown(markdown: string): string {
       const headers = splitRow(line);
       i += 2;
       const rows: string[][] = [];
-      while (i < lines.length && /^\|.*\|\s*$/.test(lines[i])) {
-        rows.push(splitRow(lines[i]));
+      while (i < lines.length && /^\|.*\|\s*$/.test((lines[i] ?? ""))) {
+        rows.push(splitRow((lines[i] ?? "")));
         i++;
       }
       html.push(
@@ -211,9 +212,9 @@ export function renderMarkdown(markdown: string): string {
     // Image with optional caption: ![alt|caption](url)
     const imageMatch = /^!\[([^|\]]+)(?:\|([^\]]*))?\]\(([^)]+)\)\s*$/.exec(line.trim());
     if (imageMatch) {
-      const alt = escapeHtml(imageMatch[1].trim());
+      const alt = escapeHtml((imageMatch[1] ?? "").trim());
       const caption = imageMatch[2] ? escapeHtml(imageMatch[2].trim()) : "";
-      const url = safeHref(imageMatch[3]);
+      const url = safeHref((imageMatch[3] ?? ""));
       html.push(
         `<figure class="image-figure"><img src="${url}" alt="${alt}" loading="lazy" />${
           caption ? `<figcaption>${caption}</figcaption>` : ""
@@ -226,8 +227,8 @@ export function renderMarkdown(markdown: string): string {
     // Unordered list
     if (/^\s*[-*]\s+/.test(line)) {
       const items: string[] = [];
-      while (i < lines.length && /^\s*[-*]\s+/.test(lines[i])) {
-        items.push(lines[i].replace(/^\s*[-*]\s+/, ""));
+      while (i < lines.length && /^\s*[-*]\s+/.test((lines[i] ?? ""))) {
+        items.push((lines[i] ?? "").replace(/^\s*[-*]\s+/, ""));
         i++;
       }
       html.push(`<ul>${items.map((it) => `<li>${renderInline(it)}</li>`).join("")}</ul>`);
@@ -237,8 +238,8 @@ export function renderMarkdown(markdown: string): string {
     // Ordered list
     if (/^\s*\d+[.)]\s+/.test(line)) {
       const items: string[] = [];
-      while (i < lines.length && /^\s*\d+[.)]\s+/.test(lines[i])) {
-        items.push(lines[i].replace(/^\s*\d+[.)]\s+/, ""));
+      while (i < lines.length && /^\s*\d+[.)]\s+/.test((lines[i] ?? ""))) {
+        items.push((lines[i] ?? "").replace(/^\s*\d+[.)]\s+/, ""));
         i++;
       }
       html.push(`<ol>${items.map((it) => `<li>${renderInline(it)}</li>`).join("")}</ol>`);
@@ -262,12 +263,13 @@ export function renderMarkdown(markdown: string): string {
     const para: string[] = [];
     while (
       i < lines.length &&
-      lines[i].trim() &&
-      !/^(#{1,4}\s|>|```|\s*[-*]\s|\s*\d+[.)]\s|\||:::|!\[)/.test(lines[i])
+      (lines[i] ?? "").trim() &&
+      !/^(#{1,4}\s|>|```|\s*[-*]\s|\s*\d+[.)]\s|\||:::|!\[)/.test((lines[i] ?? ""))
     ) {
-      para.push(lines[i].trim());
+      para.push((lines[i] ?? "").trim());
       i++;
     }
+    if (!para.length) { para.push(line); i++; }
     flushParagraph(para);
   }
 
