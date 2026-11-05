@@ -19,7 +19,7 @@ const STATUS_FILTERS = ["", "draft", "in_review", "approved", "scheduled", "publ
 
 function AdminPosts() {
   const { status } = Route.useSearch();
-  const navigate = useNavigateFromSearch();
+  const navigate = useNavigate();
   const data = Route.useLoaderData();
 
   return (
