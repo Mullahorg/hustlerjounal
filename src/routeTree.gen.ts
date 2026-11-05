@@ -53,8 +53,17 @@ import { Route as UpdatesReleaseNotesRouteImport } from './routes/updates.releas
 import { Route as AuthenticatedAccountBookmarksRouteImport } from './routes/_authenticated/account.bookmarks'
 import { Route as AuthenticatedAccountSettingsRouteImport } from './routes/_authenticated/account.settings'
 import { Route as AuthenticatedAccountSubscriptionsRouteImport } from './routes/_authenticated/account.subscriptions'
+import { Route as AuthenticatedAdminCategoriesRouteImport } from './routes/_authenticated/admin.categories'
+import { Route as AuthenticatedAdminNewsletterRouteImport } from './routes/_authenticated/admin.newsletter'
+import { Route as AuthenticatedAdminPostsRouteImport } from './routes/_authenticated/admin.posts'
+import { Route as ApiV1CategoriesRouteImport } from './routes/api/v1/categories'
+import { Route as ApiV1PostsRouteImport } from './routes/api/v1/posts'
+import { Route as ApiV1SearchRouteImport } from './routes/api/v1/search'
 import { Route as DevelopersApiVersionRouteImport } from './routes/developers.api.$version'
 import { Route as DevelopersDocsSlugRouteImport } from './routes/developers.docs.$slug'
+import { Route as AuthenticatedAdminPostsNewRouteImport } from './routes/_authenticated/admin.posts.new'
+import { Route as ApiV1PostsSlugRouteImport } from './routes/api/v1/posts.$slug'
+import { Route as AuthenticatedAdminPostsIdEditRouteImport } from './routes/_authenticated/admin.posts.$id.edit'
 
 const IndexRoute = IndexRouteImport.update({
   id: '/',
@@ -278,6 +287,38 @@ const AuthenticatedAccountSubscriptionsRoute =
     path: '/subscriptions',
     getParentRoute: () => AuthenticatedAccountRoute,
   } as any)
+const AuthenticatedAdminCategoriesRoute =
+  AuthenticatedAdminCategoriesRouteImport.update({
+    id: '/categories',
+    path: '/categories',
+    getParentRoute: () => AuthenticatedAdminRoute,
+  } as any)
+const AuthenticatedAdminNewsletterRoute =
+  AuthenticatedAdminNewsletterRouteImport.update({
+    id: '/newsletter',
+    path: '/newsletter',
+    getParentRoute: () => AuthenticatedAdminRoute,
+  } as any)
+const AuthenticatedAdminPostsRoute = AuthenticatedAdminPostsRouteImport.update({
+  id: '/posts',
+  path: '/posts',
+  getParentRoute: () => AuthenticatedAdminRoute,
+} as any)
+const ApiV1CategoriesRoute = ApiV1CategoriesRouteImport.update({
+  id: '/api/v1/categories',
+  path: '/api/v1/categories',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ApiV1PostsRoute = ApiV1PostsRouteImport.update({
+  id: '/api/v1/posts',
+  path: '/api/v1/posts',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ApiV1SearchRoute = ApiV1SearchRouteImport.update({
+  id: '/api/v1/search',
+  path: '/api/v1/search',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const DevelopersApiVersionRoute = DevelopersApiVersionRouteImport.update({
   id: '/$version',
   path: '/$version',
@@ -288,6 +329,23 @@ const DevelopersDocsSlugRoute = DevelopersDocsSlugRouteImport.update({
   path: '/$slug',
   getParentRoute: () => DevelopersDocsRoute,
 } as any)
+const AuthenticatedAdminPostsNewRoute =
+  AuthenticatedAdminPostsNewRouteImport.update({
+    id: '/new',
+    path: '/new',
+    getParentRoute: () => AuthenticatedAdminPostsRoute,
+  } as any)
+const ApiV1PostsSlugRoute = ApiV1PostsSlugRouteImport.update({
+  id: '/$slug',
+  path: '/$slug',
+  getParentRoute: () => ApiV1PostsRoute,
+} as any)
+const AuthenticatedAdminPostsIdEditRoute =
+  AuthenticatedAdminPostsIdEditRouteImport.update({
+    id: '/$id/edit',
+    path: '/$id/edit',
+    getParentRoute: () => AuthenticatedAdminPostsRoute,
+  } as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
@@ -310,7 +368,7 @@ export interface FileRoutesByFullPath {
   '/topics': typeof TopicsRouteWithChildren
   '/updates': typeof UpdatesRouteWithChildren
   '/account': typeof AuthenticatedAccountRouteWithChildren
-  '/admin': typeof AuthenticatedAdminRoute
+  '/admin': typeof AuthenticatedAdminRouteWithChildren
   '/authors/$slug': typeof AuthorsSlugRoute
   '/categories/$slug': typeof CategoriesSlugRoute
   '/developers/api': typeof DevelopersApiRouteWithChildren
@@ -333,8 +391,17 @@ export interface FileRoutesByFullPath {
   '/account/bookmarks': typeof AuthenticatedAccountBookmarksRoute
   '/account/settings': typeof AuthenticatedAccountSettingsRoute
   '/account/subscriptions': typeof AuthenticatedAccountSubscriptionsRoute
+  '/admin/categories': typeof AuthenticatedAdminCategoriesRoute
+  '/admin/newsletter': typeof AuthenticatedAdminNewsletterRoute
+  '/admin/posts': typeof AuthenticatedAdminPostsRouteWithChildren
+  '/api/v1/categories': typeof ApiV1CategoriesRoute
+  '/api/v1/posts': typeof ApiV1PostsRouteWithChildren
+  '/api/v1/search': typeof ApiV1SearchRoute
   '/developers/api/$version': typeof DevelopersApiVersionRoute
   '/developers/docs/$slug': typeof DevelopersDocsSlugRoute
+  '/admin/posts/new': typeof AuthenticatedAdminPostsNewRoute
+  '/api/v1/posts/$slug': typeof ApiV1PostsSlugRoute
+  '/admin/posts/$id/edit': typeof AuthenticatedAdminPostsIdEditRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
@@ -357,7 +424,7 @@ export interface FileRoutesByTo {
   '/topics': typeof TopicsRouteWithChildren
   '/updates': typeof UpdatesRouteWithChildren
   '/account': typeof AuthenticatedAccountRouteWithChildren
-  '/admin': typeof AuthenticatedAdminRoute
+  '/admin': typeof AuthenticatedAdminRouteWithChildren
   '/authors/$slug': typeof AuthorsSlugRoute
   '/categories/$slug': typeof CategoriesSlugRoute
   '/developers/api': typeof DevelopersApiRouteWithChildren
@@ -380,8 +447,17 @@ export interface FileRoutesByTo {
   '/account/bookmarks': typeof AuthenticatedAccountBookmarksRoute
   '/account/settings': typeof AuthenticatedAccountSettingsRoute
   '/account/subscriptions': typeof AuthenticatedAccountSubscriptionsRoute
+  '/admin/categories': typeof AuthenticatedAdminCategoriesRoute
+  '/admin/newsletter': typeof AuthenticatedAdminNewsletterRoute
+  '/admin/posts': typeof AuthenticatedAdminPostsRouteWithChildren
+  '/api/v1/categories': typeof ApiV1CategoriesRoute
+  '/api/v1/posts': typeof ApiV1PostsRouteWithChildren
+  '/api/v1/search': typeof ApiV1SearchRoute
   '/developers/api/$version': typeof DevelopersApiVersionRoute
   '/developers/docs/$slug': typeof DevelopersDocsSlugRoute
+  '/admin/posts/new': typeof AuthenticatedAdminPostsNewRoute
+  '/api/v1/posts/$slug': typeof ApiV1PostsSlugRoute
+  '/admin/posts/$id/edit': typeof AuthenticatedAdminPostsIdEditRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
@@ -406,7 +482,7 @@ export interface FileRoutesById {
   '/topics': typeof TopicsRouteWithChildren
   '/updates': typeof UpdatesRouteWithChildren
   '/_authenticated/account': typeof AuthenticatedAccountRouteWithChildren
-  '/_authenticated/admin': typeof AuthenticatedAdminRoute
+  '/_authenticated/admin': typeof AuthenticatedAdminRouteWithChildren
   '/authors/$slug': typeof AuthorsSlugRoute
   '/categories/$slug': typeof CategoriesSlugRoute
   '/developers/api': typeof DevelopersApiRouteWithChildren
@@ -429,8 +505,17 @@ export interface FileRoutesById {
   '/_authenticated/account/bookmarks': typeof AuthenticatedAccountBookmarksRoute
   '/_authenticated/account/settings': typeof AuthenticatedAccountSettingsRoute
   '/_authenticated/account/subscriptions': typeof AuthenticatedAccountSubscriptionsRoute
+  '/_authenticated/admin/categories': typeof AuthenticatedAdminCategoriesRoute
+  '/_authenticated/admin/newsletter': typeof AuthenticatedAdminNewsletterRoute
+  '/_authenticated/admin/posts': typeof AuthenticatedAdminPostsRouteWithChildren
+  '/api/v1/categories': typeof ApiV1CategoriesRoute
+  '/api/v1/posts': typeof ApiV1PostsRouteWithChildren
+  '/api/v1/search': typeof ApiV1SearchRoute
   '/developers/api/$version': typeof DevelopersApiVersionRoute
   '/developers/docs/$slug': typeof DevelopersDocsSlugRoute
+  '/_authenticated/admin/posts/new': typeof AuthenticatedAdminPostsNewRoute
+  '/api/v1/posts/$slug': typeof ApiV1PostsSlugRoute
+  '/_authenticated/admin/posts/$id/edit': typeof AuthenticatedAdminPostsIdEditRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
@@ -478,8 +563,17 @@ export interface FileRouteTypes {
     | '/account/bookmarks'
     | '/account/settings'
     | '/account/subscriptions'
+    | '/admin/categories'
+    | '/admin/newsletter'
+    | '/admin/posts'
+    | '/api/v1/categories'
+    | '/api/v1/posts'
+    | '/api/v1/search'
     | '/developers/api/$version'
     | '/developers/docs/$slug'
+    | '/admin/posts/new'
+    | '/api/v1/posts/$slug'
+    | '/admin/posts/$id/edit'
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/'
@@ -525,8 +619,17 @@ export interface FileRouteTypes {
     | '/account/bookmarks'
     | '/account/settings'
     | '/account/subscriptions'
+    | '/admin/categories'
+    | '/admin/newsletter'
+    | '/admin/posts'
+    | '/api/v1/categories'
+    | '/api/v1/posts'
+    | '/api/v1/search'
     | '/developers/api/$version'
     | '/developers/docs/$slug'
+    | '/admin/posts/new'
+    | '/api/v1/posts/$slug'
+    | '/admin/posts/$id/edit'
   id:
     | '__root__'
     | '/'
@@ -573,8 +676,17 @@ export interface FileRouteTypes {
     | '/_authenticated/account/bookmarks'
     | '/_authenticated/account/settings'
     | '/_authenticated/account/subscriptions'
+    | '/_authenticated/admin/categories'
+    | '/_authenticated/admin/newsletter'
+    | '/_authenticated/admin/posts'
+    | '/api/v1/categories'
+    | '/api/v1/posts'
+    | '/api/v1/search'
     | '/developers/api/$version'
     | '/developers/docs/$slug'
+    | '/_authenticated/admin/posts/new'
+    | '/api/v1/posts/$slug'
+    | '/_authenticated/admin/posts/$id/edit'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
@@ -601,6 +713,9 @@ export interface RootRouteChildren {
   AuthorsSlugRoute: typeof AuthorsSlugRoute
   CategoriesSlugRoute: typeof CategoriesSlugRoute
   SeriesSlugRoute: typeof SeriesSlugRoute
+  ApiV1CategoriesRoute: typeof ApiV1CategoriesRoute
+  ApiV1PostsRoute: typeof ApiV1PostsRouteWithChildren
+  ApiV1SearchRoute: typeof ApiV1SearchRoute
 }
 
 declare module '@tanstack/react-router' {
@@ -913,6 +1028,48 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AuthenticatedAccountSubscriptionsRouteImport
       parentRoute: typeof AuthenticatedAccountRoute
     }
+    '/_authenticated/admin/categories': {
+      id: '/_authenticated/admin/categories'
+      path: '/categories'
+      fullPath: '/admin/categories'
+      preLoaderRoute: typeof AuthenticatedAdminCategoriesRouteImport
+      parentRoute: typeof AuthenticatedAdminRoute
+    }
+    '/_authenticated/admin/newsletter': {
+      id: '/_authenticated/admin/newsletter'
+      path: '/newsletter'
+      fullPath: '/admin/newsletter'
+      preLoaderRoute: typeof AuthenticatedAdminNewsletterRouteImport
+      parentRoute: typeof AuthenticatedAdminRoute
+    }
+    '/_authenticated/admin/posts': {
+      id: '/_authenticated/admin/posts'
+      path: '/posts'
+      fullPath: '/admin/posts'
+      preLoaderRoute: typeof AuthenticatedAdminPostsRouteImport
+      parentRoute: typeof AuthenticatedAdminRoute
+    }
+    '/api/v1/categories': {
+      id: '/api/v1/categories'
+      path: '/api/v1/categories'
+      fullPath: '/api/v1/categories'
+      preLoaderRoute: typeof ApiV1CategoriesRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/api/v1/posts': {
+      id: '/api/v1/posts'
+      path: '/api/v1/posts'
+      fullPath: '/api/v1/posts'
+      preLoaderRoute: typeof ApiV1PostsRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/api/v1/search': {
+      id: '/api/v1/search'
+      path: '/api/v1/search'
+      fullPath: '/api/v1/search'
+      preLoaderRoute: typeof ApiV1SearchRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/developers/api/$version': {
       id: '/developers/api/$version'
       path: '/$version'
@@ -926,6 +1083,27 @@ declare module '@tanstack/react-router' {
       fullPath: '/developers/docs/$slug'
       preLoaderRoute: typeof DevelopersDocsSlugRouteImport
       parentRoute: typeof DevelopersDocsRoute
+    }
+    '/_authenticated/admin/posts/new': {
+      id: '/_authenticated/admin/posts/new'
+      path: '/new'
+      fullPath: '/admin/posts/new'
+      preLoaderRoute: typeof AuthenticatedAdminPostsNewRouteImport
+      parentRoute: typeof AuthenticatedAdminPostsRoute
+    }
+    '/api/v1/posts/$slug': {
+      id: '/api/v1/posts/$slug'
+      path: '/$slug'
+      fullPath: '/api/v1/posts/$slug'
+      preLoaderRoute: typeof ApiV1PostsSlugRouteImport
+      parentRoute: typeof ApiV1PostsRoute
+    }
+    '/_authenticated/admin/posts/$id/edit': {
+      id: '/_authenticated/admin/posts/$id/edit'
+      path: '/$id/edit'
+      fullPath: '/admin/posts/$id/edit'
+      preLoaderRoute: typeof AuthenticatedAdminPostsIdEditRouteImport
+      parentRoute: typeof AuthenticatedAdminPostsRoute
     }
   }
 }
@@ -946,14 +1124,45 @@ const AuthenticatedAccountRouteChildren: AuthenticatedAccountRouteChildren = {
 const AuthenticatedAccountRouteWithChildren =
   AuthenticatedAccountRoute._addFileChildren(AuthenticatedAccountRouteChildren)
 
+interface AuthenticatedAdminPostsRouteChildren {
+  AuthenticatedAdminPostsNewRoute: typeof AuthenticatedAdminPostsNewRoute
+  AuthenticatedAdminPostsIdEditRoute: typeof AuthenticatedAdminPostsIdEditRoute
+}
+
+const AuthenticatedAdminPostsRouteChildren: AuthenticatedAdminPostsRouteChildren =
+  {
+    AuthenticatedAdminPostsNewRoute: AuthenticatedAdminPostsNewRoute,
+    AuthenticatedAdminPostsIdEditRoute: AuthenticatedAdminPostsIdEditRoute,
+  }
+
+const AuthenticatedAdminPostsRouteWithChildren =
+  AuthenticatedAdminPostsRoute._addFileChildren(
+    AuthenticatedAdminPostsRouteChildren,
+  )
+
+interface AuthenticatedAdminRouteChildren {
+  AuthenticatedAdminCategoriesRoute: typeof AuthenticatedAdminCategoriesRoute
+  AuthenticatedAdminNewsletterRoute: typeof AuthenticatedAdminNewsletterRoute
+  AuthenticatedAdminPostsRoute: typeof AuthenticatedAdminPostsRouteWithChildren
+}
+
+const AuthenticatedAdminRouteChildren: AuthenticatedAdminRouteChildren = {
+  AuthenticatedAdminCategoriesRoute: AuthenticatedAdminCategoriesRoute,
+  AuthenticatedAdminNewsletterRoute: AuthenticatedAdminNewsletterRoute,
+  AuthenticatedAdminPostsRoute: AuthenticatedAdminPostsRouteWithChildren,
+}
+
+const AuthenticatedAdminRouteWithChildren =
+  AuthenticatedAdminRoute._addFileChildren(AuthenticatedAdminRouteChildren)
+
 interface AuthenticatedRouteRouteChildren {
   AuthenticatedAccountRoute: typeof AuthenticatedAccountRouteWithChildren
-  AuthenticatedAdminRoute: typeof AuthenticatedAdminRoute
+  AuthenticatedAdminRoute: typeof AuthenticatedAdminRouteWithChildren
 }
 
 const AuthenticatedRouteRouteChildren: AuthenticatedRouteRouteChildren = {
   AuthenticatedAccountRoute: AuthenticatedAccountRouteWithChildren,
-  AuthenticatedAdminRoute: AuthenticatedAdminRoute,
+  AuthenticatedAdminRoute: AuthenticatedAdminRouteWithChildren,
 }
 
 const AuthenticatedRouteRouteWithChildren =
@@ -1104,6 +1313,18 @@ const UpdatesRouteChildren: UpdatesRouteChildren = {
 const UpdatesRouteWithChildren =
   UpdatesRoute._addFileChildren(UpdatesRouteChildren)
 
+interface ApiV1PostsRouteChildren {
+  ApiV1PostsSlugRoute: typeof ApiV1PostsSlugRoute
+}
+
+const ApiV1PostsRouteChildren: ApiV1PostsRouteChildren = {
+  ApiV1PostsSlugRoute: ApiV1PostsSlugRoute,
+}
+
+const ApiV1PostsRouteWithChildren = ApiV1PostsRoute._addFileChildren(
+  ApiV1PostsRouteChildren,
+)
+
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
   AuthenticatedRouteRoute: AuthenticatedRouteRouteWithChildren,
@@ -1128,6 +1349,9 @@ const rootRouteChildren: RootRouteChildren = {
   AuthorsSlugRoute: AuthorsSlugRoute,
   CategoriesSlugRoute: CategoriesSlugRoute,
   SeriesSlugRoute: SeriesSlugRoute,
+  ApiV1CategoriesRoute: ApiV1CategoriesRoute,
+  ApiV1PostsRoute: ApiV1PostsRouteWithChildren,
+  ApiV1SearchRoute: ApiV1SearchRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
