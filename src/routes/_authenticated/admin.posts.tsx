@@ -95,7 +95,3 @@ function AdminPosts() {
   );
 }
 
-function useNavigateFromSearch() {
-  const { useNavigate } = require("@tanstack/react-router") as typeof import("@tanstack/react-router");
-  return useNavigate();
-}
