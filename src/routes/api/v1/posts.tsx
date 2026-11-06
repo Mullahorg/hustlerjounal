@@ -1,21 +1,25 @@
+import { corsHeaders, paginationFromURL, safeSearchQuery } from "@/lib/api";
 import { createFileRoute } from "@tanstack/react-router";
 import { createJournalPublicClient } from "@/lib/server/supabase-public";
 
 /* REST v1: list published posts. Public read, no key required. */
 export const Route = createFileRoute("/api/v1/posts")({
+  staticData: { sitemap: false },
   server: {
     handlers: {
+      OPTIONS: () => new Response(null,{status:204,headers:corsHeaders}),
       GET: async ({ request }) => {
         const url = new URL(request.url);
-        const limit = Math.min(50, Math.max(1, Number(url.searchParams.get("limit") ?? 20)));
-        const offset = Math.max(0, Number(url.searchParams.get("offset") ?? 0));
+        const pagination=paginationFromURL(url);
+        if(!pagination.success) return Response.json({error:{code:"invalid_query",message:"Use a limit from 1 to 50 and a nonnegative integer offset."}},{status:400,headers:corsHeaders});
+        const {limit,offset}=pagination.data;
         const category = url.searchParams.get("category");
 
         const client = createJournalPublicClient();
         let query = client
           .from("posts")
           .select(
-            "id,type,slug,title,subtitle,excerpt,cover_image_url,reading_time_minutes,published_at,updated_at,category:categories(name,slug),author:authors(name,slug)",
+            "id,type,slug,title,subtitle,excerpt,cover_image_url,reading_time_minutes,published_at,updated_at,category:categories!inner(name,slug),author:authors(name,slug)",
           )
           .eq("status", "published")
           .is("deleted_at", null)
@@ -54,7 +58,7 @@ export const Route = createFileRoute("/api/v1/posts")({
             offset,
             limit,
           },
-        });
+        },{headers:corsHeaders});
       },
     },
   },

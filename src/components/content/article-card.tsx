@@ -23,7 +23,7 @@ export function CategoryChip({
     <Link
       to="/categories/$slug"
       params={{ slug }}
-      className={`inline-flex items-center rounded-full px-3 py-1 text-xs font-bold uppercase tracking-wider ${cls}`}
+      className={`inline-flex items-center rounded-full px-3 py-1 text-base font-bold uppercase tracking-normal ${cls}`}
     >
       {name}
     </Link>
@@ -38,7 +38,7 @@ export function PostMeta({
   className?: string;
 }) {
   return (
-    <p className={`text-sm font-medium text-muted-foreground ${className}`}>
+    <p className={`text-base font-medium text-muted-foreground ${className}`}>
       {post.author ? `${post.author.name}. ` : ""}
       <time dateTime={post.publishedAt ?? undefined}>
         {post.publishedAt
@@ -99,7 +99,7 @@ export function ArticleCard({
           {post.categoryName && post.categorySlug && (
             <CategoryChip name={post.categoryName} slug={post.categorySlug} linked={false} />
           )}
-          <h2 className="mt-4 text-3xl font-extrabold tracking-tight leading-tight group-hover:underline underline-offset-4 md:text-4xl">
+          <h2 className="mt-4 text-3xl font-extrabold tracking-normal leading-tight group-hover:underline underline-offset-4 md:text-4xl">
             {post.title}
           </h2>
           {post.excerpt && (
@@ -135,7 +135,7 @@ export function ArticleCard({
           {post.title}
         </h3>
         {post.excerpt && (
-          <p className="mt-2 line-clamp-3 text-sm leading-relaxed text-muted-foreground">
+          <p className="mt-2 line-clamp-3 text-base leading-relaxed text-muted-foreground">
             {post.excerpt}
           </p>
         )}
@@ -190,7 +190,7 @@ export function ArticleCardTyped({ post, size = "md" }: { post: PostCardDTO; siz
           {post.title}
         </h3>
         {post.excerpt && size !== "sm" && (
-          <p className="mt-2 line-clamp-3 text-sm leading-relaxed text-muted-foreground">
+          <p className="mt-2 line-clamp-3 text-base leading-relaxed text-muted-foreground">
             {post.excerpt}
           </p>
         )}

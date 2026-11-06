@@ -1,6 +1,7 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
 
 export const Route = createFileRoute("/about")({
+  staticData: { sitemap: true },
   head: () => ({
     meta: [
       { title: "About | Hustler Journal" },
@@ -14,6 +15,7 @@ export const Route = createFileRoute("/about")({
         content: "Hustler Journal is the editorial home of HustlerLink.",
       },
       { property: "og:type", content: "website" },
+      { name: "twitter:card", content: "summary_large_image" },
     ],
   }),
   component: AboutPage,
@@ -44,7 +46,7 @@ function AboutPage() {
   return (
     <div className="mx-auto max-w-3xl px-4 py-10 lg:py-14">
       <p className="eyebrow">About</p>
-      <h1 className="mt-1 text-4xl font-extrabold tracking-tight md:text-5xl">
+      <h1 className="mt-1 text-4xl font-extrabold tracking-normal md:text-5xl">
         The publication of record for the informal economy
       </h1>
       <div className="article-body mt-8">
@@ -74,7 +76,7 @@ function AboutPage() {
       </div>
 
       <section className="mt-12" aria-labelledby="team-heading">
-        <h2 id="team-heading" className="text-2xl font-bold tracking-tight">
+        <h2 id="team-heading" className="text-2xl font-bold tracking-normal">
           The newsroom
         </h2>
         <div className="mt-5 grid gap-4 sm:grid-cols-3">
@@ -85,8 +87,8 @@ function AboutPage() {
               className="rounded-2xl border border-border bg-card p-5 card-interactive"
             >
               <p className="font-bold">{m.name}</p>
-              <p className="text-sm font-semibold text-muted-foreground">{m.role}</p>
-              <p className="mt-2 text-sm leading-relaxed text-muted-foreground">{m.bio}</p>
+              <p className="text-base font-semibold text-muted-foreground">{m.role}</p>
+              <p className="mt-2 text-base leading-relaxed text-muted-foreground">{m.bio}</p>
             </Link>
           ))}
         </div>

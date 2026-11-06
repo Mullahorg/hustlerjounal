@@ -4,6 +4,7 @@ import { toast } from "sonner";
 import { supabase } from "@/integrations/supabase/client";
 
 export const Route = createFileRoute("/register")({
+  staticData: { sitemap: false },
   head: () => ({
     meta: [
       { title: "Create account | Hustler Journal" },
@@ -11,6 +12,7 @@ export const Route = createFileRoute("/register")({
       { property: "og:title", content: "Create account | Hustler Journal" },
       { property: "og:description", content: "Create a Hustler Journal account." },
       { property: "og:type", content: "website" },
+      { name: "twitter:card", content: "summary_large_image" },
       { name: "robots", content: "noindex" },
     ],
   }),
@@ -27,20 +29,20 @@ function RegisterPage() {
 
   return (
     <div className="mx-auto max-w-md px-4 py-16">
-      <h1 className="text-3xl font-extrabold tracking-tight">Create your account</h1>
-      <p className="mt-2 text-sm leading-relaxed text-muted-foreground">
+      <h1 className="text-3xl font-extrabold tracking-normal">Create your account</h1>
+      <p className="mt-2 text-base leading-relaxed text-muted-foreground">
         Free. It exists so you can save articles and manage your newsletter subscriptions.
       </p>
       {awaitingConfirm ? (
         <div role="status" aria-live="polite" className="mt-8 rounded-2xl border-2 border-primary/30 bg-primary-soft p-6">
           <h2 className="text-lg font-bold text-primary">Check your email</h2>
-          <p className="mt-1.5 text-sm leading-relaxed text-muted-foreground">
+          <p className="mt-1.5 text-base leading-relaxed text-muted-foreground">
             We sent a confirmation link to {email}. Click it to finish, then sign in.
           </p>
           <button
             type="button"
             onClick={() => navigate({ to: "/login" })}
-            className="mt-4 inline-flex h-11 items-center rounded-full bg-primary px-5 text-sm font-semibold text-primary-foreground"
+            className="mt-4 inline-flex h-11 items-center rounded-full bg-primary px-5 text-base font-semibold text-primary-foreground"
           >
             Go to sign in
           </button>
@@ -76,7 +78,7 @@ function RegisterPage() {
           }}
         >
           <div>
-            <label htmlFor="rg-name" className="mb-1.5 block text-sm font-semibold">
+            <label htmlFor="rg-name" className="mb-1.5 block text-base font-semibold">
               Display name
             </label>
             <input
@@ -88,7 +90,7 @@ function RegisterPage() {
             />
           </div>
           <div>
-            <label htmlFor="rg-email" className="mb-1.5 block text-sm font-semibold">
+            <label htmlFor="rg-email" className="mb-1.5 block text-base font-semibold">
               Email address
             </label>
             <input
@@ -102,7 +104,7 @@ function RegisterPage() {
             />
           </div>
           <div>
-            <label htmlFor="rg-password" className="mb-1.5 block text-sm font-semibold">
+            <label htmlFor="rg-password" className="mb-1.5 block text-base font-semibold">
               Password
             </label>
             <input
@@ -115,7 +117,7 @@ function RegisterPage() {
               onChange={(e) => setPassword(e.target.value)}
               className="h-12 w-full rounded-xl border border-input bg-background px-4 text-base"
             />
-            <p className="mt-1 text-xs text-muted-foreground">At least 10 characters.</p>
+            <p className="mt-1 text-base text-muted-foreground">At least 10 characters.</p>
           </div>
           <button
             type="submit"
@@ -126,7 +128,7 @@ function RegisterPage() {
           </button>
         </form>
       )}
-      <p className="mt-6 text-center text-sm text-muted-foreground">
+      <p className="mt-6 text-center text-base text-muted-foreground">
         Already have an account?{" "}
         <Link to="/login" className="font-bold text-primary underline-offset-4 hover:underline">
           Sign in

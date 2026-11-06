@@ -39,7 +39,7 @@ export function ShareDrawer({ title }: { title: string }) {
       <SheetTrigger asChild>
         <button
           type="button"
-          className="inline-flex h-10 items-center gap-2 rounded-full border border-border bg-card px-4 text-sm font-semibold text-foreground transition-colors hover:bg-accent-soft"
+          className="inline-flex h-10 items-center gap-2 rounded-full border border-border bg-card px-4 text-base font-semibold text-foreground transition-colors hover:bg-accent-soft"
         >
           <Share2 className="h-4 w-4" aria-hidden />
           Share
@@ -53,7 +53,7 @@ export function ShareDrawer({ title }: { title: string }) {
           <button
             type="button"
             onClick={copy}
-            className="flex h-12 items-center justify-center gap-2 rounded-xl border border-border bg-card text-sm font-semibold hover:bg-accent-soft"
+            className="flex h-12 items-center justify-center gap-2 rounded-xl border border-border bg-card text-base font-semibold hover:bg-accent-soft"
           >
             {copied ? <Check className="h-4 w-4" aria-hidden /> : <Link2 className="h-4 w-4" aria-hidden />}
             {copied ? "Copied" : "Copy link"}
@@ -64,7 +64,7 @@ export function ShareDrawer({ title }: { title: string }) {
               href={t.href(url, title)}
               target="_blank"
               rel="noopener noreferrer"
-              className="flex h-12 items-center justify-center rounded-xl border border-border bg-card text-sm font-semibold hover:bg-accent-soft"
+              className="flex h-12 items-center justify-center rounded-xl border border-border bg-card text-base font-semibold hover:bg-accent-soft"
             >
               {t.label}
             </a>
@@ -72,7 +72,7 @@ export function ShareDrawer({ title }: { title: string }) {
           <button
             type="button"
             onClick={() => window.print()}
-            className="flex h-12 items-center justify-center gap-2 rounded-xl border border-border bg-card text-sm font-semibold hover:bg-accent-soft"
+            className="flex h-12 items-center justify-center gap-2 rounded-xl border border-border bg-card text-base font-semibold hover:bg-accent-soft"
           >
             <Printer className="h-4 w-4" aria-hidden />
             Print

@@ -13,7 +13,7 @@ export function TableOfContents({ headings }: { headings: Heading[] }) {
           <li key={h.id} className={h.level === 3 ? "pl-3" : ""}>
             <a
               href={`#${h.id}`}
-              className="text-sm font-medium leading-snug text-muted-foreground underline-offset-4 hover:text-primary hover:underline"
+              className="text-base font-medium leading-snug text-muted-foreground underline-offset-4 hover:text-primary hover:underline"
             >
               {h.text}
             </a>
@@ -30,7 +30,7 @@ export function TableOfContents({ headings }: { headings: Heading[] }) {
 
       {/* Mobile: collapsible drawer */}
       <details className="rounded-xl border border-border bg-card lg:hidden">
-        <summary className="flex cursor-pointer list-none items-center gap-2 px-4 py-3 text-sm font-bold text-foreground">
+        <summary className="flex cursor-pointer list-none items-center gap-2 px-4 py-3 text-base font-bold text-foreground">
           <List className="h-4 w-4" aria-hidden />
           On this page
         </summary>
@@ -67,8 +67,8 @@ export function AuthorCard({
         >
           {author.name}
         </Link>
-        {author.roleTitle && <p className="text-sm font-medium text-muted-foreground">{author.roleTitle}</p>}
-        {author.bio && <p className="mt-2 text-sm leading-relaxed text-muted-foreground">{author.bio}</p>}
+        {author.roleTitle && <p className="text-base font-medium text-muted-foreground">{author.roleTitle}</p>}
+        {author.bio && <p className="mt-2 text-base leading-relaxed text-muted-foreground">{author.bio}</p>}
       </div>
     </div>
   );

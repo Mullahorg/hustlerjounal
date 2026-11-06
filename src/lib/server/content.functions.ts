@@ -1,3 +1,5 @@
+import { z } from "zod";
+import { resolveCover } from "@/lib/covers";
 import { createServerFn } from "@tanstack/react-start";
 import { extractHeadings, renderMarkdown } from "@/lib/markdown";
 import { createJournalPublicClient } from "@/lib/server/supabase-public";
@@ -15,7 +17,7 @@ export function toCard(row: PostCardRow): PostCardDTO {
     title: row.title,
     subtitle: row.subtitle,
     excerpt: row.excerpt,
-    coverImageUrl: row.cover_image_url,
+    coverImageUrl: resolveCover(row.cover_image_url),
     coverImageAlt: row.cover_image_alt,
     readingTimeMinutes: row.reading_time_minutes,
     publishedAt: row.published_at,
@@ -57,7 +59,12 @@ export const listPublishedPosts = createServerFn({ method: "GET" })
   .handler(async ({ data }): Promise<PostCardDTO[]> => {
     const client = createJournalPublicClient();
     let query = PUBLISHED_FILTER(baseQuery(client));
-    if (data.categorySlug) query = query.eq("category.slug", data.categorySlug);
+    if (data.categorySlug) {
+      const { data: category, error } = await client.from("categories").select("id").eq("slug", data.categorySlug).maybeSingle();
+      if (error) throw error;
+      if (!category) return [];
+      query = query.eq("category_id", category.id);
+    }
     if (data.type) query = query.eq("type", data.type);
     if (data.featured) query = query.eq("featured", true);
     if (data.editorsPick) query = query.eq("editors_pick", true);
@@ -103,6 +110,7 @@ export const getPostBySlug = createServerFn({ method: "GET" })
         `${CARD_SELECT},body_markdown,seo_title,seo_description,schema_type,series:series(name,slug),series_order`,
       )
       .eq("slug", data.slug)
+      .lte("published_at", new Date().toISOString())
       .eq("status", "published")
       .is("deleted_at", null)
       .limit(1);
@@ -128,8 +136,10 @@ export const getRelatedPosts = createServerFn({ method: "GET" })
   .inputValidator((input: { categorySlug: string; excludeSlug: string; limit?: number }) => input)
   .handler(async ({ data }): Promise<PostCardDTO[]> => {
     const client = createJournalPublicClient();
+    const { data: category } = await client.from("categories").select("id").eq("slug", data.categorySlug).maybeSingle();
+    if (!category) return [];
     const { data: rows, error } = await PUBLISHED_FILTER(baseQuery(client))
-      .eq("category.slug", data.categorySlug)
+      .eq("category_id", category.id)
       .neq("slug", data.excludeSlug)
       .order("published_at", { ascending: false })
       .range(0, (data.limit ?? 3) - 1);
@@ -161,10 +171,10 @@ export const searchPosts = createServerFn({ method: "GET" })
   .inputValidator((input: { query: string; limit?: number }) => input)
   .handler(async ({ data }): Promise<PostCardDTO[]> => {
     const client = createJournalPublicClient();
-    const q = data.query.trim().replace(/[%,]/g, " ").trim();
+    const q = data.query.slice(0, 200).trim().replace(/[^\p{L}\p{N}\s-]/gu, " ").trim();
     if (!q) return [];
     const { data: rows, error } = await PUBLISHED_FILTER(baseQuery(client))
-      .or(`title.ilike.%${q}%,excerpt.ilike.%${q}%,subtitle.ilike.%${q}%`)
+      .or(`title.ilike.%${q}%,excerpt.ilike.%${q}%,subtitle.ilike.%${q}%,body_markdown.ilike.%${q}%`)
       .order("published_at", { ascending: false })
       .range(0, (data.limit ?? 24) - 1);
     if (error) throw new Error(error.message);
@@ -217,8 +227,10 @@ export const listPostsByAuthor = createServerFn({ method: "GET" })
   .inputValidator((input: { authorSlug: string; limit?: number }) => input)
   .handler(async ({ data }): Promise<PostCardDTO[]> => {
     const client = createJournalPublicClient();
+    const { data: author } = await client.from("authors").select("id").eq("slug", data.authorSlug).maybeSingle();
+    if (!author) return [];
     const { data: rows, error } = await PUBLISHED_FILTER(baseQuery(client))
-      .eq("author.slug", data.authorSlug)
+      .eq("primary_author_id", author.id)
       .order("published_at", { ascending: false })
       .range(0, (data.limit ?? 30) - 1);
     if (error) throw new Error(error.message);
@@ -308,26 +320,5 @@ export const listSeries = createServerFn({ method: "GET" }).handler(async () => 
 });
 
 export const subscribeNewsletter = createServerFn({ method: "POST" })
-  .inputValidator((input: { email: string; name?: string; categories?: string[] }) => input)
-  .handler(async ({ data }) => {
-    const client = createJournalPublicClient();
-    const email = data.email.trim().toLowerCase();
-    if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
-      return { ok: false, error: "Enter a valid email address." };
-    }
-    const token = crypto.randomUUID();
-    const { error } = await client.from("newsletter_subscribers").insert({
-      email,
-      name: data.name ?? null,
-      status: "pending",
-      double_optin_token: token,
-      category_preferences: data.categories ?? [],
-    });
-    if (error) {
-      if (error.code === "23505") {
-        return { ok: false, error: "This email is already on the list. Check your inbox to confirm." };
-      }
-      return { ok: false, error: "Could not subscribe right now. Try again shortly." };
-    }
-    return { ok: true };
-  });
+  .inputValidator(z.object({ email: z.string().email().max(254), name: z.string().max(80).optional(), categories: z.array(z.string().max(80)).max(12).optional() }))
+  .handler(async () => ({ ok: false, error: "Newsletter delivery is not available yet. Please check back after the sender domain is connected." }));

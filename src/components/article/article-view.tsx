@@ -1,27 +1,15 @@
+import { useEffect } from "react";
+import { useServerFn } from "@tanstack/react-start";
+import { recordPostView } from "@/lib/server/content.functions";
 import { Link } from "@tanstack/react-router";
 import { ReadingProgressBar } from "@/components/article/reading-progress";
 import { ShareDrawer } from "@/components/article/share-drawer";
 import { BookmarkButton } from "@/components/article/bookmark-button";
 import { TableOfContents, AuthorCard } from "@/components/article/table-of-contents";
-import { CategoryChip, ArticleCardTyped } from "@/components/content/article-card";
+import { CategoryChip, ArticleCardTyped, cardRoute } from "@/components/content/article-card";
 import { CtaBanner } from "@/components/content/cta-banner";
 import { formatDate } from "@/lib/site";
 import type { PostCardDTO, PostDetailDTO } from "@/lib/types";
-
-function cardRoute(post: PostCardDTO): string {
-  const map: Record<string, string> = {
-    story: "/stories/$slug",
-    guide: "/guides/$slug",
-    safety: "/safety/$slug",
-    update: "/updates/$slug",
-    announcement: "/news/$slug",
-    news: "/news/$slug",
-    help: "/help/$slug",
-    policy: "/legal/$slug",
-    doc: "/developers/docs/$slug",
-  };
-  return map[post.type] ?? "/stories/$slug";
-}
 
 const CTA_BY_CATEGORY: Record<string, "worker" | "buyer" | "safety" | "developer" | "newsletter"> = {
   "success-stories": "worker",
@@ -45,6 +33,8 @@ export function ArticleView({
   prev: PostCardDTO | null;
   next: PostCardDTO | null;
 }) {
+  const trackView = useServerFn(recordPostView);
+  useEffect(() => { trackView({ data: { slug: post.slug } }).catch(() => undefined); }, [post.slug, trackView]);
   const showUpdated =
     post.updatedAt &&
     post.publishedAt &&
@@ -67,14 +57,14 @@ export function ArticleView({
                 {post.categoryName && post.categorySlug && (
                   <CategoryChip name={post.categoryName} slug={post.categorySlug} />
                 )}
-                <h1 className="mt-4 text-4xl font-extrabold tracking-tight leading-tight md:text-5xl">
+                <h1 className="mt-4 text-4xl font-extrabold tracking-normal leading-tight md:text-5xl">
                   {post.title}
                 </h1>
                 {post.subtitle && (
                   <p className="mt-3 text-lg leading-relaxed text-muted-foreground">{post.subtitle}</p>
                 )}
                 <div className="mt-5 flex flex-wrap items-center justify-between gap-3">
-                  <p className="text-sm font-medium text-muted-foreground">
+                  <p className="text-base font-medium text-muted-foreground">
                     By{" "}
                     {post.author ? (
                       <Link
@@ -134,7 +124,7 @@ export function ArticleView({
 
             {related.length > 0 && (
               <section className="mt-14" aria-labelledby="related-heading">
-                <h2 id="related-heading" className="text-2xl font-bold tracking-tight">
+                <h2 id="related-heading" className="text-2xl font-bold tracking-normal">
                   Related reading
                 </h2>
                 <div className="mt-5 grid gap-6 sm:grid-cols-2 lg:grid-cols-3">

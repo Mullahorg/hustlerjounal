@@ -19,7 +19,7 @@ export function SectionIndex({
     <div className="mx-auto max-w-6xl px-4 py-10 lg:py-14">
       <header className="max-w-2xl">
         <p className="eyebrow">{eyebrow}</p>
-        <h1 className="mt-1 text-4xl font-extrabold tracking-tight md:text-5xl">{title}</h1>
+        <h1 className="mt-1 text-4xl font-extrabold tracking-normal md:text-5xl">{title}</h1>
         <p className="mt-3 text-lg leading-relaxed text-muted-foreground">{description}</p>
       </header>
 

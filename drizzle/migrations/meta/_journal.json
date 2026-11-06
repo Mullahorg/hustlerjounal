@@ -15,6 +15,13 @@
       "when": 1793701272505,
       "tag": "0001_journal_seed_taxonomy",
       "breakpoints": true
+    },
+    {
+      "idx": 2,
+      "version": "7",
+      "when": 1793950357005,
+      "tag": "0002_secure_editorial_workflow_and_contact",
+      "breakpoints": true
     }
   ]
 }

@@ -1,3 +1,5 @@
+import { z } from "zod";
+import { canEditPost, canChangeStatus } from "@/lib/editor-rules";
 import { createServerFn } from "@tanstack/react-start";
 import { requireSupabaseAuth } from "@/integrations/supabase/auth-middleware";
 import { estimateReadingMinutes, renderMarkdown } from "@/lib/markdown";
@@ -84,7 +86,7 @@ export const adminListPosts = createServerFn({ method: "GET" })
 
 export const adminGetPost = createServerFn({ method: "GET" })
   .middleware([requireSupabaseAuth])
-  .inputValidator((input: { id: string }) => input)
+  .inputValidator(z.object({ id: z.string().uuid() }))
   .handler(async ({ data, context }) => {
     if (!(await hasAnyRole(context, STAFF_ROLES))) return { forbidden: true } as const;
     const { data: rows, error } = await context.supabase
@@ -114,23 +116,14 @@ export const adminGetPost = createServerFn({ method: "GET" })
 
 export const adminSavePost = createServerFn({ method: "POST" })
   .middleware([requireSupabaseAuth])
-  .inputValidator((input: {
-    id?: string;
-    title: string;
-    slug: string;
-    subtitle?: string;
-    excerpt?: string;
-    bodyMarkdown?: string;
-    categoryId?: string | null;
-    type?: string;
-    coverImageUrl?: string | null;
-    coverImageAlt?: string | null;
-    seoTitle?: string | null;
-    seoDescription?: string | null;
-    featured?: boolean;
-    editorsPick?: boolean;
-    scheduledFor?: string | null;
-  }) => input)
+  .inputValidator(z.object({
+    id: z.string().uuid().optional(), title: z.string().trim().min(1).max(200), slug: z.string().regex(/^[a-z0-9]+(?:-[a-z0-9]+)*$/).max(200),
+    subtitle: z.string().max(300).optional(), excerpt: z.string().max(500).optional(), bodyMarkdown: z.string().max(200000).optional(),
+    categoryId: z.string().uuid().nullable().optional(), type: z.enum(["article","story","guide","safety","update","announcement","news","help","doc","policy","faq"]).optional(),
+    coverImageUrl: z.string().max(2000).nullable().optional(), coverImageAlt: z.string().max(300).nullable().optional(),
+    seoTitle: z.string().max(200).nullable().optional(), seoDescription: z.string().max(500).nullable().optional(),
+    featured: z.boolean().optional(), editorsPick: z.boolean().optional(), scheduledFor: z.string().datetime().nullable().optional()
+  }))
   .handler(async ({ data, context }) => {
     const staff = await hasAnyRole(context, STAFF_ROLES);
     if (!staff) return { ok: false, error: "You do not have permission to edit posts." };
@@ -157,6 +150,9 @@ export const adminSavePost = createServerFn({ method: "POST" })
     };
 
     if (data.id) {
+      const { data: existing, error: readError } = await context.supabase.from("posts").select("id,created_by_user_id,status,slug").eq("id",data.id).maybeSingle();
+      const { data: roleRows } = await context.supabase.from("user_roles").select("role").eq("user_id",context.userId);
+      if (readError || !existing || !canEditPost((roleRows??[]).map(r=>r.role),existing.created_by_user_id,context.userId,existing.status)) return { ok:false,error:"You cannot edit this post." };
       const { error } = await context.supabase.from("posts").update(base).eq("id", data.id);
       if (error) return { ok: false, error: error.message };
       const { error: revError } = await context.supabase.from("post_revisions").insert({
@@ -181,39 +177,16 @@ export const adminSavePost = createServerFn({ method: "POST" })
 
 export const adminSetStatus = createServerFn({ method: "POST" })
   .middleware([requireSupabaseAuth])
-  .inputValidator((input: { id: string; status: string }) => input)
+  .inputValidator(z.object({ id:z.string().uuid(),status:z.enum(["draft","in_review","approved","scheduled","published","archived"]), scheduledFor:z.string().datetime().optional() }))
   .handler(async ({ data, context }) => {
-    const needed =
-      data.status === "published"
-        ? PUBLISH_ROLES
-        : data.status === "approved"
-          ? APPROVE_ROLES
-          : data.status === "in_review" || data.status === "draft" || data.status === "archived"
-            ? STAFF_ROLES
-            : ADMIN_ROLES;
-    if (!(await hasAnyRole(context, needed))) {
-      return {
-        ok: false,
-        error:
-          data.status === "published"
-            ? "Only a publisher or admin can publish."
-            : "You do not have permission for this change.",
-      };
-    }
-    const patch: Record<string, unknown> = { status: data.status };
-    if (data.status === "published") patch.published_at = new Date().toISOString();
-    if (data.status === "scheduled" && data.id) patch.scheduled_for = new Date().toISOString();
-    const { error } = await context.supabase.from("posts").update(patch).eq("id", data.id);
-    if (error) return { ok: false, error: error.message };
-
-    const { supabaseAdmin } = await import("@/integrations/supabase/client.server");
-    await supabaseAdmin.from("audit_log").insert({
-      actor_id: context.userId,
-      action: `post.${data.status}`,
-      entity_type: "post",
-      entity_id: data.id,
-    });
-    return { ok: true };
+    const { data: post,error: readError } = await context.supabase.from("posts").select("id,created_by_user_id,status").eq("id",data.id).maybeSingle();
+    const { data: roleRows,error: roleError } = await context.supabase.from("user_roles").select("role").eq("user_id",context.userId);
+    if(readError || roleError || !post || !canChangeStatus((roleRows??[]).map(r=>r.role),post.created_by_user_id,context.userId,post.status,data.status)) return {ok:false,error:"You do not have permission for this status change."};
+    if(data.status === "scheduled" && (!data.scheduledFor || new Date(data.scheduledFor).getTime()<=Date.now())) return {ok:false,error:"Choose a future publication date."};
+    const patch = { status:data.status, ...(data.status === "published"?{published_at:new Date().toISOString()}:{}), ...(data.status === "scheduled"?{scheduled_for:data.scheduledFor}: {}) };
+    const {data: changed,error}=await context.supabase.from("posts").update(patch).eq("id",data.id).select("id").maybeSingle();
+    if(error || !changed) return {ok:false,error:"Could not change the post status."};
+    return {ok:true};
   });
 
 export const adminListCategories = createServerFn({ method: "GET" })
@@ -230,7 +203,7 @@ export const adminListCategories = createServerFn({ method: "GET" })
 
 export const adminSaveCategory = createServerFn({ method: "POST" })
   .middleware([requireSupabaseAuth])
-  .inputValidator((input: { id?: string; name: string; slug: string; description?: string }) => input)
+  .inputValidator(z.object({ id:z.string().uuid().optional(),name:z.string().trim().min(1).max(100),slug:z.string().regex(/^[a-z0-9-]+$/).max(100),description:z.string().max(1000).optional() }))
   .handler(async ({ data, context }) => {
     if (!(await hasAnyRole(context, ["editor", "senior_editor", "admin", "super_admin"]))) {
       return { ok: false, error: "Only editors and admins manage categories." };
@@ -264,3 +237,37 @@ export const adminListSubscribers = createServerFn({ method: "GET" })
     if (error) throw new Error(error.message);
     return { forbidden: false as const, subscribers: data ?? [] };
   });
+
+export const adminRestoreRevision = createServerFn({method:"POST"}).middleware([requireSupabaseAuth])
+ .inputValidator(z.object({ id:z.string().uuid(),revisionId:z.string().uuid() }))
+ .handler(async ({data,context})=>{
+  const {data:post}=await context.supabase.from("posts").select("created_by_user_id,status").eq("id",data.id).maybeSingle();
+  const {data:roles}=await context.supabase.from("user_roles").select("role").eq("user_id",context.userId);
+  if(!post || !canEditPost((roles??[]).map(r=>r.role),post.created_by_user_id,context.userId,post.status)) return {ok:false,error:"You cannot restore this revision."};
+  const {data:revision}=await context.supabase.from("post_revisions").select("title,body_markdown").eq("id",data.revisionId).eq("post_id",data.id).maybeSingle();
+  if(!revision) return {ok:false,error:"Revision not found."};
+  const {error}=await context.supabase.from("posts").update({title:revision.title??"Untitled",body_markdown:revision.body_markdown,body_rendered:renderMarkdown(revision.body_markdown??"")}).eq("id",data.id);
+  return error?{ok:false,error:"Could not restore revision."}:{ok:true};
+ });
+export const adminListAudit = createServerFn({method:"GET"}).middleware([requireSupabaseAuth]).handler(async ({context})=>{
+ if(!(await hasAnyRole(context,ADMIN_ROLES))) throw new Error("Not found");
+ const {data,error}=await context.supabase.from("audit_log").select("id,action,entity_type,created_at").order("created_at",{ascending:false}).limit(100);
+ if(error) throw error; return data??[];
+});
+export const adminGetSettings = createServerFn({method:"GET"}).middleware([requireSupabaseAuth]).handler(async ({context})=>{
+ if(!(await hasAnyRole(context,ADMIN_ROLES))) throw new Error("Not found");
+ const {data,error}=await context.supabase.from("site_settings").select("key,value").order("key");
+ if(error) throw error; return data??[];
+});
+export const adminSaveSettings = createServerFn({method:"POST"}).middleware([requireSupabaseAuth])
+ .inputValidator(z.object({key:z.string().regex(/^[a-z_]+$/).max(100),value:z.string().max(5000)}))
+ .handler(async ({data,context})=>{
+ if(!(await hasAnyRole(context,ADMIN_ROLES))) return {ok:false,error:"Only admins can change site settings."};
+ const {error}=await context.supabase.from("site_settings").upsert({key:data.key,value:data.value,updated_by:context.userId,updated_at:new Date().toISOString()});
+ return error?{ok:false,error:"Could not save settings."}:{ok:true};
+ });
+export const adminListMessages = createServerFn({method:"GET"}).middleware([requireSupabaseAuth]).handler(async ({context})=>{
+ if(!(await hasAnyRole(context,ADMIN_ROLES))) throw new Error("Not found");
+ const {data,error}=await context.supabase.from("contact_messages").select("id,name,email,reason,message,created_at").order("created_at",{ascending:false}).limit(100);
+ if(error) throw error;return data??[];
+});

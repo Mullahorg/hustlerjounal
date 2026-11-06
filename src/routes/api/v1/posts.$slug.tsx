@@ -1,9 +1,12 @@
+import { corsHeaders, paginationFromURL, safeSearchQuery } from "@/lib/api";
 import { createFileRoute } from "@tanstack/react-router";
 import { createJournalPublicClient } from "@/lib/server/supabase-public";
 
 export const Route = createFileRoute("/api/v1/posts/$slug")({
+  staticData: { sitemap: false },
   server: {
     handlers: {
+      OPTIONS: () => new Response(null,{status:204,headers:corsHeaders}),
       GET: async ({ params }) => {
         const client = createJournalPublicClient();
         const { data, error } = await client
@@ -11,6 +14,7 @@ export const Route = createFileRoute("/api/v1/posts/$slug")({
           .select("id,type,slug,title,subtitle,excerpt,body_markdown,cover_image_url,reading_time_minutes,published_at,updated_at,category:categories(name,slug),author:authors(name,slug)")
           .eq("slug", params.slug)
           .eq("status", "published")
+          .lte("published_at", new Date().toISOString())
           .is("deleted_at", null)
           .limit(1);
         if (error) {

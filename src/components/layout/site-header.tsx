@@ -24,14 +24,14 @@ function SigninState() {
   return signedIn ? (
     <Link
       to="/account"
-      className="inline-flex h-10 items-center rounded-full border border-border bg-card px-4 text-sm font-semibold text-foreground transition-colors hover:bg-accent-soft"
+      className="inline-flex h-10 items-center rounded-full border border-border bg-card px-4 text-base font-semibold text-foreground transition-colors hover:bg-accent-soft"
     >
       My account
     </Link>
   ) : (
     <Link
       to="/login"
-      className="inline-flex h-10 items-center rounded-full bg-primary px-4 text-sm font-semibold text-primary-foreground transition-colors hover:bg-primary/90"
+      className="inline-flex h-10 items-center rounded-full bg-primary px-4 text-base font-semibold text-primary-foreground transition-colors hover:bg-primary/90"
     >
       Sign in
     </Link>
@@ -49,7 +49,7 @@ export function SiteHeader() {
           <span className="flex h-9 w-9 items-center justify-center rounded-full bg-primary text-primary-foreground">
             <BookOpen className="h-5 w-5" strokeWidth={2} aria-hidden />
           </span>
-          <span className="text-lg font-extrabold tracking-tight">
+          <span className="text-lg font-extrabold tracking-normal">
             Hustler <span className="text-primary">Journal</span>
           </span>
         </Link>
@@ -59,7 +59,7 @@ export function SiteHeader() {
             <Link
               key={item.to}
               to={item.to}
-              className="rounded-full px-3 py-2 text-sm font-semibold text-foreground transition-colors hover:bg-accent-soft"
+              className="rounded-full px-3 py-2 text-base font-semibold text-foreground transition-colors hover:bg-accent-soft"
               activeProps={{ className: "bg-primary-soft text-primary" }}
             >
               {item.label}
@@ -82,7 +82,7 @@ export function SiteHeader() {
             <DropdownMenuTrigger asChild>
               <button
                 type="button"
-                className="hidden h-10 items-center rounded-full border border-border bg-card px-4 text-sm font-semibold text-foreground transition-colors hover:bg-accent-soft md:inline-flex"
+                className="hidden h-10 items-center rounded-full border border-border bg-card px-4 text-base font-semibold text-foreground transition-colors hover:bg-accent-soft md:inline-flex"
               >
                 Ecosystem
               </button>
@@ -110,7 +110,7 @@ export function SiteHeader() {
             </SheetTrigger>
             <SheetContent side="right" className="w-80 overflow-y-auto p-0">
               <div className="border-b border-border p-4">
-                <SheetTitle className="text-base font-extrabold tracking-tight">
+                <SheetTitle className="text-base font-extrabold tracking-normal">
                   Hustler Journal
                 </SheetTitle>
               </div>
@@ -134,7 +134,7 @@ export function SiteHeader() {
                     <a
                       key={item.to}
                       href={item.to}
-                      className="block rounded-lg px-3 py-2.5 text-sm font-medium text-muted-foreground hover:bg-accent-soft hover:text-foreground"
+                      className="block rounded-lg px-3 py-2.5 text-base font-medium text-muted-foreground hover:bg-accent-soft hover:text-foreground"
                     >
                       {item.label}
                     </a>

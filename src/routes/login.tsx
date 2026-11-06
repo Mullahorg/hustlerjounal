@@ -4,6 +4,7 @@ import { toast } from "sonner";
 import { supabase } from "@/integrations/supabase/client";
 
 export const Route = createFileRoute("/login")({
+  staticData: { sitemap: false },
   head: () => ({
     meta: [
       { title: "Sign in | Hustler Journal" },
@@ -11,6 +12,7 @@ export const Route = createFileRoute("/login")({
       { property: "og:title", content: "Sign in | Hustler Journal" },
       { property: "og:description", content: "Sign in to save articles and manage your reading." },
       { property: "og:type", content: "website" },
+      { name: "twitter:card", content: "summary_large_image" },
       { name: "robots", content: "noindex" },
     ],
   }),
@@ -25,8 +27,8 @@ function LoginPage() {
 
   return (
     <div className="mx-auto max-w-md px-4 py-16">
-      <h1 className="text-3xl font-extrabold tracking-tight">Sign in</h1>
-      <p className="mt-2 text-sm leading-relaxed text-muted-foreground">
+      <h1 className="text-3xl font-extrabold tracking-normal">Sign in</h1>
+      <p className="mt-2 text-base leading-relaxed text-muted-foreground">
         Sign in to save articles to your reading list and manage your newsletter preferences.
       </p>
       <form
@@ -44,7 +46,7 @@ function LoginPage() {
         }}
       >
         <div>
-          <label htmlFor="lg-email" className="mb-1.5 block text-sm font-semibold">
+          <label htmlFor="lg-email" className="mb-1.5 block text-base font-semibold">
             Email address
           </label>
           <input
@@ -58,7 +60,7 @@ function LoginPage() {
           />
         </div>
         <div>
-          <label htmlFor="lg-password" className="mb-1.5 block text-sm font-semibold">
+          <label htmlFor="lg-password" className="mb-1.5 block text-base font-semibold">
             Password
           </label>
           <input
@@ -78,13 +80,13 @@ function LoginPage() {
         >
           Sign in
         </button>
-        <p aria-live="polite" className="text-center text-sm text-muted-foreground">
+        <p aria-live="polite" className="text-center text-base text-muted-foreground">
           <Link to="/forgot-password" className="font-semibold text-primary underline-offset-4 hover:underline">
             Forgot your password?
           </Link>
         </p>
       </form>
-      <p className="mt-6 text-center text-sm text-muted-foreground">
+      <p className="mt-6 text-center text-base text-muted-foreground">
         New here?{" "}
         <Link to="/register" className="font-bold text-primary underline-offset-4 hover:underline">
           Create an account

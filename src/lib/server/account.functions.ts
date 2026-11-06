@@ -1,3 +1,5 @@
+import { z } from "zod";
+import { resolveCover } from "@/lib/covers";
 import { createServerFn } from "@tanstack/react-start";
 import { requireSupabaseAuth } from "@/integrations/supabase/auth-middleware";
 
@@ -22,7 +24,7 @@ export const listBookmarks = createServerFn({ method: "GET" })
           type: post["type"] as string,
           title: post["title"] as string,
           excerpt: post["excerpt"] as string | null,
-          coverImageUrl: post["cover_image_url"] as string | null,
+          coverImageUrl: resolveCover(post["cover_image_url"] as string | null),
           readingTimeMinutes: post["reading_time_minutes"] as number,
           publishedAt: post["published_at"] as string | null,
           categoryName: (post["category"] as { name?: string } | null)?.name ?? null,
@@ -34,7 +36,7 @@ export const listBookmarks = createServerFn({ method: "GET" })
 
 export const toggleBookmark = createServerFn({ method: "POST" })
   .middleware([requireSupabaseAuth])
-  .inputValidator((input: { slug: string }) => input)
+  .inputValidator(z.object({ slug: z.string().regex(/^[a-z0-9-]+$/).max(200) }))
   .handler(async ({ data, context }) => {
     const { supabase, userId } = context;
     const { data: post } = await supabase
@@ -65,7 +67,7 @@ export const toggleBookmark = createServerFn({ method: "POST" })
 
 export const getBookmarkState = createServerFn({ method: "GET" })
   .middleware([requireSupabaseAuth])
-  .inputValidator((input: { slug: string }) => input)
+  .inputValidator(z.object({ slug: z.string().regex(/^[a-z0-9-]+$/).max(200) }))
   .handler(async ({ data, context }) => {
     const { data: post } = await context.supabase
       .from("posts")
@@ -86,7 +88,7 @@ export const getBookmarkState = createServerFn({ method: "GET" })
 
 export const updateProfile = createServerFn({ method: "POST" })
   .middleware([requireSupabaseAuth])
-  .inputValidator((input: { displayName: string }) => input)
+  .inputValidator(z.object({ displayName: z.string().trim().min(1).max(80) }))
   .handler(async ({ data, context }) => {
     const name = data.displayName.trim().slice(0, 80);
     const { error } = await context.supabase

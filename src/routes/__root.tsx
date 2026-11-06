@@ -15,27 +15,28 @@ import { reportLovableError } from "../lib/lovable-error-reporting";
 import { SiteHeader } from "@/components/layout/site-header";
 import { SiteFooter } from "@/components/layout/site-footer";
 import { Toaster } from "@/components/ui/sonner";
+import { supabase } from "@/integrations/supabase/client";
 import { SITE } from "@/lib/site";
 
 function NotFoundComponent() {
   return (
     <div className="mx-auto max-w-xl px-4 py-24 text-center">
-      <h1 className="text-7xl font-extrabold tracking-tight text-foreground">404</h1>
+      <h1 className="text-7xl font-extrabold tracking-normal text-foreground">404</h1>
       <h2 className="mt-4 text-xl font-bold">We could not find that page</h2>
-      <p className="mt-2 text-sm leading-relaxed text-muted-foreground">
+      <p className="mt-2 text-base leading-relaxed text-muted-foreground">
         The page may have moved, or the link is out of date. The search page can point you at the
         right story.
       </p>
       <div className="mt-6 flex justify-center gap-3">
         <Link
           to="/"
-          className="inline-flex h-11 items-center rounded-full bg-primary px-5 text-sm font-semibold text-primary-foreground hover:bg-primary/90"
+          className="inline-flex h-11 items-center rounded-full bg-primary px-5 text-base font-semibold text-primary-foreground hover:bg-primary/90"
         >
           Go home
         </Link>
         <Link
           to="/search"
-          className="inline-flex h-11 items-center rounded-full border border-border bg-card px-5 text-sm font-semibold text-foreground hover:bg-accent-soft"
+          className="inline-flex h-11 items-center rounded-full border border-border bg-card px-5 text-base font-semibold text-foreground hover:bg-accent-soft"
         >
           Search the Journal
         </Link>
@@ -53,8 +54,8 @@ function ErrorComponent({ error, reset }: ErrorComponentProps) {
 
   return (
     <div className="mx-auto max-w-xl px-4 py-24 text-center">
-      <h1 className="text-xl font-bold tracking-tight text-foreground">This page didn't load</h1>
-      <p className="mt-2 text-sm leading-relaxed text-muted-foreground">
+      <h1 className="text-xl font-bold tracking-normal text-foreground">This page didn't load</h1>
+      <p className="mt-2 text-base leading-relaxed text-muted-foreground">
         Something went wrong on our end. You can try again, or head back home.
       </p>
       <div className="mt-6 flex justify-center gap-3">
@@ -63,13 +64,13 @@ function ErrorComponent({ error, reset }: ErrorComponentProps) {
             router.invalidate();
             reset();
           }}
-          className="inline-flex h-11 items-center rounded-full bg-primary px-5 text-sm font-semibold text-primary-foreground hover:bg-primary/90"
+          className="inline-flex h-11 items-center rounded-full bg-primary px-5 text-base font-semibold text-primary-foreground hover:bg-primary/90"
         >
           Try again
         </button>
         <Link
           to="/"
-          className="inline-flex h-11 items-center rounded-full border border-border bg-card px-5 text-sm font-semibold text-foreground hover:bg-accent-soft"
+          className="inline-flex h-11 items-center rounded-full border border-border bg-card px-5 text-base font-semibold text-foreground hover:bg-accent-soft"
         >
           Go home
         </Link>
@@ -79,6 +80,7 @@ function ErrorComponent({ error, reset }: ErrorComponentProps) {
 }
 
 export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()({
+  staticData: { sitemap: false },
   head: () => ({
     meta: [
       { charSet: "utf-8" },
@@ -125,7 +127,7 @@ function RootShell({ children }: { children: ReactNode }) {
       <body>
         <a
           href="#main-content"
-          className="sr-only focus:not-sr-only focus:absolute focus:left-4 focus:top-4 focus:z-50 focus:rounded-full focus:bg-primary focus:px-4 focus:py-2 focus:text-sm focus:font-semibold focus:text-primary-foreground"
+          className="sr-only focus:not-sr-only focus:absolute focus:left-4 focus:top-4 focus:z-50 focus:rounded-full focus:bg-primary focus:px-4 focus:py-2 focus:text-base focus:font-semibold focus:text-primary-foreground"
         >
           Skip to content
         </a>
@@ -141,6 +143,16 @@ function RootShell({ children }: { children: ReactNode }) {
 
 function RootComponent() {
   const { queryClient } = Route.useRouteContext();
+  const router = useRouter();
+  useEffect(() => {
+    const { data } = supabase.auth.onAuthStateChange(event => {
+      if (!["SIGNED_IN", "SIGNED_OUT", "USER_UPDATED"].includes(event)) return;
+      router.invalidate();
+      if (event !== "SIGNED_OUT") queryClient.invalidateQueries();
+      else queryClient.clear();
+    });
+    return () => data.subscription.unsubscribe();
+  }, [router, queryClient]);
 
   return (
     <QueryClientProvider client={queryClient}>

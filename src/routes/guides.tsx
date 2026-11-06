@@ -3,6 +3,7 @@ import { listPublishedPosts } from "@/lib/server/content.functions";
 import { SectionIndex, SectionNotFound } from "@/components/content/section-index";
 
 export const Route = createFileRoute("/guides")({
+  staticData: { sitemap: true },
   head: () => ({
     meta: [
       { title: "Skills and Business Tips | Hustler Journal" },
@@ -10,6 +11,7 @@ export const Route = createFileRoute("/guides")({
       { property: "og:title", content: "Skills and Business Tips | Hustler Journal" },
       { property: "og:description", content: "Pricing, registering a business, writing job posts, and running a tighter operation." },
       { property: "og:type", content: "website" },
+      { name: "twitter:card", content: "summary_large_image" },
     ],
   }),
   loader: () => listPublishedPosts({ data: { categorySlug: "skills-business-tips", limit: 24 } }),

@@ -42,7 +42,7 @@ export function BookmarkButton({ slug }: { slug: string }) {
       type="button"
       onClick={onClick}
       aria-pressed={bookmarked}
-      className="inline-flex h-10 items-center gap-2 rounded-full border border-border bg-card px-4 text-sm font-semibold text-foreground transition-colors hover:bg-accent-soft"
+      className="inline-flex h-10 items-center gap-2 rounded-full border border-border bg-card px-4 text-base font-semibold text-foreground transition-colors hover:bg-accent-soft"
     >
       {bookmarked ? (
         <BookmarkCheck className="h-4 w-4 text-primary" aria-hidden />

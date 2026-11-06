@@ -6,6 +6,7 @@ import type { PostCardDTO } from "@/lib/types";
 const NEWS_CATEGORIES = ["community-news", "company-announcements"];
 
 export const Route = createFileRoute("/news")({
+  staticData: { sitemap: true },
   head: () => ({
     meta: [
       { title: "News | Hustler Journal" },
@@ -19,6 +20,7 @@ export const Route = createFileRoute("/news")({
         content: "Community news and company announcements from HustlerLink.",
       },
       { property: "og:type", content: "website" },
+      { name: "twitter:card", content: "summary_large_image" },
     ],
   }),
   loader: async (): Promise<PostCardDTO[]> => {

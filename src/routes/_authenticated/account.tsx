@@ -7,9 +7,10 @@ import { getMyRole } from "@/lib/server/admin.functions";
 import { updateProfile } from "@/lib/server/account.functions";
 
 export const Route = createFileRoute("/_authenticated/account")({
+  staticData: { sitemap: false },
   head: () => ({
     meta: [
-      { title: "My account | Hustler Journal" },
+      { title: "My account | Hustler Journal" }, {name:"description",content:"My account on Hustler Journal."}, {property:"og:title",content:"My account | Hustler Journal"}, {property:"og:description",content:"My account on Hustler Journal."}, {property:"og:type",content:"website"}, {name:"twitter:card",content:"summary_large_image"},
       { name: "robots", content: "noindex" },
     ],
   }),
@@ -50,15 +51,15 @@ function AccountPage() {
   return (
     <div className="mx-auto max-w-4xl px-4 py-10 lg:py-14">
       <p className="eyebrow">Account</p>
-      <h1 className="mt-1 text-3xl font-extrabold tracking-tight md:text-4xl">My account</h1>
+      <h1 className="mt-1 text-3xl font-extrabold tracking-normal md:text-4xl">My account</h1>
       {session && (
-        <p className="mt-2 text-sm text-muted-foreground">Signed in as {session.email}</p>
+        <p className="mt-2 text-base text-muted-foreground">Signed in as {session.email}</p>
       )}
 
       {roles.some((r) => r === "admin" || r === "super_admin" || r === "publisher") && (
         <div className="mt-6 flex items-center gap-3 rounded-2xl border-2 border-primary/25 bg-primary-soft p-4">
           <ShieldCheck className="h-5 w-5 text-primary" aria-hidden />
-          <p className="text-sm font-semibold">
+          <p className="text-base font-semibold">
             You have editorial access.{" "}
             <Link to="/admin" className="inline-flex items-center text-primary underline-offset-4 hover:underline">
               Open the admin dashboard <ArrowRight className="ml-0.5 inline h-4 w-4" aria-hidden />
@@ -76,7 +77,7 @@ function AccountPage() {
           >
             <l.icon className="h-5 w-5 text-primary" aria-hidden />
             <p className="mt-3 font-bold">{l.label}</p>
-            <p className="mt-1 text-sm text-muted-foreground">{l.desc}</p>
+            <p className="mt-1 text-base text-muted-foreground">{l.desc}</p>
           </Link>
         ))}
       </div>
@@ -106,7 +107,7 @@ function AccountPage() {
           <button
             type="submit"
             disabled={busy}
-            className="h-12 rounded-xl bg-primary px-6 text-sm font-bold text-primary-foreground hover:bg-primary/90 disabled:opacity-60"
+            className="h-12 rounded-xl bg-primary px-6 text-base font-bold text-primary-foreground hover:bg-primary/90 disabled:opacity-60"
           >
             Save
           </button>
@@ -120,7 +121,7 @@ function AccountPage() {
           toast.success("Signed out.");
           navigate({ to: "/" });
         }}
-        className="mt-10 inline-flex h-11 items-center gap-2 rounded-full border border-border bg-card px-5 text-sm font-semibold text-foreground hover:bg-accent-soft"
+        className="mt-10 inline-flex h-11 items-center gap-2 rounded-full border border-border bg-card px-5 text-base font-semibold text-foreground hover:bg-accent-soft"
       >
         <LogOut className="h-4 w-4" aria-hidden />
         Sign out

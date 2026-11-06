@@ -47,21 +47,21 @@ export function CtaBanner({ variant }: { variant: Variant }) {
         </span>
         <div>
           <p className="eyebrow">{v.eyebrow}</p>
-          <h3 className="mt-1 text-xl font-bold tracking-tight">{v.title}</h3>
-          <p className="mt-1.5 max-w-xl text-sm leading-relaxed text-muted-foreground">{v.body}</p>
+          <h3 className="mt-1 text-xl font-bold tracking-normal">{v.title}</h3>
+          <p className="mt-1.5 max-w-xl text-base leading-relaxed text-muted-foreground">{v.body}</p>
         </div>
       </div>
       {external ? (
         <a
           href={v.cta.to}
-          className="inline-flex h-11 shrink-0 items-center rounded-full bg-primary px-5 text-sm font-semibold text-primary-foreground transition-colors hover:bg-primary/90"
+          className="inline-flex h-11 shrink-0 items-center rounded-full bg-primary px-5 text-base font-semibold text-primary-foreground transition-colors hover:bg-primary/90"
         >
           {v.cta.label}
         </a>
       ) : (
         <Link
           to={v.cta.to}
-          className="inline-flex h-11 shrink-0 items-center rounded-full bg-primary px-5 text-sm font-semibold text-primary-foreground transition-colors hover:bg-primary/90"
+          className="inline-flex h-11 shrink-0 items-center rounded-full bg-primary px-5 text-base font-semibold text-primary-foreground transition-colors hover:bg-primary/90"
         >
           {v.cta.label}
         </Link>

@@ -3,6 +3,7 @@ import { listPublishedPosts } from "@/lib/server/content.functions";
 import { SectionIndex, SectionNotFound } from "@/components/content/section-index";
 
 export const Route = createFileRoute("/stories")({
+  staticData: { sitemap: true },
   head: () => ({
     meta: [
       { title: "Success Stories | Hustler Journal" },
@@ -10,6 +11,7 @@ export const Route = createFileRoute("/stories")({
       { property: "og:title", content: "Success Stories | Hustler Journal" },
       { property: "og:description", content: "Real hustles from across Kenya. Workers and small businesses share what changed for them." },
       { property: "og:type", content: "website" },
+      { name: "twitter:card", content: "summary_large_image" },
     ],
   }),
   loader: () => listPublishedPosts({ data: { categorySlug: "success-stories", limit: 24 } }),

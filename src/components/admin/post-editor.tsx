@@ -1,9 +1,11 @@
+import { RichTextEditor } from "./rich-text-editor";
+import { Button } from "@/components/ui/button";
 import { useEffect, useMemo, useRef, useState, type ReactNode } from "react";
 import { Link, useNavigate } from "@tanstack/react-router";
 import { useServerFn } from "@tanstack/react-start";
 import { toast } from "sonner";
 import { Eye, Save, Send, CheckCircle2, Archive, ArrowLeft } from "lucide-react";
-import { adminSavePost, adminSetStatus, getMyRole } from "@/lib/server/admin.functions";
+import { adminSavePost, adminSetStatus, getMyRole, adminRestoreRevision } from "@/lib/server/admin.functions";
 import { renderMarkdown } from "@/lib/markdown";
 
 export type EditablePost = {
@@ -50,9 +52,11 @@ export function PostEditor({
 }: {
   initial: EditablePost;
   categories: { id: string; name: string }[];
-  revisions: { id: string; title: string; created_at: string; note?: string | null }[];
+  revisions: { id: string; title: string | null; created_at: string; note?: string | null }[];
 }) {
   const navigate = useNavigate();
+  const restore = useServerFn(adminRestoreRevision);
+  const [markdownMode,setMarkdownMode] = useState(false);
   const save = useServerFn(adminSavePost);
   const setStatus = useServerFn(adminSetStatus);
   const fetchRole = useServerFn(getMyRole);
@@ -83,7 +87,7 @@ export function PostEditor({
       if (!dirty.current || !latest.current.id) return;
       dirty.current = false;
       const p = latest.current;
-      const result = await save({ data: { ...toSaveInput(p), id: p.id } });
+      const result = await save({ data: { ...toSaveInput(p), ...(p.id ? { id: p.id } : {}) } });
       if (!result.ok) toast.error(result.error ?? "Autosave failed.");
     }, 15000);
     return () => clearInterval(t);
@@ -91,7 +95,7 @@ export function PostEditor({
 
   const doSave = async () => {
     setBusy(true);
-    const result = await save({ data: { ...toSaveInput(post), id: post.id } });
+    const result = await save({ data: { ...toSaveInput(post), ...(post.id ? { id: post.id } : {}) } });
     setBusy(false);
     if (!result.ok) {
       toast.error(result.error ?? "Could not save the post.");
@@ -104,12 +108,12 @@ export function PostEditor({
     }
   };
 
-  const changeStatus = async (status: string) => {
+  const changeStatus = async (status: "draft" | "in_review" | "approved" | "scheduled" | "published" | "archived") => {
     if (!post.id) {
       toast.error("Save the post first.");
       return;
     }
-    const result = await setStatus({ data: { id: post.id, status } });
+    const result = await setStatus({ data: { id: post.id, status, ...(status === "scheduled" && post.scheduled_for ? {scheduledFor:new Date(post.scheduled_for).toISOString()}: {}) } });
     if (!result.ok) {
       toast.error(result.error ?? "Could not change the status.");
       return;
@@ -128,15 +132,15 @@ export function PostEditor({
         <div>
           <Link
             to="/admin/posts"
-            className="inline-flex items-center gap-1.5 text-sm font-semibold text-muted-foreground hover:text-foreground"
+            className="inline-flex items-center gap-1.5 text-base font-semibold text-muted-foreground hover:text-foreground"
           >
             <ArrowLeft className="h-4 w-4" aria-hidden />
             All posts
           </Link>
-          <h1 className="mt-2 text-2xl font-extrabold tracking-tight">
+          <h1 className="mt-2 text-2xl font-extrabold tracking-normal">
             {initial.id ? "Edit post" : "New post"}
           </h1>
-          <p className="mt-1 text-sm text-muted-foreground">
+          <p className="mt-1 text-base text-muted-foreground">
             Status: <span className="font-bold text-foreground">{post.status.replace("_", " ")}</span>
             {" "}{words} words. ~{Math.max(1, Math.round(words / 200))} min read.
           </p>
@@ -146,7 +150,7 @@ export function PostEditor({
             type="button"
             onClick={doSave}
             disabled={busy}
-            className="inline-flex h-10 items-center gap-2 rounded-full bg-primary px-4 text-sm font-bold text-primary-foreground hover:bg-primary/90 disabled:opacity-60"
+            className="inline-flex h-10 items-center gap-2 rounded-full bg-primary px-4 text-base font-bold text-primary-foreground hover:bg-primary/90 disabled:opacity-60"
           >
             <Save className="h-4 w-4" aria-hidden />
             {initial.id ? "Save" : "Create draft"}
@@ -154,7 +158,7 @@ export function PostEditor({
           <button
             type="button"
             onClick={() => setPreview((p) => !p)}
-            className="inline-flex h-10 items-center gap-2 rounded-full border border-border bg-card px-4 text-sm font-semibold hover:bg-accent-soft"
+            className="inline-flex h-10 items-center gap-2 rounded-full border border-border bg-card px-4 text-base font-semibold hover:bg-accent-soft"
           >
             <Eye className="h-4 w-4" aria-hidden />
             {preview ? "Edit" : "Preview"}
@@ -163,7 +167,7 @@ export function PostEditor({
             <button
               type="button"
               onClick={() => changeStatus("in_review")}
-              className="inline-flex h-10 items-center gap-2 rounded-full border border-border bg-card px-4 text-sm font-semibold hover:bg-accent-soft"
+              className="inline-flex h-10 items-center gap-2 rounded-full border border-border bg-card px-4 text-base font-semibold hover:bg-accent-soft"
             >
               <Send className="h-4 w-4" aria-hidden />
               Submit for review
@@ -173,7 +177,7 @@ export function PostEditor({
             <button
               type="button"
               onClick={() => changeStatus("approved")}
-              className="inline-flex h-10 items-center gap-2 rounded-full border border-border bg-card px-4 text-sm font-semibold hover:bg-accent-soft"
+              className="inline-flex h-10 items-center gap-2 rounded-full border border-border bg-card px-4 text-base font-semibold hover:bg-accent-soft"
             >
               <CheckCircle2 className="h-4 w-4" aria-hidden />
               Approve
@@ -183,7 +187,7 @@ export function PostEditor({
             <button
               type="button"
               onClick={() => changeStatus("published")}
-              className="inline-flex h-10 items-center gap-2 rounded-full bg-accent px-4 text-sm font-bold text-accent-foreground hover:bg-accent/90"
+              className="inline-flex h-10 items-center gap-2 rounded-full bg-accent px-4 text-base font-bold text-accent-foreground hover:bg-accent/90"
             >
               Publish
             </button>
@@ -192,7 +196,7 @@ export function PostEditor({
             <button
               type="button"
               onClick={() => changeStatus("archived")}
-              className="inline-flex h-10 items-center gap-2 rounded-full border border-border bg-card px-4 text-sm font-semibold hover:bg-accent-soft"
+              className="inline-flex h-10 items-center gap-2 rounded-full border border-border bg-card px-4 text-base font-semibold hover:bg-accent-soft"
             >
               <Archive className="h-4 w-4" aria-hidden />
               Unpublish
@@ -203,7 +207,7 @@ export function PostEditor({
 
       {preview ? (
         <article className="mt-8 rounded-2xl border border-border bg-card p-6">
-          <h1 className="text-3xl font-extrabold tracking-tight">{post.title || "Untitled"}</h1>
+          <h1 className="text-3xl font-extrabold tracking-normal">{post.title || "Untitled"}</h1>
           <div className="article-body mt-6" dangerouslySetInnerHTML={{ __html: previewHtml }} />
         </article>
       ) : (
@@ -239,39 +243,40 @@ export function PostEditor({
                 className="w-full rounded-xl border border-input bg-card p-4 text-base"
               />
             </Field>
-            <Field label="Body (Markdown)">
+            <div className="flex items-center justify-between"><p className="font-bold">Article body</p><Button variant="outline" type="button" onClick={()=>setMarkdownMode(v=>!v)}>{markdownMode?"Rich text":"Markdown"}</Button></div>
+            {markdownMode ? <Field label="Body (Markdown)">
               <textarea
                 value={post.body_markdown}
                 onChange={(e) => set({ body_markdown: e.target.value })}
                 rows={20}
-                className="w-full rounded-xl border border-input bg-card p-4 font-mono text-sm leading-relaxed"
+                className="w-full rounded-xl border border-input bg-card p-4 font-mono text-base leading-relaxed"
                 placeholder={"## A heading\n\nShort paragraphs. Two to four sentences.\n\n:::tip\nCallouts: info, warning, success, tip.\n:::\n\n[An internal link](/guides/some-slug)"}
               />
-            </Field>
+            </Field> : <RichTextEditor value={post.body_markdown} onChange={body=>set({body_markdown:body})} />}
           </div>
 
           <aside className="space-y-4">
             <div className="rounded-2xl border border-border bg-card p-4">
               <p className="eyebrow pb-3">Organisation</p>
               <div className="space-y-3">
-                <label className="block text-sm font-semibold">
+                <label className="block text-base font-semibold">
                   Type
                   <select
                     value={post.type}
                     onChange={(e) => set({ type: e.target.value })}
-                    className="mt-1.5 h-11 w-full rounded-lg border border-input bg-background px-3 text-sm font-normal"
+                    className="mt-1.5 h-11 w-full rounded-lg border border-input bg-background px-3 text-base font-normal"
                   >
                     {["article", "story", "guide", "update", "announcement", "news", "help", "doc", "policy", "faq"].map((t) => (
                       <option key={t}>{t}</option>
                     ))}
                   </select>
                 </label>
-                <label className="block text-sm font-semibold">
+                <label className="block text-base font-semibold">
                   Category
                   <select
                     value={post.category_id ?? ""}
                     onChange={(e) => set({ category_id: e.target.value || null })}
-                    className="mt-1.5 h-11 w-full rounded-lg border border-input bg-background px-3 text-sm font-normal"
+                    className="mt-1.5 h-11 w-full rounded-lg border border-input bg-background px-3 text-base font-normal"
                   >
                     <option value="">None</option>
                     {categories.map((c) => (
@@ -281,7 +286,7 @@ export function PostEditor({
                     ))}
                   </select>
                 </label>
-                <label className="flex items-center gap-2 text-sm font-semibold">
+                <label className="flex items-center gap-2 text-base font-semibold">
                   <input
                     type="checkbox"
                     checked={post.featured}
@@ -290,7 +295,7 @@ export function PostEditor({
                   />
                   Featured (homepage hero)
                 </label>
-                <label className="flex items-center gap-2 text-sm font-semibold">
+                <label className="flex items-center gap-2 text-base font-semibold">
                   <input
                     type="checkbox"
                     checked={post.editors_pick}
@@ -308,13 +313,13 @@ export function PostEditor({
                 value={post.cover_image_url ?? ""}
                 onChange={(e) => set({ cover_image_url: e.target.value || null })}
                 placeholder="/images/cover.jpg"
-                className="h-11 w-full rounded-lg border border-input bg-background px-3 text-sm"
+                className="h-11 w-full rounded-lg border border-input bg-background px-3 text-base"
               />
               <input
                 value={post.cover_image_alt ?? ""}
                 onChange={(e) => set({ cover_image_alt: e.target.value || null })}
                 placeholder="Alt text (required for accessibility)"
-                className="mt-2 h-11 w-full rounded-lg border border-input bg-background px-3 text-sm"
+                className="mt-2 h-11 w-full rounded-lg border border-input bg-background px-3 text-base"
               />
               {post.cover_image_url && (
                 <img src={post.cover_image_url} alt="" className="mt-3 aspect-video w-full rounded-lg object-cover" />
@@ -327,9 +332,9 @@ export function PostEditor({
                 value={post.seo_title ?? ""}
                 onChange={(e) => set({ seo_title: e.target.value || null })}
                 placeholder="Meta title"
-                className="h-11 w-full rounded-lg border border-input bg-background px-3 text-sm"
+                className="h-11 w-full rounded-lg border border-input bg-background px-3 text-base"
               />
-              <p className="mt-1 text-xs text-muted-foreground">
+              <p className="mt-1 text-base text-muted-foreground">
                 {(post.seo_title ?? "").length}/60 characters
               </p>
               <textarea
@@ -337,20 +342,22 @@ export function PostEditor({
                 onChange={(e) => set({ seo_description: e.target.value || null })}
                 placeholder="Meta description"
                 rows={3}
-                className="mt-2 w-full rounded-lg border border-input bg-background p-3 text-sm"
+                className="mt-2 w-full rounded-lg border border-input bg-background p-3 text-base"
               />
-              <p className="mt-1 text-xs text-muted-foreground">
+              <p className="mt-1 text-base text-muted-foreground">
                 {(post.seo_description ?? "").length}/155 characters
               </p>
             </div>
 
+            {canPublish && <div className="space-y-3 border-t border-border pt-4"><label className="block font-bold">Publication date<input type="datetime-local" value={post.scheduled_for?.slice(0,16)??""} onChange={e=>set({scheduled_for:e.target.value})} className="mt-2 h-12 w-full rounded-lg border border-input bg-card px-3" /></label><Button type="button" variant="outline" disabled={!post.id || !post.scheduled_for} onClick={()=>changeStatus("scheduled")}>Schedule</Button></div>}
             {revisions.length > 0 && (
               <div className="rounded-2xl border border-border bg-card p-4">
                 <p className="eyebrow pb-3">Revisions</p>
                 <ul className="space-y-2">
                   {revisions.slice(0, 6).map((r) => (
-                    <li key={r.id} className="text-xs text-muted-foreground">
+                    <li key={r.id} className="text-base text-muted-foreground">
                       {new Date(r.created_at).toLocaleString()} {r.note ? `: ${r.note}` : ""}
+                      <Button variant="outline" type="button" className="ml-2" onClick={async ()=>{if(!post.id)return;const result=await restore({data:{id:post.id,revisionId:r.id}});if(result.ok){toast.success("Revision restored.");window.location.reload();}else toast.error(result.error);}}>Restore</Button>
                     </li>
                   ))}
                 </ul>
@@ -365,11 +372,11 @@ export function PostEditor({
 
 function toSaveInput(p: EditablePost) {
   return {
-    id: p.id,
+    ...(p.id ? { ...(p.id ? { id: p.id } : {}) } : {}),
     title: p.title,
     slug: p.slug,
-    subtitle: p.subtitle || undefined,
-    excerpt: p.excerpt || undefined,
+    subtitle: p.subtitle,
+    excerpt: p.excerpt,
     bodyMarkdown: p.body_markdown,
     categoryId: p.category_id,
     type: p.type,
@@ -386,9 +393,9 @@ function toSaveInput(p: EditablePost) {
 function Field({ label, hint, children }: { label: string; hint?: string; children: ReactNode }) {
   return (
     <label className="block">
-      <span className="mb-1.5 block text-sm font-bold">{label}</span>
+      <span className="mb-1.5 block text-base font-bold">{label}</span>
       {children}
-      {hint && <span className="mt-1 block text-xs text-muted-foreground">{hint}</span>}
+      {hint && <span className="mt-1 block text-base text-muted-foreground">{hint}</span>}
     </label>
   );
 }

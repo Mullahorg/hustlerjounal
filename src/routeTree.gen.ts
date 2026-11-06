@@ -24,46 +24,52 @@ import { Route as NewsRouteImport } from './routes/news'
 import { Route as NewsletterRouteImport } from './routes/newsletter'
 import { Route as RegisterRouteImport } from './routes/register'
 import { Route as ResetPasswordRouteImport } from './routes/reset-password'
+import { Route as RssDotxmlRouteImport } from './routes/rss[.]xml'
 import { Route as SafetyRouteImport } from './routes/safety'
 import { Route as SearchRouteImport } from './routes/search'
+import { Route as SitemapDotxmlRouteImport } from './routes/sitemap[.]xml'
 import { Route as StoriesRouteImport } from './routes/stories'
 import { Route as TopicsRouteImport } from './routes/topics'
 import { Route as UpdatesRouteImport } from './routes/updates'
 import { Route as AuthenticatedAccountRouteImport } from './routes/_authenticated/account'
 import { Route as AuthenticatedAdminRouteImport } from './routes/_authenticated/admin'
-import { Route as AuthorsSlugRouteImport } from './routes/authors.$slug'
-import { Route as CategoriesSlugRouteImport } from './routes/categories.$slug'
-import { Route as DevelopersApiRouteImport } from './routes/developers.api'
-import { Route as DevelopersDocsRouteImport } from './routes/developers.docs'
-import { Route as GuidesSlugRouteImport } from './routes/guides.$slug'
-import { Route as HelpSlugRouteImport } from './routes/help.$slug'
-import { Route as HelpFaqRouteImport } from './routes/help.faq'
-import { Route as InvestorsSlugRouteImport } from './routes/investors.$slug'
-import { Route as LegalSlugRouteImport } from './routes/legal.$slug'
-import { Route as LegalCookiesRouteImport } from './routes/legal.cookies'
-import { Route as LegalPrivacyRouteImport } from './routes/legal.privacy'
-import { Route as LegalTermsRouteImport } from './routes/legal.terms'
-import { Route as NewsSlugRouteImport } from './routes/news.$slug'
-import { Route as SafetySlugRouteImport } from './routes/safety.$slug'
-import { Route as SeriesSlugRouteImport } from './routes/series.$slug'
-import { Route as StoriesSlugRouteImport } from './routes/stories.$slug'
-import { Route as TopicsSlugRouteImport } from './routes/topics.$slug'
-import { Route as UpdatesSlugRouteImport } from './routes/updates.$slug'
-import { Route as UpdatesReleaseNotesRouteImport } from './routes/updates.release-notes'
-import { Route as AuthenticatedAccountBookmarksRouteImport } from './routes/_authenticated/account.bookmarks'
-import { Route as AuthenticatedAccountSettingsRouteImport } from './routes/_authenticated/account.settings'
-import { Route as AuthenticatedAccountSubscriptionsRouteImport } from './routes/_authenticated/account.subscriptions'
-import { Route as AuthenticatedAdminCategoriesRouteImport } from './routes/_authenticated/admin.categories'
-import { Route as AuthenticatedAdminNewsletterRouteImport } from './routes/_authenticated/admin.newsletter'
-import { Route as AuthenticatedAdminPostsRouteImport } from './routes/_authenticated/admin.posts'
+import { Route as AuthorsSlugRouteImport } from './routes/authors_.$slug'
+import { Route as CategoriesSlugRouteImport } from './routes/categories_.$slug'
+import { Route as DevelopersApiRouteImport } from './routes/developers_.api'
+import { Route as DevelopersDocsRouteImport } from './routes/developers_.docs'
+import { Route as GuidesSlugRouteImport } from './routes/guides_.$slug'
+import { Route as HelpSlugRouteImport } from './routes/help_.$slug'
+import { Route as HelpFaqRouteImport } from './routes/help_.faq'
+import { Route as InvestorsSlugRouteImport } from './routes/investors_.$slug'
+import { Route as LegalSlugRouteImport } from './routes/legal_.$slug'
+import { Route as LegalCookiesRouteImport } from './routes/legal_.cookies'
+import { Route as LegalPrivacyRouteImport } from './routes/legal_.privacy'
+import { Route as LegalTermsRouteImport } from './routes/legal_.terms'
+import { Route as NewsSlugRouteImport } from './routes/news_.$slug'
+import { Route as SafetySlugRouteImport } from './routes/safety_.$slug'
+import { Route as SeriesSlugRouteImport } from './routes/series_.$slug'
+import { Route as StoriesSlugRouteImport } from './routes/stories_.$slug'
+import { Route as TopicsSlugRouteImport } from './routes/topics_.$slug'
+import { Route as UpdatesSlugRouteImport } from './routes/updates_.$slug'
+import { Route as UpdatesReleaseNotesRouteImport } from './routes/updates_.release-notes'
+import { Route as AuthenticatedAccountBookmarksRouteImport } from './routes/_authenticated/account_.bookmarks'
+import { Route as AuthenticatedAccountSettingsRouteImport } from './routes/_authenticated/account_.settings'
+import { Route as AuthenticatedAccountSubscriptionsRouteImport } from './routes/_authenticated/account_.subscriptions'
+import { Route as AuthenticatedAdminCategoriesRouteImport } from './routes/_authenticated/admin_.categories'
+import { Route as AuthenticatedAdminNewsletterRouteImport } from './routes/_authenticated/admin_.newsletter'
+import { Route as AuthenticatedAdminPostsRouteImport } from './routes/_authenticated/admin_.posts'
+import { Route as ApiV1AuthorsRouteImport } from './routes/api/v1/authors'
 import { Route as ApiV1CategoriesRouteImport } from './routes/api/v1/categories'
+import { Route as ApiV1OpenapiDotjsonRouteImport } from './routes/api/v1/openapi[.]json'
 import { Route as ApiV1PostsRouteImport } from './routes/api/v1/posts'
 import { Route as ApiV1SearchRouteImport } from './routes/api/v1/search'
-import { Route as DevelopersApiVersionRouteImport } from './routes/developers.api.$version'
-import { Route as DevelopersDocsSlugRouteImport } from './routes/developers.docs.$slug'
-import { Route as AuthenticatedAdminPostsNewRouteImport } from './routes/_authenticated/admin.posts.new'
+import { Route as ApiV1TagsRouteImport } from './routes/api/v1/tags'
+import { Route as ApiV1TopicsRouteImport } from './routes/api/v1/topics'
+import { Route as DevelopersApiVersionRouteImport } from './routes/developers_.api_.$version'
+import { Route as DevelopersDocsSlugRouteImport } from './routes/developers_.docs_.$slug'
+import { Route as AuthenticatedAdminPostsNewRouteImport } from './routes/_authenticated/admin_.posts_.new'
 import { Route as ApiV1PostsSlugRouteImport } from './routes/api/v1/posts.$slug'
-import { Route as AuthenticatedAdminPostsIdEditRouteImport } from './routes/_authenticated/admin.posts.$id.edit'
+import { Route as AuthenticatedAdminPostsIdEditRouteImport } from './routes/_authenticated/admin_.posts_.$id.edit'
 
 const IndexRoute = IndexRouteImport.update({
   id: '/',
@@ -139,6 +145,11 @@ const ResetPasswordRoute = ResetPasswordRouteImport.update({
   path: '/reset-password',
   getParentRoute: () => rootRouteImport,
 } as any)
+const RssDotxmlRoute = RssDotxmlRouteImport.update({
+  id: '/rss.xml',
+  path: '/rss.xml',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const SafetyRoute = SafetyRouteImport.update({
   id: '/safety',
   path: '/safety',
@@ -147,6 +158,11 @@ const SafetyRoute = SafetyRouteImport.update({
 const SearchRoute = SearchRouteImport.update({
   id: '/search',
   path: '/search',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const SitemapDotxmlRoute = SitemapDotxmlRouteImport.update({
+  id: '/sitemap.xml',
+  path: '/sitemap.xml',
   getParentRoute: () => rootRouteImport,
 } as any)
 const StoriesRoute = StoriesRouteImport.update({
@@ -175,138 +191,148 @@ const AuthenticatedAdminRoute = AuthenticatedAdminRouteImport.update({
   getParentRoute: () => AuthenticatedRouteRoute,
 } as any)
 const AuthorsSlugRoute = AuthorsSlugRouteImport.update({
-  id: '/authors/$slug',
+  id: '/authors_/$slug',
   path: '/authors/$slug',
   getParentRoute: () => rootRouteImport,
 } as any)
 const CategoriesSlugRoute = CategoriesSlugRouteImport.update({
-  id: '/categories/$slug',
+  id: '/categories_/$slug',
   path: '/categories/$slug',
   getParentRoute: () => rootRouteImport,
 } as any)
 const DevelopersApiRoute = DevelopersApiRouteImport.update({
-  id: '/api',
-  path: '/api',
-  getParentRoute: () => DevelopersRoute,
+  id: '/developers_/api',
+  path: '/developers/api',
+  getParentRoute: () => rootRouteImport,
 } as any)
 const DevelopersDocsRoute = DevelopersDocsRouteImport.update({
-  id: '/docs',
-  path: '/docs',
-  getParentRoute: () => DevelopersRoute,
+  id: '/developers_/docs',
+  path: '/developers/docs',
+  getParentRoute: () => rootRouteImport,
 } as any)
 const GuidesSlugRoute = GuidesSlugRouteImport.update({
-  id: '/$slug',
-  path: '/$slug',
-  getParentRoute: () => GuidesRoute,
+  id: '/guides_/$slug',
+  path: '/guides/$slug',
+  getParentRoute: () => rootRouteImport,
 } as any)
 const HelpSlugRoute = HelpSlugRouteImport.update({
-  id: '/$slug',
-  path: '/$slug',
-  getParentRoute: () => HelpRoute,
+  id: '/help_/$slug',
+  path: '/help/$slug',
+  getParentRoute: () => rootRouteImport,
 } as any)
 const HelpFaqRoute = HelpFaqRouteImport.update({
-  id: '/faq',
-  path: '/faq',
-  getParentRoute: () => HelpRoute,
+  id: '/help_/faq',
+  path: '/help/faq',
+  getParentRoute: () => rootRouteImport,
 } as any)
 const InvestorsSlugRoute = InvestorsSlugRouteImport.update({
-  id: '/$slug',
-  path: '/$slug',
-  getParentRoute: () => InvestorsRoute,
+  id: '/investors_/$slug',
+  path: '/investors/$slug',
+  getParentRoute: () => rootRouteImport,
 } as any)
 const LegalSlugRoute = LegalSlugRouteImport.update({
-  id: '/$slug',
-  path: '/$slug',
-  getParentRoute: () => LegalRoute,
+  id: '/legal_/$slug',
+  path: '/legal/$slug',
+  getParentRoute: () => rootRouteImport,
 } as any)
 const LegalCookiesRoute = LegalCookiesRouteImport.update({
-  id: '/cookies',
-  path: '/cookies',
-  getParentRoute: () => LegalRoute,
+  id: '/legal_/cookies',
+  path: '/legal/cookies',
+  getParentRoute: () => rootRouteImport,
 } as any)
 const LegalPrivacyRoute = LegalPrivacyRouteImport.update({
-  id: '/privacy',
-  path: '/privacy',
-  getParentRoute: () => LegalRoute,
+  id: '/legal_/privacy',
+  path: '/legal/privacy',
+  getParentRoute: () => rootRouteImport,
 } as any)
 const LegalTermsRoute = LegalTermsRouteImport.update({
-  id: '/terms',
-  path: '/terms',
-  getParentRoute: () => LegalRoute,
+  id: '/legal_/terms',
+  path: '/legal/terms',
+  getParentRoute: () => rootRouteImport,
 } as any)
 const NewsSlugRoute = NewsSlugRouteImport.update({
-  id: '/$slug',
-  path: '/$slug',
-  getParentRoute: () => NewsRoute,
+  id: '/news_/$slug',
+  path: '/news/$slug',
+  getParentRoute: () => rootRouteImport,
 } as any)
 const SafetySlugRoute = SafetySlugRouteImport.update({
-  id: '/$slug',
-  path: '/$slug',
-  getParentRoute: () => SafetyRoute,
+  id: '/safety_/$slug',
+  path: '/safety/$slug',
+  getParentRoute: () => rootRouteImport,
 } as any)
 const SeriesSlugRoute = SeriesSlugRouteImport.update({
-  id: '/series/$slug',
+  id: '/series_/$slug',
   path: '/series/$slug',
   getParentRoute: () => rootRouteImport,
 } as any)
 const StoriesSlugRoute = StoriesSlugRouteImport.update({
-  id: '/$slug',
-  path: '/$slug',
-  getParentRoute: () => StoriesRoute,
+  id: '/stories_/$slug',
+  path: '/stories/$slug',
+  getParentRoute: () => rootRouteImport,
 } as any)
 const TopicsSlugRoute = TopicsSlugRouteImport.update({
-  id: '/$slug',
-  path: '/$slug',
-  getParentRoute: () => TopicsRoute,
+  id: '/topics_/$slug',
+  path: '/topics/$slug',
+  getParentRoute: () => rootRouteImport,
 } as any)
 const UpdatesSlugRoute = UpdatesSlugRouteImport.update({
-  id: '/$slug',
-  path: '/$slug',
-  getParentRoute: () => UpdatesRoute,
+  id: '/updates_/$slug',
+  path: '/updates/$slug',
+  getParentRoute: () => rootRouteImport,
 } as any)
 const UpdatesReleaseNotesRoute = UpdatesReleaseNotesRouteImport.update({
-  id: '/release-notes',
-  path: '/release-notes',
-  getParentRoute: () => UpdatesRoute,
+  id: '/updates_/release-notes',
+  path: '/updates/release-notes',
+  getParentRoute: () => rootRouteImport,
 } as any)
 const AuthenticatedAccountBookmarksRoute =
   AuthenticatedAccountBookmarksRouteImport.update({
-    id: '/bookmarks',
-    path: '/bookmarks',
-    getParentRoute: () => AuthenticatedAccountRoute,
+    id: '/account_/bookmarks',
+    path: '/account/bookmarks',
+    getParentRoute: () => AuthenticatedRouteRoute,
   } as any)
 const AuthenticatedAccountSettingsRoute =
   AuthenticatedAccountSettingsRouteImport.update({
-    id: '/settings',
-    path: '/settings',
-    getParentRoute: () => AuthenticatedAccountRoute,
+    id: '/account_/settings',
+    path: '/account/settings',
+    getParentRoute: () => AuthenticatedRouteRoute,
   } as any)
 const AuthenticatedAccountSubscriptionsRoute =
   AuthenticatedAccountSubscriptionsRouteImport.update({
-    id: '/subscriptions',
-    path: '/subscriptions',
-    getParentRoute: () => AuthenticatedAccountRoute,
+    id: '/account_/subscriptions',
+    path: '/account/subscriptions',
+    getParentRoute: () => AuthenticatedRouteRoute,
   } as any)
 const AuthenticatedAdminCategoriesRoute =
   AuthenticatedAdminCategoriesRouteImport.update({
-    id: '/categories',
-    path: '/categories',
-    getParentRoute: () => AuthenticatedAdminRoute,
+    id: '/admin_/categories',
+    path: '/admin/categories',
+    getParentRoute: () => AuthenticatedRouteRoute,
   } as any)
 const AuthenticatedAdminNewsletterRoute =
   AuthenticatedAdminNewsletterRouteImport.update({
-    id: '/newsletter',
-    path: '/newsletter',
-    getParentRoute: () => AuthenticatedAdminRoute,
+    id: '/admin_/newsletter',
+    path: '/admin/newsletter',
+    getParentRoute: () => AuthenticatedRouteRoute,
   } as any)
 const AuthenticatedAdminPostsRoute = AuthenticatedAdminPostsRouteImport.update({
-  id: '/posts',
-  path: '/posts',
-  getParentRoute: () => AuthenticatedAdminRoute,
+  id: '/admin_/posts',
+  path: '/admin/posts',
+  getParentRoute: () => AuthenticatedRouteRoute,
+} as any)
+const ApiV1AuthorsRoute = ApiV1AuthorsRouteImport.update({
+  id: '/api/v1/authors',
+  path: '/api/v1/authors',
+  getParentRoute: () => rootRouteImport,
 } as any)
 const ApiV1CategoriesRoute = ApiV1CategoriesRouteImport.update({
   id: '/api/v1/categories',
   path: '/api/v1/categories',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ApiV1OpenapiDotjsonRoute = ApiV1OpenapiDotjsonRouteImport.update({
+  id: '/api/v1/openapi.json',
+  path: '/api/v1/openapi.json',
   getParentRoute: () => rootRouteImport,
 } as any)
 const ApiV1PostsRoute = ApiV1PostsRouteImport.update({
@@ -319,21 +345,31 @@ const ApiV1SearchRoute = ApiV1SearchRouteImport.update({
   path: '/api/v1/search',
   getParentRoute: () => rootRouteImport,
 } as any)
+const ApiV1TagsRoute = ApiV1TagsRouteImport.update({
+  id: '/api/v1/tags',
+  path: '/api/v1/tags',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ApiV1TopicsRoute = ApiV1TopicsRouteImport.update({
+  id: '/api/v1/topics',
+  path: '/api/v1/topics',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const DevelopersApiVersionRoute = DevelopersApiVersionRouteImport.update({
-  id: '/$version',
-  path: '/$version',
-  getParentRoute: () => DevelopersApiRoute,
+  id: '/developers_/api_/$version',
+  path: '/developers/api/$version',
+  getParentRoute: () => rootRouteImport,
 } as any)
 const DevelopersDocsSlugRoute = DevelopersDocsSlugRouteImport.update({
-  id: '/$slug',
-  path: '/$slug',
-  getParentRoute: () => DevelopersDocsRoute,
+  id: '/developers_/docs_/$slug',
+  path: '/developers/docs/$slug',
+  getParentRoute: () => rootRouteImport,
 } as any)
 const AuthenticatedAdminPostsNewRoute =
   AuthenticatedAdminPostsNewRouteImport.update({
-    id: '/new',
-    path: '/new',
-    getParentRoute: () => AuthenticatedAdminPostsRoute,
+    id: '/admin_/posts_/new',
+    path: '/admin/posts/new',
+    getParentRoute: () => AuthenticatedRouteRoute,
   } as any)
 const ApiV1PostsSlugRoute = ApiV1PostsSlugRouteImport.update({
   id: '/$slug',
@@ -342,37 +378,39 @@ const ApiV1PostsSlugRoute = ApiV1PostsSlugRouteImport.update({
 } as any)
 const AuthenticatedAdminPostsIdEditRoute =
   AuthenticatedAdminPostsIdEditRouteImport.update({
-    id: '/$id/edit',
-    path: '/$id/edit',
-    getParentRoute: () => AuthenticatedAdminPostsRoute,
+    id: '/admin_/posts_/$id/edit',
+    path: '/admin/posts/$id/edit',
+    getParentRoute: () => AuthenticatedRouteRoute,
   } as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/about': typeof AboutRoute
   '/contact': typeof ContactRoute
-  '/developers': typeof DevelopersRouteWithChildren
+  '/developers': typeof DevelopersRoute
   '/forgot-password': typeof ForgotPasswordRoute
-  '/guides': typeof GuidesRouteWithChildren
-  '/help': typeof HelpRouteWithChildren
-  '/investors': typeof InvestorsRouteWithChildren
-  '/legal': typeof LegalRouteWithChildren
+  '/guides': typeof GuidesRoute
+  '/help': typeof HelpRoute
+  '/investors': typeof InvestorsRoute
+  '/legal': typeof LegalRoute
   '/login': typeof LoginRoute
-  '/news': typeof NewsRouteWithChildren
+  '/news': typeof NewsRoute
   '/newsletter': typeof NewsletterRoute
   '/register': typeof RegisterRoute
   '/reset-password': typeof ResetPasswordRoute
-  '/safety': typeof SafetyRouteWithChildren
+  '/rss.xml': typeof RssDotxmlRoute
+  '/safety': typeof SafetyRoute
   '/search': typeof SearchRoute
-  '/stories': typeof StoriesRouteWithChildren
-  '/topics': typeof TopicsRouteWithChildren
-  '/updates': typeof UpdatesRouteWithChildren
-  '/account': typeof AuthenticatedAccountRouteWithChildren
-  '/admin': typeof AuthenticatedAdminRouteWithChildren
+  '/sitemap.xml': typeof SitemapDotxmlRoute
+  '/stories': typeof StoriesRoute
+  '/topics': typeof TopicsRoute
+  '/updates': typeof UpdatesRoute
+  '/account': typeof AuthenticatedAccountRoute
+  '/admin': typeof AuthenticatedAdminRoute
   '/authors/$slug': typeof AuthorsSlugRoute
   '/categories/$slug': typeof CategoriesSlugRoute
-  '/developers/api': typeof DevelopersApiRouteWithChildren
-  '/developers/docs': typeof DevelopersDocsRouteWithChildren
+  '/developers/api': typeof DevelopersApiRoute
+  '/developers/docs': typeof DevelopersDocsRoute
   '/guides/$slug': typeof GuidesSlugRoute
   '/help/$slug': typeof HelpSlugRoute
   '/help/faq': typeof HelpFaqRoute
@@ -393,10 +431,14 @@ export interface FileRoutesByFullPath {
   '/account/subscriptions': typeof AuthenticatedAccountSubscriptionsRoute
   '/admin/categories': typeof AuthenticatedAdminCategoriesRoute
   '/admin/newsletter': typeof AuthenticatedAdminNewsletterRoute
-  '/admin/posts': typeof AuthenticatedAdminPostsRouteWithChildren
+  '/admin/posts': typeof AuthenticatedAdminPostsRoute
+  '/api/v1/authors': typeof ApiV1AuthorsRoute
   '/api/v1/categories': typeof ApiV1CategoriesRoute
+  '/api/v1/openapi.json': typeof ApiV1OpenapiDotjsonRoute
   '/api/v1/posts': typeof ApiV1PostsRouteWithChildren
   '/api/v1/search': typeof ApiV1SearchRoute
+  '/api/v1/tags': typeof ApiV1TagsRoute
+  '/api/v1/topics': typeof ApiV1TopicsRoute
   '/developers/api/$version': typeof DevelopersApiVersionRoute
   '/developers/docs/$slug': typeof DevelopersDocsSlugRoute
   '/admin/posts/new': typeof AuthenticatedAdminPostsNewRoute
@@ -407,28 +449,30 @@ export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/about': typeof AboutRoute
   '/contact': typeof ContactRoute
-  '/developers': typeof DevelopersRouteWithChildren
+  '/developers': typeof DevelopersRoute
   '/forgot-password': typeof ForgotPasswordRoute
-  '/guides': typeof GuidesRouteWithChildren
-  '/help': typeof HelpRouteWithChildren
-  '/investors': typeof InvestorsRouteWithChildren
-  '/legal': typeof LegalRouteWithChildren
+  '/guides': typeof GuidesRoute
+  '/help': typeof HelpRoute
+  '/investors': typeof InvestorsRoute
+  '/legal': typeof LegalRoute
   '/login': typeof LoginRoute
-  '/news': typeof NewsRouteWithChildren
+  '/news': typeof NewsRoute
   '/newsletter': typeof NewsletterRoute
   '/register': typeof RegisterRoute
   '/reset-password': typeof ResetPasswordRoute
-  '/safety': typeof SafetyRouteWithChildren
+  '/rss.xml': typeof RssDotxmlRoute
+  '/safety': typeof SafetyRoute
   '/search': typeof SearchRoute
-  '/stories': typeof StoriesRouteWithChildren
-  '/topics': typeof TopicsRouteWithChildren
-  '/updates': typeof UpdatesRouteWithChildren
-  '/account': typeof AuthenticatedAccountRouteWithChildren
-  '/admin': typeof AuthenticatedAdminRouteWithChildren
+  '/sitemap.xml': typeof SitemapDotxmlRoute
+  '/stories': typeof StoriesRoute
+  '/topics': typeof TopicsRoute
+  '/updates': typeof UpdatesRoute
+  '/account': typeof AuthenticatedAccountRoute
+  '/admin': typeof AuthenticatedAdminRoute
   '/authors/$slug': typeof AuthorsSlugRoute
   '/categories/$slug': typeof CategoriesSlugRoute
-  '/developers/api': typeof DevelopersApiRouteWithChildren
-  '/developers/docs': typeof DevelopersDocsRouteWithChildren
+  '/developers/api': typeof DevelopersApiRoute
+  '/developers/docs': typeof DevelopersDocsRoute
   '/guides/$slug': typeof GuidesSlugRoute
   '/help/$slug': typeof HelpSlugRoute
   '/help/faq': typeof HelpFaqRoute
@@ -449,10 +493,14 @@ export interface FileRoutesByTo {
   '/account/subscriptions': typeof AuthenticatedAccountSubscriptionsRoute
   '/admin/categories': typeof AuthenticatedAdminCategoriesRoute
   '/admin/newsletter': typeof AuthenticatedAdminNewsletterRoute
-  '/admin/posts': typeof AuthenticatedAdminPostsRouteWithChildren
+  '/admin/posts': typeof AuthenticatedAdminPostsRoute
+  '/api/v1/authors': typeof ApiV1AuthorsRoute
   '/api/v1/categories': typeof ApiV1CategoriesRoute
+  '/api/v1/openapi.json': typeof ApiV1OpenapiDotjsonRoute
   '/api/v1/posts': typeof ApiV1PostsRouteWithChildren
   '/api/v1/search': typeof ApiV1SearchRoute
+  '/api/v1/tags': typeof ApiV1TagsRoute
+  '/api/v1/topics': typeof ApiV1TopicsRoute
   '/developers/api/$version': typeof DevelopersApiVersionRoute
   '/developers/docs/$slug': typeof DevelopersDocsSlugRoute
   '/admin/posts/new': typeof AuthenticatedAdminPostsNewRoute
@@ -465,57 +513,63 @@ export interface FileRoutesById {
   '/_authenticated': typeof AuthenticatedRouteRouteWithChildren
   '/about': typeof AboutRoute
   '/contact': typeof ContactRoute
-  '/developers': typeof DevelopersRouteWithChildren
+  '/developers': typeof DevelopersRoute
   '/forgot-password': typeof ForgotPasswordRoute
-  '/guides': typeof GuidesRouteWithChildren
-  '/help': typeof HelpRouteWithChildren
-  '/investors': typeof InvestorsRouteWithChildren
-  '/legal': typeof LegalRouteWithChildren
+  '/guides': typeof GuidesRoute
+  '/help': typeof HelpRoute
+  '/investors': typeof InvestorsRoute
+  '/legal': typeof LegalRoute
   '/login': typeof LoginRoute
-  '/news': typeof NewsRouteWithChildren
+  '/news': typeof NewsRoute
   '/newsletter': typeof NewsletterRoute
   '/register': typeof RegisterRoute
   '/reset-password': typeof ResetPasswordRoute
-  '/safety': typeof SafetyRouteWithChildren
+  '/rss.xml': typeof RssDotxmlRoute
+  '/safety': typeof SafetyRoute
   '/search': typeof SearchRoute
-  '/stories': typeof StoriesRouteWithChildren
-  '/topics': typeof TopicsRouteWithChildren
-  '/updates': typeof UpdatesRouteWithChildren
-  '/_authenticated/account': typeof AuthenticatedAccountRouteWithChildren
-  '/_authenticated/admin': typeof AuthenticatedAdminRouteWithChildren
-  '/authors/$slug': typeof AuthorsSlugRoute
-  '/categories/$slug': typeof CategoriesSlugRoute
-  '/developers/api': typeof DevelopersApiRouteWithChildren
-  '/developers/docs': typeof DevelopersDocsRouteWithChildren
-  '/guides/$slug': typeof GuidesSlugRoute
-  '/help/$slug': typeof HelpSlugRoute
-  '/help/faq': typeof HelpFaqRoute
-  '/investors/$slug': typeof InvestorsSlugRoute
-  '/legal/$slug': typeof LegalSlugRoute
-  '/legal/cookies': typeof LegalCookiesRoute
-  '/legal/privacy': typeof LegalPrivacyRoute
-  '/legal/terms': typeof LegalTermsRoute
-  '/news/$slug': typeof NewsSlugRoute
-  '/safety/$slug': typeof SafetySlugRoute
-  '/series/$slug': typeof SeriesSlugRoute
-  '/stories/$slug': typeof StoriesSlugRoute
-  '/topics/$slug': typeof TopicsSlugRoute
-  '/updates/$slug': typeof UpdatesSlugRoute
-  '/updates/release-notes': typeof UpdatesReleaseNotesRoute
-  '/_authenticated/account/bookmarks': typeof AuthenticatedAccountBookmarksRoute
-  '/_authenticated/account/settings': typeof AuthenticatedAccountSettingsRoute
-  '/_authenticated/account/subscriptions': typeof AuthenticatedAccountSubscriptionsRoute
-  '/_authenticated/admin/categories': typeof AuthenticatedAdminCategoriesRoute
-  '/_authenticated/admin/newsletter': typeof AuthenticatedAdminNewsletterRoute
-  '/_authenticated/admin/posts': typeof AuthenticatedAdminPostsRouteWithChildren
+  '/sitemap.xml': typeof SitemapDotxmlRoute
+  '/stories': typeof StoriesRoute
+  '/topics': typeof TopicsRoute
+  '/updates': typeof UpdatesRoute
+  '/_authenticated/account': typeof AuthenticatedAccountRoute
+  '/_authenticated/admin': typeof AuthenticatedAdminRoute
+  '/authors_/$slug': typeof AuthorsSlugRoute
+  '/categories_/$slug': typeof CategoriesSlugRoute
+  '/developers_/api': typeof DevelopersApiRoute
+  '/developers_/docs': typeof DevelopersDocsRoute
+  '/guides_/$slug': typeof GuidesSlugRoute
+  '/help_/$slug': typeof HelpSlugRoute
+  '/help_/faq': typeof HelpFaqRoute
+  '/investors_/$slug': typeof InvestorsSlugRoute
+  '/legal_/$slug': typeof LegalSlugRoute
+  '/legal_/cookies': typeof LegalCookiesRoute
+  '/legal_/privacy': typeof LegalPrivacyRoute
+  '/legal_/terms': typeof LegalTermsRoute
+  '/news_/$slug': typeof NewsSlugRoute
+  '/safety_/$slug': typeof SafetySlugRoute
+  '/series_/$slug': typeof SeriesSlugRoute
+  '/stories_/$slug': typeof StoriesSlugRoute
+  '/topics_/$slug': typeof TopicsSlugRoute
+  '/updates_/$slug': typeof UpdatesSlugRoute
+  '/updates_/release-notes': typeof UpdatesReleaseNotesRoute
+  '/_authenticated/account_/bookmarks': typeof AuthenticatedAccountBookmarksRoute
+  '/_authenticated/account_/settings': typeof AuthenticatedAccountSettingsRoute
+  '/_authenticated/account_/subscriptions': typeof AuthenticatedAccountSubscriptionsRoute
+  '/_authenticated/admin_/categories': typeof AuthenticatedAdminCategoriesRoute
+  '/_authenticated/admin_/newsletter': typeof AuthenticatedAdminNewsletterRoute
+  '/_authenticated/admin_/posts': typeof AuthenticatedAdminPostsRoute
+  '/api/v1/authors': typeof ApiV1AuthorsRoute
   '/api/v1/categories': typeof ApiV1CategoriesRoute
+  '/api/v1/openapi.json': typeof ApiV1OpenapiDotjsonRoute
   '/api/v1/posts': typeof ApiV1PostsRouteWithChildren
   '/api/v1/search': typeof ApiV1SearchRoute
-  '/developers/api/$version': typeof DevelopersApiVersionRoute
-  '/developers/docs/$slug': typeof DevelopersDocsSlugRoute
-  '/_authenticated/admin/posts/new': typeof AuthenticatedAdminPostsNewRoute
+  '/api/v1/tags': typeof ApiV1TagsRoute
+  '/api/v1/topics': typeof ApiV1TopicsRoute
+  '/developers_/api_/$version': typeof DevelopersApiVersionRoute
+  '/developers_/docs_/$slug': typeof DevelopersDocsSlugRoute
+  '/_authenticated/admin_/posts_/new': typeof AuthenticatedAdminPostsNewRoute
   '/api/v1/posts/$slug': typeof ApiV1PostsSlugRoute
-  '/_authenticated/admin/posts/$id/edit': typeof AuthenticatedAdminPostsIdEditRoute
+  '/_authenticated/admin_/posts_/$id/edit': typeof AuthenticatedAdminPostsIdEditRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
@@ -534,8 +588,10 @@ export interface FileRouteTypes {
     | '/newsletter'
     | '/register'
     | '/reset-password'
+    | '/rss.xml'
     | '/safety'
     | '/search'
+    | '/sitemap.xml'
     | '/stories'
     | '/topics'
     | '/updates'
@@ -566,9 +622,13 @@ export interface FileRouteTypes {
     | '/admin/categories'
     | '/admin/newsletter'
     | '/admin/posts'
+    | '/api/v1/authors'
     | '/api/v1/categories'
+    | '/api/v1/openapi.json'
     | '/api/v1/posts'
     | '/api/v1/search'
+    | '/api/v1/tags'
+    | '/api/v1/topics'
     | '/developers/api/$version'
     | '/developers/docs/$slug'
     | '/admin/posts/new'
@@ -590,8 +650,10 @@ export interface FileRouteTypes {
     | '/newsletter'
     | '/register'
     | '/reset-password'
+    | '/rss.xml'
     | '/safety'
     | '/search'
+    | '/sitemap.xml'
     | '/stories'
     | '/topics'
     | '/updates'
@@ -622,9 +684,13 @@ export interface FileRouteTypes {
     | '/admin/categories'
     | '/admin/newsletter'
     | '/admin/posts'
+    | '/api/v1/authors'
     | '/api/v1/categories'
+    | '/api/v1/openapi.json'
     | '/api/v1/posts'
     | '/api/v1/search'
+    | '/api/v1/tags'
+    | '/api/v1/topics'
     | '/developers/api/$version'
     | '/developers/docs/$slug'
     | '/admin/posts/new'
@@ -647,46 +713,52 @@ export interface FileRouteTypes {
     | '/newsletter'
     | '/register'
     | '/reset-password'
+    | '/rss.xml'
     | '/safety'
     | '/search'
+    | '/sitemap.xml'
     | '/stories'
     | '/topics'
     | '/updates'
     | '/_authenticated/account'
     | '/_authenticated/admin'
-    | '/authors/$slug'
-    | '/categories/$slug'
-    | '/developers/api'
-    | '/developers/docs'
-    | '/guides/$slug'
-    | '/help/$slug'
-    | '/help/faq'
-    | '/investors/$slug'
-    | '/legal/$slug'
-    | '/legal/cookies'
-    | '/legal/privacy'
-    | '/legal/terms'
-    | '/news/$slug'
-    | '/safety/$slug'
-    | '/series/$slug'
-    | '/stories/$slug'
-    | '/topics/$slug'
-    | '/updates/$slug'
-    | '/updates/release-notes'
-    | '/_authenticated/account/bookmarks'
-    | '/_authenticated/account/settings'
-    | '/_authenticated/account/subscriptions'
-    | '/_authenticated/admin/categories'
-    | '/_authenticated/admin/newsletter'
-    | '/_authenticated/admin/posts'
+    | '/authors_/$slug'
+    | '/categories_/$slug'
+    | '/developers_/api'
+    | '/developers_/docs'
+    | '/guides_/$slug'
+    | '/help_/$slug'
+    | '/help_/faq'
+    | '/investors_/$slug'
+    | '/legal_/$slug'
+    | '/legal_/cookies'
+    | '/legal_/privacy'
+    | '/legal_/terms'
+    | '/news_/$slug'
+    | '/safety_/$slug'
+    | '/series_/$slug'
+    | '/stories_/$slug'
+    | '/topics_/$slug'
+    | '/updates_/$slug'
+    | '/updates_/release-notes'
+    | '/_authenticated/account_/bookmarks'
+    | '/_authenticated/account_/settings'
+    | '/_authenticated/account_/subscriptions'
+    | '/_authenticated/admin_/categories'
+    | '/_authenticated/admin_/newsletter'
+    | '/_authenticated/admin_/posts'
+    | '/api/v1/authors'
     | '/api/v1/categories'
+    | '/api/v1/openapi.json'
     | '/api/v1/posts'
     | '/api/v1/search'
-    | '/developers/api/$version'
-    | '/developers/docs/$slug'
-    | '/_authenticated/admin/posts/new'
+    | '/api/v1/tags'
+    | '/api/v1/topics'
+    | '/developers_/api_/$version'
+    | '/developers_/docs_/$slug'
+    | '/_authenticated/admin_/posts_/new'
     | '/api/v1/posts/$slug'
-    | '/_authenticated/admin/posts/$id/edit'
+    | '/_authenticated/admin_/posts_/$id/edit'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
@@ -694,28 +766,52 @@ export interface RootRouteChildren {
   AuthenticatedRouteRoute: typeof AuthenticatedRouteRouteWithChildren
   AboutRoute: typeof AboutRoute
   ContactRoute: typeof ContactRoute
-  DevelopersRoute: typeof DevelopersRouteWithChildren
+  DevelopersRoute: typeof DevelopersRoute
   ForgotPasswordRoute: typeof ForgotPasswordRoute
-  GuidesRoute: typeof GuidesRouteWithChildren
-  HelpRoute: typeof HelpRouteWithChildren
-  InvestorsRoute: typeof InvestorsRouteWithChildren
-  LegalRoute: typeof LegalRouteWithChildren
+  GuidesRoute: typeof GuidesRoute
+  HelpRoute: typeof HelpRoute
+  InvestorsRoute: typeof InvestorsRoute
+  LegalRoute: typeof LegalRoute
   LoginRoute: typeof LoginRoute
-  NewsRoute: typeof NewsRouteWithChildren
+  NewsRoute: typeof NewsRoute
   NewsletterRoute: typeof NewsletterRoute
   RegisterRoute: typeof RegisterRoute
   ResetPasswordRoute: typeof ResetPasswordRoute
-  SafetyRoute: typeof SafetyRouteWithChildren
+  RssDotxmlRoute: typeof RssDotxmlRoute
+  SafetyRoute: typeof SafetyRoute
   SearchRoute: typeof SearchRoute
-  StoriesRoute: typeof StoriesRouteWithChildren
-  TopicsRoute: typeof TopicsRouteWithChildren
-  UpdatesRoute: typeof UpdatesRouteWithChildren
+  SitemapDotxmlRoute: typeof SitemapDotxmlRoute
+  StoriesRoute: typeof StoriesRoute
+  TopicsRoute: typeof TopicsRoute
+  UpdatesRoute: typeof UpdatesRoute
   AuthorsSlugRoute: typeof AuthorsSlugRoute
   CategoriesSlugRoute: typeof CategoriesSlugRoute
+  DevelopersApiRoute: typeof DevelopersApiRoute
+  DevelopersDocsRoute: typeof DevelopersDocsRoute
+  GuidesSlugRoute: typeof GuidesSlugRoute
+  HelpSlugRoute: typeof HelpSlugRoute
+  HelpFaqRoute: typeof HelpFaqRoute
+  InvestorsSlugRoute: typeof InvestorsSlugRoute
+  LegalSlugRoute: typeof LegalSlugRoute
+  LegalCookiesRoute: typeof LegalCookiesRoute
+  LegalPrivacyRoute: typeof LegalPrivacyRoute
+  LegalTermsRoute: typeof LegalTermsRoute
+  NewsSlugRoute: typeof NewsSlugRoute
+  SafetySlugRoute: typeof SafetySlugRoute
   SeriesSlugRoute: typeof SeriesSlugRoute
+  StoriesSlugRoute: typeof StoriesSlugRoute
+  TopicsSlugRoute: typeof TopicsSlugRoute
+  UpdatesSlugRoute: typeof UpdatesSlugRoute
+  UpdatesReleaseNotesRoute: typeof UpdatesReleaseNotesRoute
+  ApiV1AuthorsRoute: typeof ApiV1AuthorsRoute
   ApiV1CategoriesRoute: typeof ApiV1CategoriesRoute
+  ApiV1OpenapiDotjsonRoute: typeof ApiV1OpenapiDotjsonRoute
   ApiV1PostsRoute: typeof ApiV1PostsRouteWithChildren
   ApiV1SearchRoute: typeof ApiV1SearchRoute
+  ApiV1TagsRoute: typeof ApiV1TagsRoute
+  ApiV1TopicsRoute: typeof ApiV1TopicsRoute
+  DevelopersApiVersionRoute: typeof DevelopersApiVersionRoute
+  DevelopersDocsSlugRoute: typeof DevelopersDocsSlugRoute
 }
 
 declare module '@tanstack/react-router' {
@@ -825,6 +921,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof ResetPasswordRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/rss.xml': {
+      id: '/rss.xml'
+      path: '/rss.xml'
+      fullPath: '/rss.xml'
+      preLoaderRoute: typeof RssDotxmlRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/safety': {
       id: '/safety'
       path: '/safety'
@@ -837,6 +940,13 @@ declare module '@tanstack/react-router' {
       path: '/search'
       fullPath: '/search'
       preLoaderRoute: typeof SearchRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/sitemap.xml': {
+      id: '/sitemap.xml'
+      path: '/sitemap.xml'
+      fullPath: '/sitemap.xml'
+      preLoaderRoute: typeof SitemapDotxmlRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/stories': {
@@ -874,186 +984,200 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AuthenticatedAdminRouteImport
       parentRoute: typeof AuthenticatedRouteRoute
     }
-    '/authors/$slug': {
-      id: '/authors/$slug'
+    '/authors_/$slug': {
+      id: '/authors_/$slug'
       path: '/authors/$slug'
       fullPath: '/authors/$slug'
       preLoaderRoute: typeof AuthorsSlugRouteImport
       parentRoute: typeof rootRouteImport
     }
-    '/categories/$slug': {
-      id: '/categories/$slug'
+    '/categories_/$slug': {
+      id: '/categories_/$slug'
       path: '/categories/$slug'
       fullPath: '/categories/$slug'
       preLoaderRoute: typeof CategoriesSlugRouteImport
       parentRoute: typeof rootRouteImport
     }
-    '/developers/api': {
-      id: '/developers/api'
-      path: '/api'
+    '/developers_/api': {
+      id: '/developers_/api'
+      path: '/developers/api'
       fullPath: '/developers/api'
       preLoaderRoute: typeof DevelopersApiRouteImport
-      parentRoute: typeof DevelopersRoute
+      parentRoute: typeof rootRouteImport
     }
-    '/developers/docs': {
-      id: '/developers/docs'
-      path: '/docs'
+    '/developers_/docs': {
+      id: '/developers_/docs'
+      path: '/developers/docs'
       fullPath: '/developers/docs'
       preLoaderRoute: typeof DevelopersDocsRouteImport
-      parentRoute: typeof DevelopersRoute
+      parentRoute: typeof rootRouteImport
     }
-    '/guides/$slug': {
-      id: '/guides/$slug'
-      path: '/$slug'
+    '/guides_/$slug': {
+      id: '/guides_/$slug'
+      path: '/guides/$slug'
       fullPath: '/guides/$slug'
       preLoaderRoute: typeof GuidesSlugRouteImport
-      parentRoute: typeof GuidesRoute
+      parentRoute: typeof rootRouteImport
     }
-    '/help/$slug': {
-      id: '/help/$slug'
-      path: '/$slug'
+    '/help_/$slug': {
+      id: '/help_/$slug'
+      path: '/help/$slug'
       fullPath: '/help/$slug'
       preLoaderRoute: typeof HelpSlugRouteImport
-      parentRoute: typeof HelpRoute
+      parentRoute: typeof rootRouteImport
     }
-    '/help/faq': {
-      id: '/help/faq'
-      path: '/faq'
+    '/help_/faq': {
+      id: '/help_/faq'
+      path: '/help/faq'
       fullPath: '/help/faq'
       preLoaderRoute: typeof HelpFaqRouteImport
-      parentRoute: typeof HelpRoute
+      parentRoute: typeof rootRouteImport
     }
-    '/investors/$slug': {
-      id: '/investors/$slug'
-      path: '/$slug'
+    '/investors_/$slug': {
+      id: '/investors_/$slug'
+      path: '/investors/$slug'
       fullPath: '/investors/$slug'
       preLoaderRoute: typeof InvestorsSlugRouteImport
-      parentRoute: typeof InvestorsRoute
+      parentRoute: typeof rootRouteImport
     }
-    '/legal/$slug': {
-      id: '/legal/$slug'
-      path: '/$slug'
+    '/legal_/$slug': {
+      id: '/legal_/$slug'
+      path: '/legal/$slug'
       fullPath: '/legal/$slug'
       preLoaderRoute: typeof LegalSlugRouteImport
-      parentRoute: typeof LegalRoute
+      parentRoute: typeof rootRouteImport
     }
-    '/legal/cookies': {
-      id: '/legal/cookies'
-      path: '/cookies'
+    '/legal_/cookies': {
+      id: '/legal_/cookies'
+      path: '/legal/cookies'
       fullPath: '/legal/cookies'
       preLoaderRoute: typeof LegalCookiesRouteImport
-      parentRoute: typeof LegalRoute
+      parentRoute: typeof rootRouteImport
     }
-    '/legal/privacy': {
-      id: '/legal/privacy'
-      path: '/privacy'
+    '/legal_/privacy': {
+      id: '/legal_/privacy'
+      path: '/legal/privacy'
       fullPath: '/legal/privacy'
       preLoaderRoute: typeof LegalPrivacyRouteImport
-      parentRoute: typeof LegalRoute
+      parentRoute: typeof rootRouteImport
     }
-    '/legal/terms': {
-      id: '/legal/terms'
-      path: '/terms'
+    '/legal_/terms': {
+      id: '/legal_/terms'
+      path: '/legal/terms'
       fullPath: '/legal/terms'
       preLoaderRoute: typeof LegalTermsRouteImport
-      parentRoute: typeof LegalRoute
+      parentRoute: typeof rootRouteImport
     }
-    '/news/$slug': {
-      id: '/news/$slug'
-      path: '/$slug'
+    '/news_/$slug': {
+      id: '/news_/$slug'
+      path: '/news/$slug'
       fullPath: '/news/$slug'
       preLoaderRoute: typeof NewsSlugRouteImport
-      parentRoute: typeof NewsRoute
+      parentRoute: typeof rootRouteImport
     }
-    '/safety/$slug': {
-      id: '/safety/$slug'
-      path: '/$slug'
+    '/safety_/$slug': {
+      id: '/safety_/$slug'
+      path: '/safety/$slug'
       fullPath: '/safety/$slug'
       preLoaderRoute: typeof SafetySlugRouteImport
-      parentRoute: typeof SafetyRoute
+      parentRoute: typeof rootRouteImport
     }
-    '/series/$slug': {
-      id: '/series/$slug'
+    '/series_/$slug': {
+      id: '/series_/$slug'
       path: '/series/$slug'
       fullPath: '/series/$slug'
       preLoaderRoute: typeof SeriesSlugRouteImport
       parentRoute: typeof rootRouteImport
     }
-    '/stories/$slug': {
-      id: '/stories/$slug'
-      path: '/$slug'
+    '/stories_/$slug': {
+      id: '/stories_/$slug'
+      path: '/stories/$slug'
       fullPath: '/stories/$slug'
       preLoaderRoute: typeof StoriesSlugRouteImport
-      parentRoute: typeof StoriesRoute
+      parentRoute: typeof rootRouteImport
     }
-    '/topics/$slug': {
-      id: '/topics/$slug'
-      path: '/$slug'
+    '/topics_/$slug': {
+      id: '/topics_/$slug'
+      path: '/topics/$slug'
       fullPath: '/topics/$slug'
       preLoaderRoute: typeof TopicsSlugRouteImport
-      parentRoute: typeof TopicsRoute
+      parentRoute: typeof rootRouteImport
     }
-    '/updates/$slug': {
-      id: '/updates/$slug'
-      path: '/$slug'
+    '/updates_/$slug': {
+      id: '/updates_/$slug'
+      path: '/updates/$slug'
       fullPath: '/updates/$slug'
       preLoaderRoute: typeof UpdatesSlugRouteImport
-      parentRoute: typeof UpdatesRoute
+      parentRoute: typeof rootRouteImport
     }
-    '/updates/release-notes': {
-      id: '/updates/release-notes'
-      path: '/release-notes'
+    '/updates_/release-notes': {
+      id: '/updates_/release-notes'
+      path: '/updates/release-notes'
       fullPath: '/updates/release-notes'
       preLoaderRoute: typeof UpdatesReleaseNotesRouteImport
-      parentRoute: typeof UpdatesRoute
+      parentRoute: typeof rootRouteImport
     }
-    '/_authenticated/account/bookmarks': {
-      id: '/_authenticated/account/bookmarks'
-      path: '/bookmarks'
+    '/_authenticated/account_/bookmarks': {
+      id: '/_authenticated/account_/bookmarks'
+      path: '/account/bookmarks'
       fullPath: '/account/bookmarks'
       preLoaderRoute: typeof AuthenticatedAccountBookmarksRouteImport
-      parentRoute: typeof AuthenticatedAccountRoute
+      parentRoute: typeof AuthenticatedRouteRoute
     }
-    '/_authenticated/account/settings': {
-      id: '/_authenticated/account/settings'
-      path: '/settings'
+    '/_authenticated/account_/settings': {
+      id: '/_authenticated/account_/settings'
+      path: '/account/settings'
       fullPath: '/account/settings'
       preLoaderRoute: typeof AuthenticatedAccountSettingsRouteImport
-      parentRoute: typeof AuthenticatedAccountRoute
+      parentRoute: typeof AuthenticatedRouteRoute
     }
-    '/_authenticated/account/subscriptions': {
-      id: '/_authenticated/account/subscriptions'
-      path: '/subscriptions'
+    '/_authenticated/account_/subscriptions': {
+      id: '/_authenticated/account_/subscriptions'
+      path: '/account/subscriptions'
       fullPath: '/account/subscriptions'
       preLoaderRoute: typeof AuthenticatedAccountSubscriptionsRouteImport
-      parentRoute: typeof AuthenticatedAccountRoute
+      parentRoute: typeof AuthenticatedRouteRoute
     }
-    '/_authenticated/admin/categories': {
-      id: '/_authenticated/admin/categories'
-      path: '/categories'
+    '/_authenticated/admin_/categories': {
+      id: '/_authenticated/admin_/categories'
+      path: '/admin/categories'
       fullPath: '/admin/categories'
       preLoaderRoute: typeof AuthenticatedAdminCategoriesRouteImport
-      parentRoute: typeof AuthenticatedAdminRoute
+      parentRoute: typeof AuthenticatedRouteRoute
     }
-    '/_authenticated/admin/newsletter': {
-      id: '/_authenticated/admin/newsletter'
-      path: '/newsletter'
+    '/_authenticated/admin_/newsletter': {
+      id: '/_authenticated/admin_/newsletter'
+      path: '/admin/newsletter'
       fullPath: '/admin/newsletter'
       preLoaderRoute: typeof AuthenticatedAdminNewsletterRouteImport
-      parentRoute: typeof AuthenticatedAdminRoute
+      parentRoute: typeof AuthenticatedRouteRoute
     }
-    '/_authenticated/admin/posts': {
-      id: '/_authenticated/admin/posts'
-      path: '/posts'
+    '/_authenticated/admin_/posts': {
+      id: '/_authenticated/admin_/posts'
+      path: '/admin/posts'
       fullPath: '/admin/posts'
       preLoaderRoute: typeof AuthenticatedAdminPostsRouteImport
-      parentRoute: typeof AuthenticatedAdminRoute
+      parentRoute: typeof AuthenticatedRouteRoute
+    }
+    '/api/v1/authors': {
+      id: '/api/v1/authors'
+      path: '/api/v1/authors'
+      fullPath: '/api/v1/authors'
+      preLoaderRoute: typeof ApiV1AuthorsRouteImport
+      parentRoute: typeof rootRouteImport
     }
     '/api/v1/categories': {
       id: '/api/v1/categories'
       path: '/api/v1/categories'
       fullPath: '/api/v1/categories'
       preLoaderRoute: typeof ApiV1CategoriesRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/api/v1/openapi.json': {
+      id: '/api/v1/openapi.json'
+      path: '/api/v1/openapi.json'
+      fullPath: '/api/v1/openapi.json'
+      preLoaderRoute: typeof ApiV1OpenapiDotjsonRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/api/v1/posts': {
@@ -1070,26 +1194,40 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof ApiV1SearchRouteImport
       parentRoute: typeof rootRouteImport
     }
-    '/developers/api/$version': {
-      id: '/developers/api/$version'
-      path: '/$version'
+    '/api/v1/tags': {
+      id: '/api/v1/tags'
+      path: '/api/v1/tags'
+      fullPath: '/api/v1/tags'
+      preLoaderRoute: typeof ApiV1TagsRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/api/v1/topics': {
+      id: '/api/v1/topics'
+      path: '/api/v1/topics'
+      fullPath: '/api/v1/topics'
+      preLoaderRoute: typeof ApiV1TopicsRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/developers_/api_/$version': {
+      id: '/developers_/api_/$version'
+      path: '/developers/api/$version'
       fullPath: '/developers/api/$version'
       preLoaderRoute: typeof DevelopersApiVersionRouteImport
-      parentRoute: typeof DevelopersApiRoute
+      parentRoute: typeof rootRouteImport
     }
-    '/developers/docs/$slug': {
-      id: '/developers/docs/$slug'
-      path: '/$slug'
+    '/developers_/docs_/$slug': {
+      id: '/developers_/docs_/$slug'
+      path: '/developers/docs/$slug'
       fullPath: '/developers/docs/$slug'
       preLoaderRoute: typeof DevelopersDocsSlugRouteImport
-      parentRoute: typeof DevelopersDocsRoute
+      parentRoute: typeof rootRouteImport
     }
-    '/_authenticated/admin/posts/new': {
-      id: '/_authenticated/admin/posts/new'
-      path: '/new'
+    '/_authenticated/admin_/posts_/new': {
+      id: '/_authenticated/admin_/posts_/new'
+      path: '/admin/posts/new'
       fullPath: '/admin/posts/new'
       preLoaderRoute: typeof AuthenticatedAdminPostsNewRouteImport
-      parentRoute: typeof AuthenticatedAdminPostsRoute
+      parentRoute: typeof AuthenticatedRouteRoute
     }
     '/api/v1/posts/$slug': {
       id: '/api/v1/posts/$slug'
@@ -1098,220 +1236,45 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof ApiV1PostsSlugRouteImport
       parentRoute: typeof ApiV1PostsRoute
     }
-    '/_authenticated/admin/posts/$id/edit': {
-      id: '/_authenticated/admin/posts/$id/edit'
-      path: '/$id/edit'
+    '/_authenticated/admin_/posts_/$id/edit': {
+      id: '/_authenticated/admin_/posts_/$id/edit'
+      path: '/admin/posts/$id/edit'
       fullPath: '/admin/posts/$id/edit'
       preLoaderRoute: typeof AuthenticatedAdminPostsIdEditRouteImport
-      parentRoute: typeof AuthenticatedAdminPostsRoute
+      parentRoute: typeof AuthenticatedRouteRoute
     }
   }
 }
 
-interface AuthenticatedAccountRouteChildren {
+interface AuthenticatedRouteRouteChildren {
+  AuthenticatedAccountRoute: typeof AuthenticatedAccountRoute
+  AuthenticatedAdminRoute: typeof AuthenticatedAdminRoute
   AuthenticatedAccountBookmarksRoute: typeof AuthenticatedAccountBookmarksRoute
   AuthenticatedAccountSettingsRoute: typeof AuthenticatedAccountSettingsRoute
   AuthenticatedAccountSubscriptionsRoute: typeof AuthenticatedAccountSubscriptionsRoute
-}
-
-const AuthenticatedAccountRouteChildren: AuthenticatedAccountRouteChildren = {
-  AuthenticatedAccountBookmarksRoute: AuthenticatedAccountBookmarksRoute,
-  AuthenticatedAccountSettingsRoute: AuthenticatedAccountSettingsRoute,
-  AuthenticatedAccountSubscriptionsRoute:
-    AuthenticatedAccountSubscriptionsRoute,
-}
-
-const AuthenticatedAccountRouteWithChildren =
-  AuthenticatedAccountRoute._addFileChildren(AuthenticatedAccountRouteChildren)
-
-interface AuthenticatedAdminPostsRouteChildren {
+  AuthenticatedAdminCategoriesRoute: typeof AuthenticatedAdminCategoriesRoute
+  AuthenticatedAdminNewsletterRoute: typeof AuthenticatedAdminNewsletterRoute
+  AuthenticatedAdminPostsRoute: typeof AuthenticatedAdminPostsRoute
   AuthenticatedAdminPostsNewRoute: typeof AuthenticatedAdminPostsNewRoute
   AuthenticatedAdminPostsIdEditRoute: typeof AuthenticatedAdminPostsIdEditRoute
 }
 
-const AuthenticatedAdminPostsRouteChildren: AuthenticatedAdminPostsRouteChildren =
-  {
-    AuthenticatedAdminPostsNewRoute: AuthenticatedAdminPostsNewRoute,
-    AuthenticatedAdminPostsIdEditRoute: AuthenticatedAdminPostsIdEditRoute,
-  }
-
-const AuthenticatedAdminPostsRouteWithChildren =
-  AuthenticatedAdminPostsRoute._addFileChildren(
-    AuthenticatedAdminPostsRouteChildren,
-  )
-
-interface AuthenticatedAdminRouteChildren {
-  AuthenticatedAdminCategoriesRoute: typeof AuthenticatedAdminCategoriesRoute
-  AuthenticatedAdminNewsletterRoute: typeof AuthenticatedAdminNewsletterRoute
-  AuthenticatedAdminPostsRoute: typeof AuthenticatedAdminPostsRouteWithChildren
-}
-
-const AuthenticatedAdminRouteChildren: AuthenticatedAdminRouteChildren = {
+const AuthenticatedRouteRouteChildren: AuthenticatedRouteRouteChildren = {
+  AuthenticatedAccountRoute: AuthenticatedAccountRoute,
+  AuthenticatedAdminRoute: AuthenticatedAdminRoute,
+  AuthenticatedAccountBookmarksRoute: AuthenticatedAccountBookmarksRoute,
+  AuthenticatedAccountSettingsRoute: AuthenticatedAccountSettingsRoute,
+  AuthenticatedAccountSubscriptionsRoute:
+    AuthenticatedAccountSubscriptionsRoute,
   AuthenticatedAdminCategoriesRoute: AuthenticatedAdminCategoriesRoute,
   AuthenticatedAdminNewsletterRoute: AuthenticatedAdminNewsletterRoute,
-  AuthenticatedAdminPostsRoute: AuthenticatedAdminPostsRouteWithChildren,
-}
-
-const AuthenticatedAdminRouteWithChildren =
-  AuthenticatedAdminRoute._addFileChildren(AuthenticatedAdminRouteChildren)
-
-interface AuthenticatedRouteRouteChildren {
-  AuthenticatedAccountRoute: typeof AuthenticatedAccountRouteWithChildren
-  AuthenticatedAdminRoute: typeof AuthenticatedAdminRouteWithChildren
-}
-
-const AuthenticatedRouteRouteChildren: AuthenticatedRouteRouteChildren = {
-  AuthenticatedAccountRoute: AuthenticatedAccountRouteWithChildren,
-  AuthenticatedAdminRoute: AuthenticatedAdminRouteWithChildren,
+  AuthenticatedAdminPostsRoute: AuthenticatedAdminPostsRoute,
+  AuthenticatedAdminPostsNewRoute: AuthenticatedAdminPostsNewRoute,
+  AuthenticatedAdminPostsIdEditRoute: AuthenticatedAdminPostsIdEditRoute,
 }
 
 const AuthenticatedRouteRouteWithChildren =
   AuthenticatedRouteRoute._addFileChildren(AuthenticatedRouteRouteChildren)
-
-interface DevelopersApiRouteChildren {
-  DevelopersApiVersionRoute: typeof DevelopersApiVersionRoute
-}
-
-const DevelopersApiRouteChildren: DevelopersApiRouteChildren = {
-  DevelopersApiVersionRoute: DevelopersApiVersionRoute,
-}
-
-const DevelopersApiRouteWithChildren = DevelopersApiRoute._addFileChildren(
-  DevelopersApiRouteChildren,
-)
-
-interface DevelopersDocsRouteChildren {
-  DevelopersDocsSlugRoute: typeof DevelopersDocsSlugRoute
-}
-
-const DevelopersDocsRouteChildren: DevelopersDocsRouteChildren = {
-  DevelopersDocsSlugRoute: DevelopersDocsSlugRoute,
-}
-
-const DevelopersDocsRouteWithChildren = DevelopersDocsRoute._addFileChildren(
-  DevelopersDocsRouteChildren,
-)
-
-interface DevelopersRouteChildren {
-  DevelopersApiRoute: typeof DevelopersApiRouteWithChildren
-  DevelopersDocsRoute: typeof DevelopersDocsRouteWithChildren
-}
-
-const DevelopersRouteChildren: DevelopersRouteChildren = {
-  DevelopersApiRoute: DevelopersApiRouteWithChildren,
-  DevelopersDocsRoute: DevelopersDocsRouteWithChildren,
-}
-
-const DevelopersRouteWithChildren = DevelopersRoute._addFileChildren(
-  DevelopersRouteChildren,
-)
-
-interface GuidesRouteChildren {
-  GuidesSlugRoute: typeof GuidesSlugRoute
-}
-
-const GuidesRouteChildren: GuidesRouteChildren = {
-  GuidesSlugRoute: GuidesSlugRoute,
-}
-
-const GuidesRouteWithChildren =
-  GuidesRoute._addFileChildren(GuidesRouteChildren)
-
-interface HelpRouteChildren {
-  HelpSlugRoute: typeof HelpSlugRoute
-  HelpFaqRoute: typeof HelpFaqRoute
-}
-
-const HelpRouteChildren: HelpRouteChildren = {
-  HelpSlugRoute: HelpSlugRoute,
-  HelpFaqRoute: HelpFaqRoute,
-}
-
-const HelpRouteWithChildren = HelpRoute._addFileChildren(HelpRouteChildren)
-
-interface InvestorsRouteChildren {
-  InvestorsSlugRoute: typeof InvestorsSlugRoute
-}
-
-const InvestorsRouteChildren: InvestorsRouteChildren = {
-  InvestorsSlugRoute: InvestorsSlugRoute,
-}
-
-const InvestorsRouteWithChildren = InvestorsRoute._addFileChildren(
-  InvestorsRouteChildren,
-)
-
-interface LegalRouteChildren {
-  LegalSlugRoute: typeof LegalSlugRoute
-  LegalCookiesRoute: typeof LegalCookiesRoute
-  LegalPrivacyRoute: typeof LegalPrivacyRoute
-  LegalTermsRoute: typeof LegalTermsRoute
-}
-
-const LegalRouteChildren: LegalRouteChildren = {
-  LegalSlugRoute: LegalSlugRoute,
-  LegalCookiesRoute: LegalCookiesRoute,
-  LegalPrivacyRoute: LegalPrivacyRoute,
-  LegalTermsRoute: LegalTermsRoute,
-}
-
-const LegalRouteWithChildren = LegalRoute._addFileChildren(LegalRouteChildren)
-
-interface NewsRouteChildren {
-  NewsSlugRoute: typeof NewsSlugRoute
-}
-
-const NewsRouteChildren: NewsRouteChildren = {
-  NewsSlugRoute: NewsSlugRoute,
-}
-
-const NewsRouteWithChildren = NewsRoute._addFileChildren(NewsRouteChildren)
-
-interface SafetyRouteChildren {
-  SafetySlugRoute: typeof SafetySlugRoute
-}
-
-const SafetyRouteChildren: SafetyRouteChildren = {
-  SafetySlugRoute: SafetySlugRoute,
-}
-
-const SafetyRouteWithChildren =
-  SafetyRoute._addFileChildren(SafetyRouteChildren)
-
-interface StoriesRouteChildren {
-  StoriesSlugRoute: typeof StoriesSlugRoute
-}
-
-const StoriesRouteChildren: StoriesRouteChildren = {
-  StoriesSlugRoute: StoriesSlugRoute,
-}
-
-const StoriesRouteWithChildren =
-  StoriesRoute._addFileChildren(StoriesRouteChildren)
-
-interface TopicsRouteChildren {
-  TopicsSlugRoute: typeof TopicsSlugRoute
-}
-
-const TopicsRouteChildren: TopicsRouteChildren = {
-  TopicsSlugRoute: TopicsSlugRoute,
-}
-
-const TopicsRouteWithChildren =
-  TopicsRoute._addFileChildren(TopicsRouteChildren)
-
-interface UpdatesRouteChildren {
-  UpdatesSlugRoute: typeof UpdatesSlugRoute
-  UpdatesReleaseNotesRoute: typeof UpdatesReleaseNotesRoute
-}
-
-const UpdatesRouteChildren: UpdatesRouteChildren = {
-  UpdatesSlugRoute: UpdatesSlugRoute,
-  UpdatesReleaseNotesRoute: UpdatesReleaseNotesRoute,
-}
-
-const UpdatesRouteWithChildren =
-  UpdatesRoute._addFileChildren(UpdatesRouteChildren)
 
 interface ApiV1PostsRouteChildren {
   ApiV1PostsSlugRoute: typeof ApiV1PostsSlugRoute
@@ -1330,28 +1293,52 @@ const rootRouteChildren: RootRouteChildren = {
   AuthenticatedRouteRoute: AuthenticatedRouteRouteWithChildren,
   AboutRoute: AboutRoute,
   ContactRoute: ContactRoute,
-  DevelopersRoute: DevelopersRouteWithChildren,
+  DevelopersRoute: DevelopersRoute,
   ForgotPasswordRoute: ForgotPasswordRoute,
-  GuidesRoute: GuidesRouteWithChildren,
-  HelpRoute: HelpRouteWithChildren,
-  InvestorsRoute: InvestorsRouteWithChildren,
-  LegalRoute: LegalRouteWithChildren,
+  GuidesRoute: GuidesRoute,
+  HelpRoute: HelpRoute,
+  InvestorsRoute: InvestorsRoute,
+  LegalRoute: LegalRoute,
   LoginRoute: LoginRoute,
-  NewsRoute: NewsRouteWithChildren,
+  NewsRoute: NewsRoute,
   NewsletterRoute: NewsletterRoute,
   RegisterRoute: RegisterRoute,
   ResetPasswordRoute: ResetPasswordRoute,
-  SafetyRoute: SafetyRouteWithChildren,
+  RssDotxmlRoute: RssDotxmlRoute,
+  SafetyRoute: SafetyRoute,
   SearchRoute: SearchRoute,
-  StoriesRoute: StoriesRouteWithChildren,
-  TopicsRoute: TopicsRouteWithChildren,
-  UpdatesRoute: UpdatesRouteWithChildren,
+  SitemapDotxmlRoute: SitemapDotxmlRoute,
+  StoriesRoute: StoriesRoute,
+  TopicsRoute: TopicsRoute,
+  UpdatesRoute: UpdatesRoute,
   AuthorsSlugRoute: AuthorsSlugRoute,
   CategoriesSlugRoute: CategoriesSlugRoute,
+  DevelopersApiRoute: DevelopersApiRoute,
+  DevelopersDocsRoute: DevelopersDocsRoute,
+  GuidesSlugRoute: GuidesSlugRoute,
+  HelpSlugRoute: HelpSlugRoute,
+  HelpFaqRoute: HelpFaqRoute,
+  InvestorsSlugRoute: InvestorsSlugRoute,
+  LegalSlugRoute: LegalSlugRoute,
+  LegalCookiesRoute: LegalCookiesRoute,
+  LegalPrivacyRoute: LegalPrivacyRoute,
+  LegalTermsRoute: LegalTermsRoute,
+  NewsSlugRoute: NewsSlugRoute,
+  SafetySlugRoute: SafetySlugRoute,
   SeriesSlugRoute: SeriesSlugRoute,
+  StoriesSlugRoute: StoriesSlugRoute,
+  TopicsSlugRoute: TopicsSlugRoute,
+  UpdatesSlugRoute: UpdatesSlugRoute,
+  UpdatesReleaseNotesRoute: UpdatesReleaseNotesRoute,
+  ApiV1AuthorsRoute: ApiV1AuthorsRoute,
   ApiV1CategoriesRoute: ApiV1CategoriesRoute,
+  ApiV1OpenapiDotjsonRoute: ApiV1OpenapiDotjsonRoute,
   ApiV1PostsRoute: ApiV1PostsRouteWithChildren,
   ApiV1SearchRoute: ApiV1SearchRoute,
+  ApiV1TagsRoute: ApiV1TagsRoute,
+  ApiV1TopicsRoute: ApiV1TopicsRoute,
+  DevelopersApiVersionRoute: DevelopersApiVersionRoute,
+  DevelopersDocsSlugRoute: DevelopersDocsSlugRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)

@@ -4,9 +4,10 @@ import { toast } from "sonner";
 import { supabase } from "@/integrations/supabase/client";
 
 export const Route = createFileRoute("/forgot-password")({
+  staticData: { sitemap: false },
   head: () => ({
     meta: [
-      { title: "Reset password | Hustler Journal" },
+      { title: "Reset password | Hustler Journal" }, {name:"description",content:"Reset password on Hustler Journal."}, {property:"og:title",content:"Reset password | Hustler Journal"}, {property:"og:description",content:"Reset password on Hustler Journal."}, {property:"og:type",content:"website"}, {name:"twitter:card",content:"summary_large_image"},
       { name: "description", content: "Request a password reset link for your Hustler Journal account." },
       { name: "robots", content: "noindex" },
     ],
@@ -20,18 +21,18 @@ function ForgotPasswordPage() {
 
   return (
     <div className="mx-auto max-w-md px-4 py-16">
-      <h1 className="text-3xl font-extrabold tracking-tight">Forgot your password</h1>
+      <h1 className="text-3xl font-extrabold tracking-normal">Forgot your password</h1>
       {sent ? (
         <div role="status" aria-live="polite" className="mt-8 rounded-2xl border-2 border-primary/30 bg-primary-soft p-6">
           <h2 className="text-lg font-bold text-primary">Check your email</h2>
-          <p className="mt-1.5 text-sm leading-relaxed text-muted-foreground">
+          <p className="mt-1.5 text-base leading-relaxed text-muted-foreground">
             If an account exists for {email}, a reset link is on its way. The link opens the page
             where you set a new password.
           </p>
         </div>
       ) : (
         <>
-          <p className="mt-2 text-sm leading-relaxed text-muted-foreground">
+          <p className="mt-2 text-base leading-relaxed text-muted-foreground">
             Enter the email on your account and we will send a reset link.
           </p>
           <form
@@ -49,7 +50,7 @@ function ForgotPasswordPage() {
             }}
           >
             <div>
-              <label htmlFor="fp-email" className="mb-1.5 block text-sm font-semibold">
+              <label htmlFor="fp-email" className="mb-1.5 block text-base font-semibold">
                 Email address
               </label>
               <input
@@ -71,7 +72,7 @@ function ForgotPasswordPage() {
           </form>
         </>
       )}
-      <p className="mt-6 text-center text-sm text-muted-foreground">
+      <p className="mt-6 text-center text-base text-muted-foreground">
         <Link to="/login" className="font-bold text-primary underline-offset-4 hover:underline">
           Back to sign in
         </Link>

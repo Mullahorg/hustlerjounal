@@ -20,6 +20,7 @@ type HomeData = {
 };
 
 export const Route = createFileRoute("/")({
+  staticData: { sitemap: true },
   head: () => ({
     meta: [
       { title: "Hustler Journal: Practical guides and stories from HustlerLink" },
@@ -35,6 +36,7 @@ export const Route = createFileRoute("/")({
           "Success stories, safety guides, skills, and product updates for Africa's informal economy.",
       },
       { property: "og:type", content: "website" },
+      { name: "twitter:card", content: "summary_large_image" },
     ],
   }),
   loader: async (): Promise<HomeData> => {
@@ -67,12 +69,12 @@ function LoadError({ error, reset }: { error: unknown; reset: () => void }) {
   return (
     <div className="mx-auto max-w-xl px-4 py-24 text-center">
       <h1 className="text-xl font-bold">The Journal did not load</h1>
-      <p className="mt-2 text-sm text-muted-foreground">
+      <p className="mt-2 text-base text-muted-foreground">
         {error instanceof Error ? error.message : "Something went wrong."}
       </p>
       <button
         onClick={reset}
-        className="mt-6 inline-flex h-11 items-center rounded-full bg-primary px-5 text-sm font-semibold text-primary-foreground"
+        className="mt-6 inline-flex h-11 items-center rounded-full bg-primary px-5 text-base font-semibold text-primary-foreground"
       >
         Try again
       </button>
@@ -102,7 +104,7 @@ function HomePage() {
             <Link
               key={item.label}
               to={item.to}
-              className="shrink-0 rounded-full border border-border bg-background px-4 py-1.5 text-sm font-semibold text-foreground transition-colors hover:bg-accent-soft"
+              className="shrink-0 rounded-full border border-border bg-background px-4 py-1.5 text-base font-semibold text-foreground transition-colors hover:bg-accent-soft"
             >
               {item.label}
             </Link>
@@ -116,11 +118,11 @@ function HomePage() {
           <section aria-label="Featured story">
             <div className="grid items-center gap-8 rounded-3xl border border-border bg-card p-6 shadow-card md:grid-cols-2 md:p-10">
               <div>
-                <span className="inline-flex items-center gap-1.5 rounded-full bg-accent px-3 py-1 text-xs font-bold uppercase tracking-wider text-accent-foreground">
+                <span className="inline-flex items-center gap-1.5 rounded-full bg-accent px-3 py-1 text-base font-bold uppercase tracking-normal text-accent-foreground">
                   <Sparkles className="h-3.5 w-3.5" aria-hidden />
                   Featured story
                 </span>
-                <h1 className="mt-4 text-4xl font-extrabold tracking-tight leading-tight md:text-5xl">
+                <h1 className="mt-4 text-4xl font-extrabold tracking-normal leading-tight md:text-5xl">
                   <Link to="/stories/$slug" params={{ slug: hero.slug }} className="hover:underline underline-offset-4">
                     {hero.title}
                   </Link>
@@ -132,7 +134,7 @@ function HomePage() {
                 <Link
                   to="/stories/$slug"
                   params={{ slug: hero.slug }}
-                  className="mt-6 inline-flex h-12 items-center gap-2 rounded-full bg-primary px-6 text-sm font-bold text-primary-foreground hover:bg-primary/90"
+                  className="mt-6 inline-flex h-12 items-center gap-2 rounded-full bg-primary px-6 text-base font-bold text-primary-foreground hover:bg-primary/90"
                 >
                   Read the story
                   <ArrowRight className="h-4 w-4" aria-hidden />
@@ -191,7 +193,7 @@ function HomePage() {
             <div className="grid gap-6 md:grid-cols-3">
               {picks.map((p) => (
                 <div key={p.id} className="relative">
-                  <span className="absolute -top-2.5 left-4 z-10 inline-flex items-center rounded-full bg-accent px-2.5 py-0.5 text-xs font-bold uppercase tracking-wider text-accent-foreground">
+                  <span className="absolute -top-2.5 left-4 z-10 inline-flex items-center rounded-full bg-accent px-2.5 py-0.5 text-base font-bold uppercase tracking-normal text-accent-foreground">
                     Pick
                   </span>
                   <ArticleCardTyped post={p} />
@@ -206,17 +208,17 @@ function HomePage() {
           <div className="flex flex-col items-start justify-between gap-6 rounded-2xl border-2 border-primary/20 bg-primary-soft p-6 md:flex-row md:items-center md:p-10">
             <div>
               <p className="eyebrow">Community spotlight</p>
-              <h2 id="spotlight-heading" className="mt-1 text-2xl font-bold tracking-tight md:text-3xl">
+              <h2 id="spotlight-heading" className="mt-1 text-2xl font-bold tracking-normal md:text-3xl">
                 Real hustles, told by the people living them
               </h2>
-              <p className="mt-2 max-w-xl text-sm leading-relaxed text-muted-foreground">
+              <p className="mt-2 max-w-xl text-base leading-relaxed text-muted-foreground">
                 Every spotlight is reported and confirmed before publication. If your work changed
                 after joining HustlerLink, we want to hear it.
               </p>
             </div>
             <Link
               to="/stories"
-              className="inline-flex h-12 shrink-0 items-center gap-2 rounded-full bg-primary px-6 text-sm font-bold text-primary-foreground hover:bg-primary/90"
+              className="inline-flex h-12 shrink-0 items-center gap-2 rounded-full bg-primary px-6 text-base font-bold text-primary-foreground hover:bg-primary/90"
             >
               Read the spotlights
               <ArrowRight className="h-4 w-4" aria-hidden />
@@ -258,7 +260,7 @@ function HomePage() {
                   ) : null}
                   {c.name}
                 </p>
-                <p className="mt-1.5 text-sm leading-relaxed text-muted-foreground">{c.description}</p>
+                <p className="mt-1.5 text-base leading-relaxed text-muted-foreground">{c.description}</p>
               </Link>
             ))}
           </div>
@@ -268,8 +270,8 @@ function HomePage() {
         <section className="mt-14 rounded-2xl border border-border bg-card p-6 md:p-10">
           <div className="mb-6 max-w-2xl">
             <p className="eyebrow">Newsletter</p>
-            <h2 className="mt-1 text-2xl font-bold tracking-tight md:text-3xl">The weekly Hustle Brief</h2>
-            <p className="mt-2 text-sm leading-relaxed text-muted-foreground">
+            <h2 className="mt-1 text-2xl font-bold tracking-normal md:text-3xl">The weekly Hustle Brief</h2>
+            <p className="mt-2 text-base leading-relaxed text-muted-foreground">
               One email each week: the best story, one practical guide, and what shipped. We confirm
               every subscription with a second email before anything else arrives.
             </p>

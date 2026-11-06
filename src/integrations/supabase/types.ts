@@ -202,6 +202,33 @@ export type Database = {
           },
         ]
       }
+      contact_messages: {
+        Row: {
+          created_at: string
+          email: string
+          id: string
+          message: string
+          name: string
+          reason: string
+        }
+        Insert: {
+          created_at?: string
+          email: string
+          id?: string
+          message: string
+          name: string
+          reason: string
+        }
+        Update: {
+          created_at?: string
+          email?: string
+          id?: string
+          message?: string
+          name?: string
+          reason?: string
+        }
+        Relationships: []
+      }
       homepage_layout: {
         Row: {
           config: Json
@@ -762,6 +789,10 @@ export type Database = {
       journal_has_role: {
         Args: { _roles: string[]; _user_id: string }
         Returns: boolean
+      }
+      journal_subscription_preferences: {
+        Args: { _categories: string[]; _unsubscribe?: boolean }
+        Returns: undefined
       }
       record_post_view: { Args: { _slug: string }; Returns: undefined }
     }

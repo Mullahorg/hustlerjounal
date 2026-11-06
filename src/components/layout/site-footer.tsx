@@ -45,11 +45,11 @@ export function SiteFooter() {
               <span className="flex h-9 w-9 items-center justify-center rounded-full bg-primary text-primary-foreground">
                 <BookOpen className="h-5 w-5" strokeWidth={2} aria-hidden />
               </span>
-              <span className="text-lg font-extrabold tracking-tight">
+              <span className="text-lg font-extrabold tracking-normal">
                 Hustler <span className="text-primary">Journal</span>
               </span>
             </div>
-            <p className="mt-3 max-w-sm text-sm leading-relaxed text-muted-foreground">
+            <p className="mt-3 max-w-sm text-base leading-relaxed text-muted-foreground">
               {SITE.tagline}. Practical guides, honest stories, and open updates for Africa's
               informal economy.
             </p>
@@ -62,7 +62,7 @@ export function SiteFooter() {
                   <li key={l.to}>
                     <Link
                       to={l.to}
-                      className="text-sm font-medium text-foreground underline-offset-4 hover:underline"
+                      className="text-base font-medium text-foreground underline-offset-4 hover:underline"
                     >
                       {l.label}
                     </Link>
@@ -80,7 +80,7 @@ export function SiteFooter() {
               <a
                 key={item.to}
                 href={item.to}
-                className="text-sm font-medium text-muted-foreground underline-offset-4 hover:text-foreground hover:underline"
+                className="text-base font-medium text-muted-foreground underline-offset-4 hover:text-foreground hover:underline"
               >
                 {item.label}
               </a>
@@ -89,7 +89,7 @@ export function SiteFooter() {
         </div>
 
         <div className="mt-8 flex flex-wrap items-center justify-between gap-4 border-t border-border pt-6">
-          <p className="text-sm text-muted-foreground">
+          <p className="text-base text-muted-foreground">
             {new Intl.DateTimeFormat("en", { year: "numeric" }).format(new Date())} HustlerLink.
             All rights reserved.
           </p>
@@ -97,16 +97,16 @@ export function SiteFooter() {
             {categories
               .filter((c) => c.slug === "legal-policies")
               .map(() => null)}
-            <Link to="/legal" className="text-sm font-medium text-muted-foreground hover:text-foreground">
+            <Link to="/legal" className="text-base font-medium text-muted-foreground hover:text-foreground">
               Legal and policies
             </Link>
-            <Link to="/legal/terms" className="text-sm font-medium text-muted-foreground hover:text-foreground">
+            <Link to="/legal/terms" className="text-base font-medium text-muted-foreground hover:text-foreground">
               Terms
             </Link>
-            <Link to="/legal/privacy" className="text-sm font-medium text-muted-foreground hover:text-foreground">
+            <Link to="/legal/privacy" className="text-base font-medium text-muted-foreground hover:text-foreground">
               Privacy
             </Link>
-            <Link to="/legal/cookies" className="text-sm font-medium text-muted-foreground hover:text-foreground">
+            <Link to="/legal/cookies" className="text-base font-medium text-muted-foreground hover:text-foreground">
               Cookies
             </Link>
           </nav>

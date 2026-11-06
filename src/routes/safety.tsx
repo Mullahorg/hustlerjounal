@@ -3,6 +3,7 @@ import { listPublishedPosts } from "@/lib/server/content.functions";
 import { SectionIndex, SectionNotFound } from "@/components/content/section-index";
 
 export const Route = createFileRoute("/safety")({
+  staticData: { sitemap: true },
   head: () => ({
     meta: [
       { title: "Safety and Escrow | Hustler Journal" },
@@ -10,6 +11,7 @@ export const Route = createFileRoute("/safety")({
       { property: "og:title", content: "Safety and Escrow | Hustler Journal" },
       { property: "og:description", content: "How escrow works, what to check before you pay, and how to stay safe on every job." },
       { property: "og:type", content: "website" },
+      { name: "twitter:card", content: "summary_large_image" },
     ],
   }),
   loader: () => listPublishedPosts({ data: { categorySlug: "safety-escrow", limit: 24 } }),

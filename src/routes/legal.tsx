@@ -3,6 +3,7 @@ import { listPublishedPosts } from "@/lib/server/content.functions";
 import { SectionIndex, SectionNotFound } from "@/components/content/section-index";
 
 export const Route = createFileRoute("/legal")({
+  staticData: { sitemap: true },
   head: () => ({
     meta: [
       { title: "Legal and Policies | Hustler Journal" },
@@ -10,6 +11,7 @@ export const Route = createFileRoute("/legal")({
       { property: "og:title", content: "Legal and Policies | Hustler Journal" },
       { property: "og:description", content: "Terms, privacy, cookies, and platform policies in plain language." },
       { property: "og:type", content: "website" },
+      { name: "twitter:card", content: "summary_large_image" },
     ],
   }),
   loader: () => listPublishedPosts({ data: { categorySlug: "legal-policies", limit: 24 } }),

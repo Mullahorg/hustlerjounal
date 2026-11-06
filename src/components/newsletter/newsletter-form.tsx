@@ -16,11 +16,11 @@ export function NewsletterForm({ compact = false }: { compact?: boolean }) {
       onSubmit={async (e) => {
         e.preventDefault();
         setState({ status: "busy" });
-        const result = await submit({ data: { email, name: name || undefined } });
+        const result = await submit({ data: { email, name } });
         if (result.ok) {
           setState({
             status: "done",
-            message: "Almost there. We sent a confirmation link to your email. Click it to finish.",
+            message: "Subscription request received.",
           });
           setEmail("");
           setName("");
@@ -68,7 +68,7 @@ export function NewsletterForm({ compact = false }: { compact?: boolean }) {
           {state.status === "busy" ? <Loader2 className="h-5 w-5 animate-spin" aria-hidden /> : "Subscribe"}
         </button>
       </div>
-      <p aria-live="polite" className="mt-3 text-sm leading-relaxed text-muted-foreground">
+      <p aria-live="polite" className="mt-3 text-base leading-relaxed text-muted-foreground">
         {state.status === "error" ? (
           <span className="font-semibold text-destructive">{state.message}</span>
         ) : state.status === "done" ? (
