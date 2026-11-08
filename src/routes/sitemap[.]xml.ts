@@ -18,9 +18,9 @@ export const Route = createFileRoute('/sitemap.xml')({
   for(const post of posts) {
    const to = cardRoute(post);
    const location = router.buildLocation({ to, params: { slug: post.slug }, search: () => ({}), hash: '' });
-   const match = router.getMatchedRoutes(location.pathname);
-   if (!match.foundRoute || !isSitemapRouteIncluded(match.foundRoute)) continue;
-   const path = sitemapPathForLocation(router,location,match.foundRoute.id);
+   const [, , foundRoute] = router.getMatchedRoutes(location.pathname);
+   if (!foundRoute || !isSitemapRouteIncluded(foundRoute)) continue;
+   const path = sitemapPathForLocation(router,location,foundRoute.id);
    if(path) entries.push({path,lastmod:post.updated_at});
   }
   for(const table of ['categories','authors','topics','series'] as const) {
@@ -31,9 +31,9 @@ export const Route = createFileRoute('/sitemap.xml')({
    const destinations = { categories: '/categories/$slug', authors: '/authors/$slug', topics: '/topics/$slug', series: '/series/$slug' } as const;
    for(const row of rows) {
     const location=router.buildLocation({to:destinations[table],params:{slug:row.slug},search:()=>({}),hash:''});
-    const match=router.getMatchedRoutes(location.pathname);
-    if(!match.foundRoute) continue;
-    const path=sitemapPathForLocation(router,location,match.foundRoute.id);
+    const [, , foundRoute]=router.getMatchedRoutes(location.pathname);
+    if(!foundRoute) continue;
+    const path=sitemapPathForLocation(router,location,foundRoute.id);
     if(path) entries.push({path});
    }
   }

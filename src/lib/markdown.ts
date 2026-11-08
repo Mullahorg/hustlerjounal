@@ -1,3 +1,4 @@
+import { resolveCover } from "./covers";
 /*
  * Minimal, strictly escaping Markdown renderer.
  *
@@ -214,7 +215,7 @@ export function renderMarkdown(markdown: string): string {
     if (imageMatch) {
       const alt = escapeHtml((imageMatch[1] ?? "").trim());
       const caption = imageMatch[2] ? escapeHtml(imageMatch[2].trim()) : "";
-      const url = safeHref((imageMatch[3] ?? ""));
+      const url = safeHref(resolveCover(imageMatch[3] ?? "") ?? "");
       html.push(
         `<figure class="image-figure"><img src="${url}" alt="${alt}" loading="lazy" />${
           caption ? `<figcaption>${caption}</figcaption>` : ""

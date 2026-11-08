@@ -54,7 +54,7 @@ export function SiteHeader() {
           </span>
         </Link>
 
-        <nav aria-label="Primary" className="ml-4 hidden items-center gap-1 lg:flex">
+        <nav aria-label="Primary" className="ml-4 hidden items-center gap-1 xl:flex">
           {primaryNav.map((item) => (
             <Link
               key={item.to}
@@ -103,7 +103,7 @@ export function SiteHeader() {
               <button
                 type="button"
                 aria-label="Open menu"
-                className="inline-flex h-10 w-10 items-center justify-center rounded-full border border-border bg-card lg:hidden"
+                className="inline-flex h-10 w-10 items-center justify-center rounded-full border border-border bg-card xl:hidden"
               >
                 <Menu className="h-5 w-5" strokeWidth={2} aria-hidden />
               </button>

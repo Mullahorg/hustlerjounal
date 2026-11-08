@@ -119,7 +119,7 @@ export const adminSavePost = createServerFn({ method: "POST" })
   .inputValidator(z.object({
     id: z.string().uuid().optional(), title: z.string().trim().min(1).max(200), slug: z.string().regex(/^[a-z0-9]+(?:-[a-z0-9]+)*$/).max(200),
     subtitle: z.string().max(300).optional(), excerpt: z.string().max(500).optional(), bodyMarkdown: z.string().max(200000).optional(),
-    categoryId: z.string().uuid().nullable().optional(), type: z.enum(["article","story","guide","safety","update","announcement","news","help","doc","policy","faq"]).optional(),
+    categoryId: z.string().uuid().nullable().optional(), type: z.string().refine(v=>["article","story","guide","safety","update","announcement","news","help","doc","policy","faq"].includes(v),"Invalid content type").optional(),
     coverImageUrl: z.string().max(2000).nullable().optional(), coverImageAlt: z.string().max(300).nullable().optional(),
     seoTitle: z.string().max(200).nullable().optional(), seoDescription: z.string().max(500).nullable().optional(),
     featured: z.boolean().optional(), editorsPick: z.boolean().optional(), scheduledFor: z.string().datetime().nullable().optional()
@@ -183,7 +183,7 @@ export const adminSetStatus = createServerFn({ method: "POST" })
     const { data: roleRows,error: roleError } = await context.supabase.from("user_roles").select("role").eq("user_id",context.userId);
     if(readError || roleError || !post || !canChangeStatus((roleRows??[]).map(r=>r.role),post.created_by_user_id,context.userId,post.status,data.status)) return {ok:false,error:"You do not have permission for this status change."};
     if(data.status === "scheduled" && (!data.scheduledFor || new Date(data.scheduledFor).getTime()<=Date.now())) return {ok:false,error:"Choose a future publication date."};
-    const patch = { status:data.status, ...(data.status === "published"?{published_at:new Date().toISOString()}:{}), ...(data.status === "scheduled"?{scheduled_for:data.scheduledFor}: {}) };
+    const patch = { status:data.status, ...(data.status === "published"?{published_at:new Date().toISOString()}:{}), ...(data.status === "scheduled" && data.scheduledFor ? {scheduled_for:data.scheduledFor}: {}) };
     const {data: changed,error}=await context.supabase.from("posts").update(patch).eq("id",data.id).select("id").maybeSingle();
     if(error || !changed) return {ok:false,error:"Could not change the post status."};
     return {ok:true};
