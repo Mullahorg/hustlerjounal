@@ -22,6 +22,13 @@
       "when": 1793950357005,
       "tag": "0002_secure_editorial_workflow_and_contact",
       "breakpoints": true
+    },
+    {
+      "idx": 3,
+      "version": "7",
+      "when": 1794124954338,
+      "tag": "0003_admin_role_management_site_branding",
+      "breakpoints": true
     }
   ]
 }

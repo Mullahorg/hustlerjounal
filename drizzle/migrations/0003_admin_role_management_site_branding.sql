@@ -1,0 +1,10 @@
+GRANT SELECT ON public.user_roles TO authenticated;
+GRANT ALL ON public.user_roles TO service_role;
+ALTER TABLE public.user_roles ENABLE ROW LEVEL SECURITY;
+CREATE POLICY "Users can read own journal roles" ON public.user_roles FOR SELECT TO authenticated USING (user_id = auth.uid());
+GRANT SELECT, INSERT, UPDATE ON public.site_settings TO authenticated;
+GRANT SELECT ON public.site_settings TO anon;
+GRANT ALL ON public.site_settings TO service_role;
+CREATE POLICY "Admins can upload site logo" ON storage.objects FOR INSERT TO authenticated WITH CHECK (bucket_id = 'site-branding' AND name = 'logo/site-logo' AND public.journal_has_role(auth.uid(), ARRAY['admin'::text, 'super_admin'::text]));
+CREATE POLICY "Admins can update site logo" ON storage.objects FOR UPDATE TO authenticated USING (bucket_id = 'site-branding' AND name = 'logo/site-logo' AND public.journal_has_role(auth.uid(), ARRAY['admin'::text, 'super_admin'::text])) WITH CHECK (bucket_id = 'site-branding' AND name = 'logo/site-logo' AND public.journal_has_role(auth.uid(), ARRAY['admin'::text, 'super_admin'::text]));
+CREATE POLICY "Admins can inspect site logo file" ON storage.objects FOR SELECT TO authenticated USING (bucket_id = 'site-branding' AND name = 'logo/site-logo' AND public.journal_has_role(auth.uid(), ARRAY['admin'::text, 'super_admin'::text]));
